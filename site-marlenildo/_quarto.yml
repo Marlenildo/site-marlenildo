@@ -1,0 +1,19 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Meu Site"
+  site-url: "https://seuusuario.github.io/meu-site"
+  navbar:
+    left:
+      - text: Início
+        href: index.qmd
+      - text: Sobre
+        href: sobre.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
