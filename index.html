@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Marlenildo — Apps em R &amp; Shiny</title>
+<meta name="description" content="Portfólio de aplicações em R e Shiny: Plota, Calibra, Ranova, Minhas Entregas e Croma — ferramentas para pesquisa agronômica, laboratório e gestão institucional." />
+<meta property="og:title" content="Marlenildo — Apps em R & Shiny" />
+<meta property="og:description" content="Gráficos, estatística, calibração, cor e gestão de entregas: cinco apps em R/Shiny publicados no Posit Connect Cloud." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+<div class="bg-glow" aria-hidden="true"></div>
+
+<header class="site-header">
+  <nav class="nav container">
+    <a href="#topo" class="brand">Marlenildo<span class="brand-dot">.</span></a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#apps">Apps</a></li>
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#contato">Contato</a></li>
+      <li><a class="nav-cta" href="https://github.com/Marlenildo" target="_blank" rel="noopener">GitHub ↗</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="conteudo">
+
+  <section class="hero" id="topo">
+    <div class="container hero-inner">
+      <p class="eyebrow">Desenvolvedor R &amp; Shiny</p>
+      <h1>Ferramentas que transformam <span class="text-gradient">dados</span> em decisão.</h1>
+      <p class="hero-lead">
+        Crio aplicações em R e Shiny para pesquisa agronômica, laboratório e gestão institucional —
+        da análise estatística de experimentos aos relatórios prontos para publicação.
+      </p>
+      <div class="hero-actions">
+        <a href="#apps" class="btn btn-primary">Ver os apps</a>
+        <a href="https://github.com/Marlenildo" target="_blank" rel="noopener" class="btn btn-ghost">Código no GitHub</a>
+      </div>
+      <ul class="hero-stack" aria-label="Tecnologias principais">
+        <li>R</li>
+        <li>Shiny</li>
+        <li>ggplot2</li>
+        <li>PostgreSQL</li>
+        <li>Posit Connect Cloud</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="apps" id="apps">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Galeria</p>
+        <h2>Apps publicados</h2>
+        <p class="section-lead">Cinco aplicações Shiny em produção no Posit Connect Cloud, cada uma resolvendo um problema real de dados.</p>
+      </div>
+
+      <div class="app-grid">
+
+        <article class="app-card">
+          <div class="app-card-top">
+            <img src="assets/img/logo-plota.png" alt="Logo do Plota" class="app-logo" loading="lazy" />
+            <div>
+              <h3>Plota</h3>
+              <p class="app-tagline">Gráficos elegantes para a pesquisa agronômica</p>
+            </div>
+          </div>
+          <p class="app-desc">
+            Barras, linhas, interação, regressão e boxplot com fonte, cor e tamanho sob medida.
+            Estatística embutida, painéis com múltiplos gráficos e exportação em TIFF, PNG, PDF, SVG e EPS
+            prontos para artigos e apresentações.
+          </p>
+          <ul class="app-tags">
+            <li>ggplot2</li><li>relatórios</li><li>exportação</li>
+          </ul>
+          <div class="app-actions">
+            <a href="https://marlenildo-plota.share.connect.posit.cloud/" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Abrir app ↗</a>
+            <a href="https://github.com/Marlenildo/plota" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Código</a>
+          </div>
+        </article>
+
+        <article class="app-card">
+          <div class="app-card-top">
+            <img src="assets/img/logo-calibra.png" alt="Logo do Calibra" class="app-logo" loading="lazy" />
+            <div>
+              <h3>Calibra</h3>
+              <p class="app-tagline">Curva de calibração e R² na hora</p>
+            </div>
+          </div>
+          <p class="app-desc">
+            Cole os pontos lidos no laboratório e veja a reta, a equação <em>y = bx + a</em> e o R²
+            se atualizarem a cada edição. Feito para conferir rapidamente o ajuste de uma curva de análise.
+          </p>
+          <ul class="app-tags">
+            <li>laboratório</li><li>regressão linear</li>
+          </ul>
+          <div class="app-actions">
+            <a href="https://marlenildo-calibra.share.connect.posit.cloud/" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Abrir app ↗</a>
+            <a href="https://github.com/Marlenildo/calibra" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Código</a>
+          </div>
+        </article>
+
+        <article class="app-card">
+          <div class="app-card-top">
+            <img src="assets/img/logo-ranova.png" alt="Logo do Ranova" class="app-logo" loading="lazy" />
+            <div>
+              <h3>Ranova</h3>
+              <p class="app-tagline">Análise de variância de experimentos</p>
+            </div>
+          </div>
+          <p class="app-desc">
+            ANOVA para DIC, DBC, esquema fatorial, parcelas subdivididas e subsubdivididas.
+            Testes de médias (Tukey, Duncan, Scott-Knott e mais), desdobramento de interações
+            e relatórios em PDF e HTML prontos para entrega.
+          </p>
+          <ul class="app-tags">
+            <li>ANOVA</li><li>delineamentos</li><li>relatórios</li>
+          </ul>
+          <div class="app-actions">
+            <a href="https://marlenildo-ranova.share.connect.posit.cloud/" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Abrir app ↗</a>
+            <a href="https://github.com/Marlenildo/ranova-app" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Código</a>
+          </div>
+        </article>
+
+        <article class="app-card">
+          <div class="app-card-top">
+            <img src="assets/img/logo-entregas.png" alt="Logo do Minhas Entregas" class="app-logo" loading="lazy" />
+            <div>
+              <h3>Minhas Entregas</h3>
+              <p class="app-tagline">Registro e acompanhamento de entregas institucionais</p>
+            </div>
+          </div>
+          <p class="app-desc">
+            Autenticação por SIAPE, lançamento mensal em matriz, controle por ciclo anual,
+            relatórios filtráveis e painel administrativo — com PostgreSQL e auditoria de ações.
+          </p>
+          <ul class="app-tags">
+            <li>PostgreSQL</li><li>autenticação</li><li>institucional</li>
+          </ul>
+          <div class="app-actions">
+            <a href="https://marlenildo-minhas-entregas.share.connect.posit.cloud/" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Abrir app ↗</a>
+          </div>
+        </article>
+
+        <article class="app-card">
+          <div class="app-card-top">
+            <img src="assets/img/logo-croma.png" alt="Logo do Croma" class="app-logo" loading="lazy" />
+            <div>
+              <h3>Croma</h3>
+              <p class="app-tagline">Visualizador CIELAB / CIELCH</p>
+            </div>
+          </div>
+          <p class="app-desc">
+            Organize, converta e compare amostras de cor por coordenadas CIELAB ou CIELCH,
+            com agrupamento de repetições, diferença ΔE (CIEDE2000) e relatório em PDF com um clique.
+          </p>
+          <ul class="app-tags">
+            <li>colorimetria</li><li>ΔE2000</li>
+          </ul>
+          <div class="app-actions">
+            <a href="https://marlenildo-croma.share.connect.posit.cloud/" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Abrir app ↗</a>
+            <a href="https://github.com/Marlenildo/croma" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Código</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="sobre">
+    <div class="container about-inner">
+      <div class="section-head">
+        <p class="eyebrow">Sobre</p>
+        <h2>Dados que viram ferramenta de verdade</h2>
+      </div>
+      <p class="about-text">
+        Desenvolvo aplicações em R que pegam dados brutos — de experimentos, de laboratório ou do
+        dia a dia de um serviço — e entregam algo pronto para uso: um gráfico no padrão de uma revista,
+        uma ANOVA com o erro certo para cada delineamento, uma curva de calibração conferida em segundos
+        ou um sistema de gestão com autenticação e relatórios. Cada app nasce de um problema real e é
+        publicado no <a href="https://connect.posit.cloud" target="_blank" rel="noopener">Posit Connect Cloud</a>,
+        pronto para qualquer pessoa usar sem instalar nada.
+      </p>
+      <ul class="skill-list" aria-label="Áreas de atuação">
+        <li>Estatística experimental</li>
+        <li>Visualização de dados</li>
+        <li>Aplicações Shiny</li>
+        <li>Bancos PostgreSQL</li>
+        <li>Publicação e deploy</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" id="contato">
+  <div class="container footer-inner">
+    <div>
+      <p class="brand">Marlenildo<span class="brand-dot">.</span></p>
+      <p class="footer-note">Apps em R &amp; Shiny para pesquisa e gestão de dados.</p>
+    </div>
+    <ul class="footer-links">
+      <li><a href="https://github.com/Marlenildo" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="mailto:marlenildo@gmail.com">marlenildo@gmail.com</a></li>
+    </ul>
+  </div>
+  <p class="footer-copy">&copy; <span id="year"></span> Marlenildo. Todos os direitos reservados.</p>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
