@@ -14,7 +14,7 @@ html { scroll-behavior: smooth; }
   --accent-b: #22d3ee;
   --accent-a-ink: var(--accent-a);
   --accent-b-ink: var(--accent-b);
-  --gradient: linear-gradient(120deg, var(--accent-a), var(--accent-b));
+  --gradient: linear-gradient(90deg, var(--accent-a), var(--accent-b));
   --glass-top: var(--surface-strong);
   --glass-bottom: var(--surface);
   --radius-lg: 22px;
@@ -157,7 +157,7 @@ img { max-width: 100%; display: block; }
   font-weight: 600;
   font-size: 0.95rem;
   font-family: inherit;
-  border: 1px solid transparent;
+  border: none;
   box-sizing: border-box;
   vertical-align: middle;
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
@@ -172,7 +172,7 @@ img { max-width: 100%; display: block; }
 .btn-ghost {
   background: var(--surface);
   color: var(--text);
-  border-color: var(--border);
+  border: 1px solid var(--border);
 }
 .btn-ghost:hover { border-color: var(--accent-b); transform: translateY(-2px); }
 .btn-sm { padding: 9px 18px; font-size: 0.85rem; }
