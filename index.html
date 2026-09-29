@@ -211,37 +211,61 @@
       </dl>
 
       <p class="about-text">
-        Nesse volume todo, o delineamento inteiramente casualizado e o de blocos, em esquema fatorial ou em
-        parcelas subdivididas, aparecem o tempo todo — é o pão de cada dia de quem faz experimento agronômico.
-        Mas a análise nem sempre cabe numa ANOVA clássica: quando os pressupostos não seguram, entram os
-        testes não paramétricos; quando são muitas variáveis medidas ao mesmo tempo, entram componentes
-        principais, agrupamento (cluster) e mapas de calor pra enxergar padrão onde uma tabela sozinha não
-        mostra nada. Alguns exemplos ilustrativos (dados fictícios) do tipo de gráfico que sai pronto dos apps:
+        Na prática, isso vira pergunta concreta: uma dose de adubo aumenta a produtividade de verdade, ou é
+        só ruído da parcela? Um produto realmente reduz a germinação de uma praga, ou a diferença não passa
+        de acaso? Quais variáveis de qualidade do fruto andam juntas, e dá pra resumir uma dúzia delas em duas
+        dimensões que fazem sentido? Acessos parecidos formam grupos naturais, ou cada um é um caso à parte?
+      </p>
+      <p class="about-text">
+        Pra essas perguntas entram ANOVA com o teste de médias certo, regressão linear e não linear, regressão
+        logística quando a resposta é sim ou não, componentes principais e análise de cluster quando são
+        muitas variáveis de uma vez — sem falar nos testes não paramétricos, pra quando os pressupostos não
+        seguram. Parte considerável sai pronta do <strong>Plota</strong> e do <strong>Ranova</strong>; o
+        resto continua no meu fluxo de trabalho em R, disponível sob consultoria. Alguns exemplos ilustrativos
+        (dados fictícios) do tipo de gráfico que cada análise produz:
       </p>
 
       <div class="example-grid">
         <figure class="example-card">
           <h3>Barras com erro e letras de Tukey</h3>
           <img src="assets/img/examples/chart-barras-erro.svg" alt="Gráfico de barras com erro-padrão e letras de comparação de médias (Tukey) por dose" loading="lazy" />
-          <figcaption>Como o Ranova e o Plota mostram a comparação de médias. Dados fictícios.</figcaption>
+          <figcaption><strong>Uma dose aumenta a produtividade de verdade, ou é ruído da parcela?</strong> Comparação de médias com teste de significância — como o Ranova e o Plota geram automaticamente.</figcaption>
         </figure>
 
         <figure class="example-card">
           <h3>Linhas com erro, dois grupos</h3>
           <img src="assets/img/examples/chart-linhas-erro.svg" alt="Gráfico de linhas com barras de erro comparando dois tratamentos ao longo do tempo" loading="lazy" />
-          <figcaption>Evolução de um tratamento no tempo, com barra de erro em cada ponto. Dados fictícios.</figcaption>
+          <figcaption><strong>Dois tratamentos evoluem de formas diferentes ao longo do tempo?</strong> Saída direta do Plota, com erro-padrão em cada ponto.</figcaption>
         </figure>
 
         <figure class="example-card">
           <h3>Ajuste de regressão</h3>
-          <img src="assets/img/examples/chart-regressao.svg" alt="Gráfico de dispersão com curva de regressão quadrática ajustada, equação e R²" loading="lazy" />
-          <figcaption>Curva ajustada automaticamente, com equação e R² — como sai do Plota. Dados fictícios.</figcaption>
+          <img src="assets/img/examples/chart-regressao.svg" alt="Gráfico de dispersão com ajuste linear e quadrático, cada um com equação e R²" loading="lazy" />
+          <figcaption><strong>Qual a dose de máxima eficiência, e qual curva explica melhor a resposta?</strong> Linear ou quadrática aqui — o Plota também ajusta cúbica, logarítmica e LOESS, e mostra qual se encaixa melhor nos seus dados.</figcaption>
+        </figure>
+
+        <figure class="example-card">
+          <h3>Regressão logística</h3>
+          <img src="assets/img/examples/chart-logistica.svg" alt="Gráfico de regressão logística mostrando a probabilidade de germinação em função da concentração de um produto" loading="lazy" />
+          <figcaption><strong>Germinou ou não germinou? Sobreviveu ou não?</strong> Quando a resposta é sim/não, a regressão logística estima a probabilidade em função da dose. Parte do meu trabalho de consultoria.</figcaption>
         </figure>
 
         <figure class="example-card">
           <h3>Componentes principais (PCA)</h3>
-          <img src="assets/img/examples/chart-pca.svg" alt="Gráfico de análise de componentes principais (PCA) com dois grupos e elipses de confiança" loading="lazy" />
-          <figcaption>Quando são muitas variáveis, o PCA resume o padrão em duas dimensões. Dados fictícios.</figcaption>
+          <img src="assets/img/examples/chart-pca.svg" alt="Biplot de componentes principais (PCA) com autovetores das variáveis e dois grupos com elipse de confiança" loading="lazy" />
+          <figcaption><strong>Uma dúzia de variáveis medidas, uma pergunta só: qual é o padrão?</strong> O biplot resume tudo em duas dimensões e mostra, pelos autovetores, qual variável puxa pra que direção. Ler esse resultado direito tem ciência própria — é exatamente o tipo de análise que costumo destrinchar em consultoria.</figcaption>
+        </figure>
+
+        <figure class="example-card">
+          <h3>Cluster hierárquico</h3>
+          <img src="assets/img/examples/chart-cluster.svg" alt="Dendrograma de análise de cluster hierárquico agrupando acessos por similaridade" loading="lazy" />
+          <figcaption><strong>Quem se parece com quem, e o quanto?</strong> O dendrograma agrupa por similaridade e mostra a que distância cada grupo se separa. Onde "cortar" a árvore muda a resposta — decisão que vale conversar antes de bater o martelo.</figcaption>
+        </figure>
+
+        <figure class="example-card">
+          <h3>Agrupamento k-means</h3>
+          <img src="assets/img/examples/chart-kmeans.svg" alt="Gráfico de agrupamento k-means com três grupos coloridos, elipses e centroides marcados" loading="lazy" />
+          <figcaption><strong>Quantos grupos existem de verdade, e onde fica o centro de cada um?</strong> O k-means define os grupos pela distância até o centroide (marcado com ×). Escolher o número certo de grupos não é chute — se seus dados pedem esse tipo de leitura, converse comigo.</figcaption>
         </figure>
       </div>
 
@@ -249,9 +273,9 @@
       <ul class="skill-list" aria-label="Métodos estatísticos">
         <li>DIC, DBC e esquemas fatoriais</li>
         <li>Parcelas subdivididas</li>
+        <li>Regressão linear, não linear e logística</li>
         <li>Testes não paramétricos</li>
         <li>Componentes principais & cluster</li>
-        <li>Regressão linear e não linear</li>
         <li>Análise de sobrevivência</li>
       </ul>
 
@@ -281,6 +305,14 @@
   </div>
   <p class="footer-copy">&copy; <span id="year"></span> Marlenildo. Todos os direitos reservados.</p>
 </footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+  <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Fechar imagem ampliada">&times;</button>
+  <div class="lightbox-content">
+    <img src="" alt="" id="lightboxImg" />
+    <p class="lightbox-caption" id="lightboxCaption"></p>
+  </div>
+</div>
 
 <script src="assets/js/main.js"></script>
 </body>

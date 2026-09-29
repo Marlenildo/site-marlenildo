@@ -350,9 +350,22 @@ section { padding: 120px 0; }
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 24px;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+.example-card:hover {
+  border-color: rgba(124, 92, 255, 0.5);
+  box-shadow: 0 18px 40px -22px rgba(124, 92, 255, 0.45);
 }
 .example-card h3 { font-size: 1.05rem; margin-bottom: 12px; }
-.example-card img { width: 100%; height: auto; display: block; }
+.example-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  cursor: zoom-in;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+.example-card:hover img { transform: scale(1.035); }
 .example-card figcaption {
   margin-top: 10px;
   font-size: 0.8rem;
@@ -368,6 +381,69 @@ section { padding: 120px 0; }
   margin: 28px 0 10px;
 }
 .mini-label:first-of-type { margin-top: 0; }
+
+/* ---------- Lightbox ---------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: rgba(5, 6, 10, 0.88);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.lightbox.is-open { opacity: 1; pointer-events: auto; }
+.lightbox-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: min(920px, 92vw);
+  max-height: 90vh;
+  transform: scale(0.96);
+  transition: transform 0.25s ease;
+}
+.lightbox.is-open .lightbox-content { transform: scale(1); }
+.lightbox img {
+  max-width: 100%;
+  max-height: 74vh;
+  width: auto;
+  border-radius: 16px;
+  background: var(--bg-alt);
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.7);
+  cursor: default;
+}
+.lightbox-caption {
+  margin-top: 18px;
+  max-width: 640px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.lightbox-caption strong { color: var(--text); }
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface-strong);
+  color: var(--text);
+  font-size: 1.4rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.lightbox-close:hover { border-color: var(--accent-b); }
 
 /* ---------- Footer ---------- */
 .site-footer {

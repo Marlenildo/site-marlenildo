@@ -3,6 +3,7 @@
 
 library(ggplot2)
 library(scales)
+library(ggdendro)
 
 out_dir <- "assets/img/examples"
 if (!dir.exists(out_dir)) dir.create(out_dir, recursive = TRUE)
@@ -108,48 +109,137 @@ p2 <- ggplot(df2, aes(semana, media, colour = grupo, group = grupo)) +
   tema_site
 salvar(p2, "chart-linhas-erro.svg")
 
-## 3) Regressao com equacao e R2 -----------------------------------------
+## 3) Regressao: ajuste linear x quadratico, com equacao e R2 -------------
 set.seed(3)
 dose_c <- c(0, 50, 100, 150, 200, 250)
 resp <- c(15.0, 19.4, 24.7, 27.2, 26.4, 22.8)
-mod <- lm(resp ~ dose_c + I(dose_c^2))
-b <- coef(mod)
-r2 <- summary(mod)$r.squared
-curva <- data.frame(dose_c = seq(0, 250, length.out = 200))
-curva$pred <- predict(mod, newdata = curva)
-eq_lbl <- sprintf("y = %.1f + %.3fx - %.5fx^2   R^2 = %.2f", b[1], b[2], abs(b[3]), r2)
+
+mod_quad <- lm(resp ~ dose_c + I(dose_c^2))
+b_quad <- coef(mod_quad)
+r2_quad <- summary(mod_quad)$r.squared
+curva_quad <- data.frame(dose_c = seq(0, 250, length.out = 200))
+curva_quad$pred <- predict(mod_quad, newdata = curva_quad)
+curva_quad$tipo <- "Quadrática"
+eq_quad <- sprintf("Quadrática: y = %.1f + %.3fx − %.5fx²  (R² = %.2f)", b_quad[1], b_quad[2], abs(b_quad[3]), r2_quad)
+
+mod_lin <- lm(resp ~ dose_c)
+b_lin <- coef(mod_lin)
+r2_lin <- summary(mod_lin)$r.squared
+curva_lin <- data.frame(dose_c = seq(0, 250, length.out = 200))
+curva_lin$pred <- predict(mod_lin, newdata = curva_lin)
+curva_lin$tipo <- "Linear"
+eq_lin <- sprintf("Linear: y = %.1f + %.3fx  (R² = %.2f)", b_lin[1], b_lin[2], r2_lin)
+
+curvas <- rbind(curva_quad, curva_lin)
 
 p3 <- ggplot() +
-  geom_line(data = curva, aes(dose_c, pred), colour = azul, linewidth = 1.1) +
-  geom_point(data = data.frame(dose_c, resp), aes(dose_c, resp), colour = verde, size = 3.2) +
-  annotate("text", x = 125, y = max(curva$pred) * 1.09, label = eq_lbl, colour = mutedcolor, size = 4.1) +
-  scale_y_continuous(limits = c(0, NA), expand = expansion(mult = c(0, 0.18))) +
-  labs(x = "Dose (kg ha⁻¹)", y = "Produtividade (t ha⁻¹)") +
+  geom_point(data = data.frame(dose_c, resp), aes(dose_c, resp), colour = texto, size = 3, alpha = 0.85) +
+  geom_line(data = curvas, aes(dose_c, pred, colour = tipo, linetype = tipo), linewidth = 1.05) +
+  annotate("text", x = 125, y = max(curvas$pred) * 1.22, label = eq_quad, colour = azul, size = 3.6) +
+  annotate("text", x = 125, y = max(curvas$pred) * 1.13, label = eq_lin, colour = verde, size = 3.6) +
+  scale_colour_manual(values = c("Quadrática" = azul, "Linear" = verde)) +
+  scale_linetype_manual(values = c("Quadrática" = "solid", "Linear" = "22")) +
+  scale_y_continuous(limits = c(0, NA), expand = expansion(mult = c(0, 0.3))) +
+  labs(x = "Dose (kg ha⁻¹)", y = "Produtividade (t ha⁻¹)", colour = NULL, linetype = NULL) +
   tema_site
 salvar(p3, "chart-regressao.svg")
 
-## 4) PCA (scores PC1 x PC2 com elipses) ---------------------------------
+## 4) PCA — biplot com autovetores (loadings) -----------------------------
 set.seed(4)
 n <- 18
 grp <- rep(c("Grupo 1", "Grupo 2"), each = n / 2)
 X <- data.frame(
-  v1 = c(rnorm(n/2, 10, 1.4), rnorm(n/2, 13.5, 1.4)),
-  v2 = c(rnorm(n/2, 5, 1),    rnorm(n/2, 7.6, 1)),
-  v3 = c(rnorm(n/2, 20, 2.4), rnorm(n/2, 17.5, 2.2)),
-  v4 = c(rnorm(n/2, 3, 0.6),  rnorm(n/2, 4.4, 0.7))
+  Altura   = c(rnorm(n/2, 10, 1.4), rnorm(n/2, 13.5, 1.4)),
+  Diametro = c(rnorm(n/2, 5, 1),    rnorm(n/2, 7.6, 1)),
+  Brix     = c(rnorm(n/2, 20, 2.4), rnorm(n/2, 17.5, 2.2)),
+  Massa    = c(rnorm(n/2, 3, 0.6),  rnorm(n/2, 4.4, 0.7))
 )
 pca <- prcomp(X, scale. = TRUE)
 scores <- as.data.frame(pca$x[, 1:2])
 scores$grupo <- grp
 ve <- round(100 * summary(pca)$importance[2, 1:2], 1)
 
-p4 <- ggplot(scores, aes(PC1, PC2, colour = grupo, fill = grupo)) +
-  stat_ellipse(geom = "polygon", alpha = 0.12, colour = NA, level = 0.8) +
-  geom_point(size = 3) +
+esc <- 4.4
+loadings <- as.data.frame(pca$rotation[, 1:2]) * esc
+loadings$var <- rownames(loadings)
+
+p4 <- ggplot(scores, aes(PC1, PC2)) +
+  stat_ellipse(aes(colour = grupo, fill = grupo), geom = "polygon", alpha = 0.10, colour = NA, level = 0.8) +
+  geom_point(aes(colour = grupo), size = 3) +
+  geom_segment(data = loadings, aes(x = 0, y = 0, xend = PC1, yend = PC2), inherit.aes = FALSE,
+               colour = texto, linewidth = 0.6, arrow = arrow(length = unit(0.16, "cm"), type = "closed")) +
+  geom_text(data = loadings, aes(x = PC1 * 1.18, y = PC2 * 1.18, label = var), inherit.aes = FALSE,
+            colour = texto, fontface = "bold", size = 3.7) +
   scale_colour_manual(values = c("Grupo 1" = azul, "Grupo 2" = verde)) +
   scale_fill_manual(values = c("Grupo 1" = azul, "Grupo 2" = verde)) +
   labs(x = paste0("PC1 (", ve[1], "%)"), y = paste0("PC2 (", ve[2], "%)")) +
   tema_site
 salvar(p4, "chart-pca.svg")
+
+## 5) Cluster — dendrograma de agrupamento --------------------------------
+set.seed(5)
+acessos <- data.frame(
+  produtividade = rnorm(10, 22, 4),
+  brix          = rnorm(10, 11, 1.6),
+  firmeza       = rnorm(10, 6, 1.1)
+)
+rownames(acessos) <- paste("Acesso", 1:10)
+hc <- hclust(dist(scale(acessos)), method = "ward.D2")
+dd <- dendro_data(hc)
+
+p5 <- ggplot() +
+  geom_segment(data = dd$segments, aes(x = x, y = y, xend = xend, yend = yend), colour = azul, linewidth = 0.7) +
+  geom_text(data = dd$labels, aes(x = x, y = -0.35, label = label), colour = mutedcolor,
+            angle = 90, hjust = 1, size = 3.3) +
+  scale_y_continuous(expand = expansion(mult = c(0.32, 0.08))) +
+  labs(x = NULL, y = "Distância") +
+  tema_site +
+  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), panel.grid.major.x = element_blank())
+salvar(p5, "chart-cluster.svg", h = 4.15)
+
+## 6) Regressao logistica (resposta sim/nao) ------------------------------
+set.seed(6)
+conc <- rep(seq(0, 140, by = 20), each = 6)
+prob_real <- plogis(-3 + 0.055 * conc)
+germinou <- rbinom(length(conc), 1, prob_real)
+dfl <- data.frame(conc, germinou)
+modl <- glm(germinou ~ conc, data = dfl, family = binomial)
+curval <- data.frame(conc = seq(0, 140, length.out = 200))
+curval$prob <- predict(modl, newdata = curval, type = "response")
+
+p6 <- ggplot() +
+  geom_point(data = dfl, aes(conc, germinou), colour = verde, size = 2.3, alpha = 0.6,
+             position = position_jitter(height = 0.045, width = 2)) +
+  geom_line(data = curval, aes(conc, prob), colour = azul, linewidth = 1.1) +
+  scale_y_continuous(labels = percent_format(accuracy = 1), limits = c(-0.05, 1.05)) +
+  labs(x = "Concentração (mg L⁻¹)", y = "Probabilidade de germinação") +
+  tema_site
+salvar(p6, "chart-logistica.svg")
+
+## 7) Agrupamento k-means (com centroides) --------------------------------
+set.seed(7)
+n_por_grupo <- 20
+kdf <- data.frame(
+  brix   = c(rnorm(n_por_grupo, 9, 0.7),   rnorm(n_por_grupo, 13, 0.7),   rnorm(n_por_grupo, 16.5, 0.8)),
+  acidez = c(rnorm(n_por_grupo, 1.15, 0.15), rnorm(n_por_grupo, 0.55, 0.12), rnorm(n_por_grupo, 0.32, 0.08))
+)
+mu <- colMeans(kdf); sdv <- apply(kdf, 2, sd)
+kdf_s <- scale(kdf, center = mu, scale = sdv)
+km <- kmeans(kdf_s, centers = 3, nstart = 10)
+kdf$cluster <- factor(km$cluster)
+centros <- as.data.frame(sweep(sweep(km$centers, 2, sdv, `*`), 2, mu, `+`))
+
+cores3 <- setNames(c(azul, verde, "#ff5fa2"), levels(kdf$cluster))
+
+p7 <- ggplot(kdf, aes(brix, acidez, colour = cluster, fill = cluster)) +
+  stat_ellipse(geom = "polygon", alpha = 0.10, colour = NA, level = 0.8) +
+  geom_point(size = 2.6, alpha = 0.85) +
+  geom_point(data = centros, aes(brix, acidez), inherit.aes = FALSE, shape = 4, size = 5,
+             stroke = 1.5, colour = texto) +
+  scale_colour_manual(values = cores3, guide = "none") +
+  scale_fill_manual(values = cores3, guide = "none") +
+  labs(x = "Teor de sólidos solúveis (°Brix)", y = "Acidez titulável (%)") +
+  tema_site
+salvar(p7, "chart-kmeans.svg")
 
 cat("OK\n")
