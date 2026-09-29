@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Guia rápido de R para pesquisa agronômica — Marlenildo</title>
+<meta name="description" content="Como instalar R e RStudio, importar dados, instalar e carregar pacotes, e quais pacotes usar em análise estatística agronômica: agricolae, ExpDes.pt, easyanova e mais." />
+<meta property="og:title" content="Guia rápido de R para pesquisa agronômica" />
+<meta property="og:description" content="Instalação, importação de dados e os principais pacotes de estatística experimental em R, explicados em passos curtos." />
+<meta property="og:type" content="article" />
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/style.css" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130340973057636" crossorigin="anonymous"></script>
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+<div class="bg-glow" aria-hidden="true"></div>
+
+<header class="site-header">
+  <nav class="nav container">
+    <a href="index.html#topo" class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="46" height="46" /><span>Marlenildo<span class="brand-dot">.online</span></span></a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#apps">Apps</a></li>
+      <li><a href="r-para-pesquisa.html" class="is-current">Guia de R</a></li>
+      <li><a href="index.html#sobre">Sobre</a></li>
+      <li><a href="index.html#contato">Contato</a></li>
+      <li><a class="nav-cta" href="https://github.com/Marlenildo" target="_blank" rel="noopener">GitHub <svg class="icon-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="conteudo">
+
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <p class="eyebrow">Guia rápido</p>
+      <h1>R para quem faz pesquisa, não pra quem programa por hobby.</h1>
+      <p class="hero-lead">
+        Quase todo experimento agronômico termina numa análise de variância — e é aí que a maioria trava:
+        montar a tabela certa, escolher o teste de médias, fazer o gráfico, entender o resultado. O R faz
+        isso de um jeito bonito; este guia é só o suficiente pra você chegar lá sem se afogar em código.
+        Quatro passos curtos: instalar o R e o RStudio, importar seus dados, instalar pacotes e escolher o
+        pacote certo pra análise experimental.
+      </p>
+      <ul class="chip-nav" aria-label="Ir para a seção">
+        <li><a href="#instalar">1. Instalar</a></li>
+        <li><a href="#importar">2. Importar dados</a></li>
+        <li><a href="#pacotes">3. Pacotes</a></li>
+        <li><a href="#analise">4. Análise agronômica</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="guide" id="instalar">
+    <div class="container guide-article">
+      <span class="guide-number">01</span>
+      <div class="section-head">
+        <h2>Como baixar e instalar o R e o RStudio</h2>
+        <p class="section-lead">São dois programas diferentes: o R faz as contas, o RStudio é a tela onde você trabalha. Instale nessa ordem.</p>
+      </div>
+      <ol class="guide-steps">
+        <li>
+          <strong>Instale o R primeiro.</strong> Vá em
+          <a href="https://cran.r-project.org" target="_blank" rel="noopener">cran.r-project.org</a>,
+          escolha seu sistema (Windows, Mac ou Linux) e baixe a versão <em>base</em>. No Windows é um
+          <code>.exe</code>; é só seguir o instalador com as opções padrão.
+        </li>
+        <li>
+          <strong>Depois instale o RStudio Desktop</strong> (gratuito), em
+          <a href="https://posit.co/download/rstudio-desktop/" target="_blank" rel="noopener">posit.co/download/rstudio-desktop</a>.
+          Ele detecta o R instalado automaticamente — não precisa configurar nada.
+        </li>
+        <li>
+          Abra o RStudio, não o R sozinho. A janela <strong>Console</strong> (canto inferior esquerdo,
+          normalmente) é onde os comandos deste guia são digitados.
+        </li>
+        <li>
+          De tempos em tempos sai uma versão nova do R (cerca de uma por ano) e do RStudio. Vale atualizar
+          os dois a cada alguns meses — alguns pacotes passam a exigir versões mais recentes.
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="guide" id="importar">
+    <div class="container guide-article">
+      <span class="guide-number">02</span>
+      <div class="section-head">
+        <h2>Como importar seus dados</h2>
+        <p class="section-lead">O jeito mais fácil é pelo menu, mas saber o comando por trás ajuda a repetir a análise depois.</p>
+      </div>
+      <p class="guide-p">
+        No RStudio: <strong>File → Import Dataset</strong> e escolha o tipo de arquivo. Ele monta o comando
+        pra você e mostra no console antes de rodar — bom jeito de aprender a sintaxe.
+      </p>
+      <p class="guide-p">Os comandos mais comuns:</p>
+      <pre class="code-block"><code># CSV exportado do Excel brasileiro (separado por ; e vírgula decimal)
+dados &lt;- read.csv2("dados.csv")
+
+# CSV no padrão internacional (separado por , e ponto decimal)
+dados &lt;- read.csv("dados.csv")
+
+# Arquivo do Excel (.xlsx) — precisa do pacote readxl
+dados &lt;- readxl::read_excel("dados.xlsx", sheet = 1)
+
+# Colar direto da área de transferência (copiou do Excel com Ctrl+C)
+dados &lt;- read.delim("clipboard")</code></pre>
+      <p class="guide-p">
+        Dica que resolve 90% dos erros de importação: se os números aparecerem como texto (entre aspas) ou
+        virarem <code>NA</code>, o problema quase sempre é vírgula decimal. Use <code>read.csv2()</code> em vez
+        de <code>read.csv()</code>, ou passe <code>dec = ","</code> como argumento.
+      </p>
+      <p class="guide-p">
+        Depois de importar, confira com <code>str(dados)</code> ou <code>head(dados)</code> se as colunas
+        vieram com o tipo certo (número, texto, fator) antes de seguir pra análise.
+      </p>
+    </div>
+  </section>
+
+  <section class="guide" id="pacotes">
+    <div class="container guide-article">
+      <span class="guide-number">03</span>
+      <div class="section-head">
+        <h2>Como instalar e carregar pacotes</h2>
+        <p class="section-lead">O R vem enxuto; quase tudo que você vai usar está em um pacote separado.</p>
+      </div>
+      <pre class="code-block"><code># Instala uma vez por computador (baixa e guarda o pacote)
+install.packages("agricolae")
+
+# Carrega em cada sessão nova do R — é o que de fato "liga" o pacote
+library(agricolae)</code></pre>
+      <p class="guide-p">
+        A confusão mais comum é esquecer o <code>library()</code>: o pacote pode estar instalado e mesmo assim
+        o R reclamar que a função não existe, porque ele não foi carregado <em>nessa</em> sessão.
+      </p>
+      <p class="guide-p">
+        Pacotes que não estão no CRAN — como projetos que só existem no GitHub — pedem o pacote
+        <code>remotes</code> primeiro:
+      </p>
+      <pre class="code-block"><code>install.packages("remotes")
+remotes::install_github("usuario/nome-do-repositorio")</code></pre>
+    </div>
+  </section>
+
+  <section class="guide" id="analise">
+    <div class="container guide-article">
+      <span class="guide-number">04</span>
+      <div class="section-head">
+        <h2>Pacotes para análise estatística agronômica</h2>
+        <p class="section-lead">Os clássicos usados em TCC, dissertação e artigo para ANOVA de experimentos em DIC, DBC e esquema fatorial.</p>
+      </div>
+
+      <div class="pkg-grid">
+        <article class="pkg-card">
+          <h3>agricolae</h3>
+          <p>
+            O mais tradicional. Gera os principais delineamentos experimentais, faz ANOVA e reúne quase todos
+            os testes de comparação de médias usados em agronomia — Tukey, Duncan, SNK, Scott-Knott — numa
+            única função por teste.
+          </p>
+          <code>install.packages("agricolae")</code>
+        </article>
+
+        <article class="pkg-card">
+          <h3>ExpDes.pt</h3>
+          <p>
+            Pensado para quem está aprendendo: funções em português, saída em português, feito para DIC, DBC
+            e DQL — inclusive em esquema fatorial e parcelas subdivididas. Boa porta de entrada antes de
+            partir para pacotes mais gerais.
+          </p>
+          <code>install.packages("ExpDes.pt")</code>
+        </article>
+
+        <article class="pkg-card">
+          <h3>easyanova</h3>
+          <p>
+            Uma função só resolve a ANOVA e já devolve médias, teste de comparação e pressupostos — troca
+            flexibilidade por rapidez, útil pra conferir um resultado rápido antes de detalhar a análise.
+          </p>
+          <code>install.packages("easyanova")</code>
+        </article>
+
+        <article class="pkg-card pkg-card-accent">
+          <h3>ranova</h3>
+          <p>
+            Pacote que desenvolvi para cobrir os casos que os anteriores tratam separadamente — DIC, DBC,
+            esquema fatorial, parcelas subdivididas e subsubdivididas — com o erro correto em cada teste F e
+            os mesmos nomes de função do início ao fim.
+          </p>
+          <code>remotes::install_github("Marlenildo/ranova")</code>
+        </article>
+      </div>
+
+      <p class="guide-p">
+        Se preferir não instalar nada agora, o <a href="index.html#apps">Ranova</a> dá interface pronta pra
+        esse pacote direto no navegador — cole os dados, escolha o delineamento e o relatório sai em PDF ou
+        HTML.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" id="contato">
+  <div class="container footer-inner">
+    <div>
+      <p class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="38" height="38" /><span>Marlenildo<span class="brand-dot">.online</span></span></p>
+      <p class="footer-note">Apps em R &amp; Shiny para pesquisa e gestão de dados.</p>
+    </div>
+    <ul class="footer-links">
+      <li><a href="https://github.com/Marlenildo" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="mailto:marlenildo@gmail.com">marlenildo@gmail.com</a></li>
+    </ul>
+  </div>
+  <p class="footer-copy">&copy; <span id="year"></span> Marlenildo. Todos os direitos reservados.</p>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
