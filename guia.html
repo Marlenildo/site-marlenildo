@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Guia prático de estatística experimental — Marlenildo</title>
+<meta name="description" content="Dúvidas comuns de estatística experimental explicadas na ordem do experimento: DIC ou DBC, repetições, organização da planilha, Tukey ou regressão, pressupostos da ANOVA e R." />
+<meta property="og:title" content="Guia prático de estatística experimental" />
+<meta property="og:description" content="Dúvidas comuns de estatística experimental explicadas na ordem do experimento: DIC ou DBC, repetições, organização da planilha, Tukey ou regressão, pressupostos da ANOVA e R." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/style.css" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130340973057636" crossorigin="anonymous"></script>
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+<div class="bg-glow" aria-hidden="true"></div>
+
+<header class="site-header">
+  <nav class="nav container">
+    <a href="index.html#topo" class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="46" height="46" /><span>Marlenildo<span class="brand-dot">.online</span></span></a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#apps">Apps</a></li>
+      <li><a href="guia.html" aria-current="page">Guia</a></li>
+      <li><a href="index.html#sobre">Sobre</a></li>
+      <li><a href="index.html#contato">Contato</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="conteudo">
+
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <p class="eyebrow">Guia prático de estatística experimental</p>
+      <h1>Do planejamento à <span class="text-gradient">interpretação</span>.</h1>
+      <p class="hero-lead">
+        Respostas curtas para as dúvidas que mais aparecem entre estudantes de graduação e pós em
+        ciências agrárias, na ordem em que elas surgem no experimento: planejar, instalar, coletar,
+        analisar e interpretar. Cada tema traz exemplo, figura e o código em R quando faz sentido.
+      </p>
+      <ul class="chip-nav" aria-label="Ir para a etapa">
+        <li><a href="#etapa-1">1. Planejamento</a></li>
+        <li><a href="#etapa-2">2. Instalação</a></li>
+        <li><a href="#etapa-3">3. Coleta</a></li>
+        <li><a href="#etapa-4">4. Análise</a></li>
+        <li><a href="#etapa-5">5. Interpretação</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="container">
+      <ol class="stage-list">
+      <li class="stage" id="etapa-1">
+        <span class="stage-dot" aria-hidden="true">1</span>
+        <div class="stage-body">
+          <p class="eyebrow">Etapa 1</p>
+          <h2>Planejamento</h2>
+          <p>É aqui que se decide se a análise vai funcionar. Delineamento, repetições e unidade experimental não se consertam depois da colheita.</p>
+          <div class="topic-grid">
+          <a class="topic-card" href="guia-dic-dbc.html">
+            <h3>DIC ou DBC?</h3>
+            <p>O que muda de fato no campo, como enxergar os blocos na área e por que a mesma planilha dá conclusões diferentes.</p>
+            <span class="topic-go">Ler o guia →</span>
+          </a>
+          <a class="topic-card" href="guia-repeticao.html">
+            <h3>Repetição de verdade × pseudorrepetição</h3>
+            <p>Medir dez plantas da mesma parcela não é ter dez repetições. Como reconhecer a unidade experimental.</p>
+            <span class="topic-go">Ler o guia →</span>
+          </a>
+          <div class="topic-card is-soon">
+            <h3>Fatorial ou parcela subdividida?</h3>
+            <p>Quando dois fatores entram juntos e o jeito de instalar muda a análise.</p>
+            <span class="topic-go">Em breve</span>
+          </div>
+          <div class="topic-card is-soon">
+            <h3>Quantas repetições usar?</h3>
+            <p>Graus de liberdade do resíduo, custo e o que a literatura da sua área costuma pedir.</p>
+            <span class="topic-go">Em breve</span>
+          </div>
+          </div>
+        </div>
+      </li>
+      <li class="stage" id="etapa-2">
+        <span class="stage-dot" aria-hidden="true">2</span>
+        <div class="stage-body">
+          <p class="eyebrow">Etapa 2</p>
+          <h2>Instalação no campo ou no laboratório</h2>
+          <p>Sorteio, croqui e identificação. Detalhes simples que evitam perder parcelas e confundir tratamentos.</p>
+          <div class="topic-grid">
+          <a class="topic-card" href="guia-dic-dbc.html#campo">
+            <h3>Como sortear e desenhar o croqui</h3>
+            <p>O sorteio no DIC e no DBC, passo a passo, com croquis de exemplo.</p>
+            <span class="topic-go">Ler o guia →</span>
+          </a>
+          <div class="topic-card is-soon">
+            <h3>Bordadura e parcela útil</h3>
+            <p>O que medir, o que descartar e por que a borda engana.</p>
+            <span class="topic-go">Em breve</span>
+          </div>
+          </div>
+        </div>
+      </li>
+      <li class="stage" id="etapa-3">
+        <span class="stage-dot" aria-hidden="true">3</span>
+        <div class="stage-body">
+          <p class="eyebrow">Etapa 3</p>
+          <h2>Coleta e organização dos dados</h2>
+          <p>O formato da planilha decide quanto trabalho você vai ter na hora da análise.</p>
+          <div class="topic-grid">
+          <a class="topic-card" href="guia-organizar-dados.html">
+            <h3>Como organizar a planilha</h3>
+            <p>Uma tabela só, cada coluna uma variável, cada linha uma observação. Nada de uma aba por dia de avaliação.</p>
+            <span class="topic-go">Ler o guia →</span>
+          </a>
+          <div class="topic-card is-soon">
+            <h3>Parcelas perdidas e dados faltantes</h3>
+            <p>Como registrar, o que acontece com a ANOVA e o que não fazer (preencher com zero).</p>
+            <span class="topic-go">Em breve</span>
+          </div>
+          </div>
+        </div>
+      </li>
+      <li class="stage" id="etapa-4">
+        <span class="stage-dot" aria-hidden="true">4</span>
+        <div class="stage-body">
+          <p class="eyebrow">Etapa 4</p>
+          <h2>Análise</h2>
+          <p>Com o delineamento certo e os dados organizados, a análise vira quase rotina.</p>
+          <div class="topic-grid">
+          <a class="topic-card" href="guia-tukey-ou-regressao.html">
+            <h3>Tukey ou regressão?</h3>
+            <p>Tratamentos qualitativos pedem comparação de médias; doses e dias pedem regressão.</p>
+            <span class="topic-go">Ler o guia →</span>
+          </a>
+          <a class="topic-card" href="guia-pressupostos.html">
+            <h3>Pressupostos da ANOVA sem mistério</h3>
+            <p>Normalidade de quê? O que olhar nos resíduos e o que fazer quando falha.</p>
+            <span class="topic-go">Ler o guia →</span>
+          </a>
+          <a class="topic-card" href="r-para-pesquisa.html">
+            <h3>Primeiros passos no R</h3>
+            <p>Instalar R e RStudio, importar a planilha e os pacotes de estatística experimental.</p>
+            <span class="topic-go">Ler o guia →</span>
+          </a>
+          </div>
+        </div>
+      </li>
+      <li class="stage" id="etapa-5">
+        <span class="stage-dot" aria-hidden="true">5</span>
+        <div class="stage-body">
+          <p class="eyebrow">Etapa 5</p>
+          <h2>Interpretação e redação</h2>
+          <p>Transformar a saída do programa em texto de resultado, tabela e figura.</p>
+          <div class="topic-grid">
+          <div class="topic-card is-soon">
+            <h3>Como ler a tabela da ANOVA</h3>
+            <p>Graus de liberdade, quadrado médio, F, valor-p e o que cada linha diz.</p>
+            <span class="topic-go">Em breve</span>
+          </div>
+          <div class="topic-card is-soon">
+            <h3>Interação significativa: e agora?</h3>
+            <p>Desdobramento passo a passo, sem se perder nas tabelas.</p>
+            <span class="topic-go">Em breve</span>
+          </div>
+          <div class="topic-card is-soon">
+            <h3>CV alto é problema?</h3>
+            <p>O que o coeficiente de variação indica e o que ele não indica.</p>
+            <span class="topic-go">Em breve</span>
+          </div>
+          </div>
+        </div>
+      </li>
+      </ol>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" id="contato">
+  <div class="container footer-inner">
+    <div>
+      <p class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="38" height="38" /><span>Marlenildo<span class="brand-dot">.online</span></span></p>
+      <p class="footer-note">Apps em R &amp; Shiny para pesquisa e gestão de dados.</p>
+      <ul class="social-icons" aria-label="Perfis profissionais e acadêmicos">
+        <li>
+          <a href="https://github.com/Marlenildo" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://orcid.org/0000-0001-7449-6916" target="_blank" rel="noopener" aria-label="ORCID">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" font-size="10" font-weight="700" fill="currentColor" stroke="none" font-family="Arial, sans-serif">iD</text></svg>
+          </a>
+        </li>
+        <li>
+          <a href="http://lattes.cnpq.br/6931262930637371" target="_blank" rel="noopener" aria-label="Currículo Lattes">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="mailto:marlenildo@gmail.com" aria-label="E-mail">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2.5"/><path d="m3 6.5 9 6.5 9-6.5"/></svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <p class="footer-copy">&copy; <span id="year"></span> Marlenildo. Todos os direitos reservados.</p>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

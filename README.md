@@ -9,7 +9,9 @@ Site estático (HTML + CSS + JS puro, sem build), publicado no domínio
 
 ## Estrutura
 
-- `index.html`: página única (hero, galeria de apps, sobre, contato).
+- `index.html`: página inicial (hero, galeria de apps, chamada do guia, sobre, contato).
+- `guia.html` e `guia-*.html`: guia prático de estatística experimental, em etapas.
+- `r-para-pesquisa.html`: primeiros passos no R (parte do guia).
 - `assets/css/style.css`: tema dark com glassmorphism e gradientes.
 - `assets/js/main.js`: menu mobile e animação de entrada dos cards.
 - `assets/img/`: logos dos apps e favicon.
@@ -26,6 +28,16 @@ python -m http.server 8000
 
 ## Publicação
 
-GitHub Pages publica direto da branch `main`, raiz do repositório.
+O GitHub Pages é publicado pelo workflow `.github/workflows/pages.yml`
+(Settings → Pages → Source: **GitHub Actions**):
+
+| Branch | Endereço | Uso |
+|---|---|---|
+| `main` | https://marlenildo.online/ | site publicado |
+| `dev`  | https://marlenildo.online/dev/ | pré-visualização (fora dos buscadores, sem anúncios) |
+
+Fluxo: trabalho numa branch de feature → merge na `dev` → conferir em `/dev/` →
+merge da `dev` na `main`. Qualquer push em `main` ou `dev` reconstrói as duas versões.
+
 O domínio `marlenildo.online` aponta para o GitHub Pages via DNS (registros
 A/AAAA para apex + CNAME para `www`).

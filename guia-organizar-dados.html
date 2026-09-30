@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Como organizar dados de experimento para análise — Marlenildo</title>
+<meta name="description" content="Como organizar a planilha de um experimento para análise estatística no R: formato longo, cada coluna uma variável, cada linha uma observação, sem abas por dia de avaliação." />
+<meta property="og:title" content="Como organizar a planilha antes de analisar" />
+<meta property="og:description" content="Como organizar a planilha de um experimento para análise estatística no R: formato longo, cada coluna uma variável, cada linha uma observação, sem abas por dia de avaliação." />
+<meta property="og:type" content="article" />
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/style.css" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130340973057636" crossorigin="anonymous"></script>
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+<div class="bg-glow" aria-hidden="true"></div>
+
+<header class="site-header">
+  <nav class="nav container">
+    <a href="index.html#topo" class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="46" height="46" /><span>Marlenildo<span class="brand-dot">.online</span></span></a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#apps">Apps</a></li>
+      <li><a href="guia.html" aria-current="page">Guia</a></li>
+      <li><a href="index.html#sobre">Sobre</a></li>
+      <li><a href="index.html#contato">Contato</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="conteudo">
+
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <nav class="breadcrumb" aria-label="Você está em"><a href="guia.html">Guia</a><span aria-hidden="true">/</span><span>Etapa 3 · Coleta e organização</span></nav>
+      <h1>Como organizar a planilha <span class="text-gradient">antes</span> de analisar.</h1>
+      <p class="hero-lead">Um conjunto de dados único, em linhas e colunas: cada coluna uma variável, cada linha uma observação. Por que isso importa e como sair das abas por dia de avaliação.</p>
+      <ul class="article-meta">
+        <li>Etapa 3 · Coleta e organização</li>
+        <li>7 min de leitura</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="guide" id="regra">
+    <div class="container guide-article">
+      <span class="guide-number">01</span>
+      <div class="section-head">
+        <h2>A regra que resolve quase tudo</h2>
+        <p class="section-lead">Programas estatísticos como o R esperam um único conjunto de dados, em linhas e colunas.</p>
+      </div>
+
+      <p class="guide-p">
+        Boa parte do tempo “gasto com estatística” é, na verdade, gasto consertando planilha: juntar abas,
+        desmesclar células, tirar unidades de dentro dos números. Tudo isso some se os dados forem anotados
+        desde o início em uma única tabela, seguindo três regras:
+      </p>
+      <div class="summary-grid">
+        <div class="summary-card"><h4>1. Cada coluna, uma variável</h4><p>Tudo que é a mesma coisa fica na mesma coluna: todas as cultivares numa coluna, todas as doses em outra, todos os dias de avaliação em outra.</p></div>
+        <div class="summary-card"><h4>2. Cada linha, uma observação</h4><p>Uma linha descreve uma unidade experimental num momento: a parcela 7 aos 30 dias, por exemplo.</p></div>
+        <div class="summary-card"><h4>3. Cada célula, um valor</h4><p>Só o número (ou o texto do nível). Sem unidade, sem observação, sem célula mesclada.</p></div>
+      </div>
+      <p class="guide-p">
+        Esse formato é chamado de <strong>formato longo</strong> (ou <em>tidy data</em>). Ele parece estranho
+        no começo, porque as tabelas de artigo são “largas”, com tratamentos nas colunas. Mas a tabela do artigo
+        é o resultado da análise, e a planilha de campo é a matéria-prima.
+      </p>
+    </div>
+  </section>
+
+  <section class="guide" id="errado">
+    <div class="container guide-article">
+      <span class="guide-number">02</span>
+      <div class="section-head">
+        <h2>Como os dados costumam chegar</h2>
+        <p class="section-lead">Um experimento com 2 cultivares, 3 doses de nitrogênio, 4 blocos e 3 avaliações (15, 30 e 45 dias após a semeadura).</p>
+      </div>
+
+      <figure class="figure">
+        <span class="tag-bad">Difícil de analisar</span>
+        <h4>Um arquivo por variável, uma aba por dia de avaliação</h4>
+        <div class="table-scroll"><table class="data-table">
+          <thead><tr><th>Tratamento</th><th class="num">Bloco I</th><th class="num">Bloco II</th><th class="num">Bloco III</th><th class="num">Bloco IV</th><th class="num">Média</th></tr></thead>
+          <tbody>
+            <tr><td class="cell-bad">Cult. A + 0 kg</td><td class="num">21,4</td><td class="num">19,8</td><td class="num">20,6</td><td class="num cell-bad">22 cm</td><td class="num">21,0</td></tr>
+            <tr><td class="cell-bad">Cult. A + 60 kg</td><td class="num">24,1</td><td class="num">23,5</td><td class="num cell-bad">—</td><td class="num">24,8</td><td class="num">24,1</td></tr>
+            <tr><td class="cell-bad">Cult. A + 120 kg</td><td class="num">26,0</td><td class="num">25,2</td><td class="num">26,9</td><td class="num">25,7</td><td class="num">26,0</td></tr>
+            <tr><td class="cell-bad">Cult. B + 0 kg</td><td class="num">18,9</td><td class="num">18,2</td><td class="num">19,5</td><td class="num">18,0</td><td class="num">18,7</td></tr>
+            <tr class="row-ellipsis"><td colspan="6">…</td></tr>
+            <tr class="row-total"><td class="cell-bad">Média geral</td><td class="num">22,6</td><td class="num">21,7</td><td class="num">23,1</td><td class="num">22,4</td><td class="num">22,4</td></tr>
+          </tbody>
+        </table></div>
+        <div class="sheet-tabs" aria-label="Abas da planilha"><span class="is-active">15 DAS</span><span>30 DAS</span><span>45 DAS</span></div>
+        <figcaption>Arquivo <code>altura.xlsx</code>. E ainda existem <code>folhas.xlsx</code> e <code>spad.xlsx</code>, cada um com as suas três abas.</figcaption>
+      </figure>
+      <p class="guide-p">Os problemas, um por um:</p>
+      <ul class="guide-list">
+        <li><strong>Os dias estão nas abas</strong>, não numa coluna. Para analisar o efeito do tempo, alguém vai ter que copiar e colar as três abas uma embaixo da outra e escrever o dia à mão.</li>
+        <li><strong>Cada variável está num arquivo.</strong> Para relacionar altura com SPAD, é preciso casar linha por linha de arquivos diferentes.</li>
+        <li><strong>Dois fatores numa coluna só:</strong> “Cult. A + 60 kg” mistura cultivar e dose. Para testar a interação, eles precisam estar separados.</li>
+        <li><strong>Blocos nas colunas:</strong> o bloco é uma variável e deveria ser uma coluna com os valores I, II, III, IV.</li>
+        <li><strong>Unidade dentro do número</strong> (“22 cm”): o programa lê como texto e a coluna inteira deixa de ser numérica.</li>
+        <li><strong>Traço para dado perdido</strong> e <strong>linhas de média</strong> no meio dos dados: o programa tenta analisar a média como se fosse uma parcela.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="guide" id="certo">
+    <div class="container guide-article">
+      <span class="guide-number">03</span>
+      <div class="section-head">
+        <h2>O mesmo experimento, organizado</h2>
+        <p class="section-lead">Uma aba, uma tabela. As colunas de identificação dizem onde e quando; as outras guardam o que foi medido.</p>
+      </div>
+
+      <figure class="figure">
+        <span class="tag-good">Pronto para analisar</span>
+        <h4>Uma única tabela em formato longo</h4>
+        <div class="table-scroll"><table class="data-table">
+          <thead><tr><th class="col-a">bloco</th><th class="col-a">cultivar</th><th class="col-a num">dose_n</th><th class="col-a num">das</th><th class="col-c num">altura_cm</th><th class="col-c num">folhas</th><th class="col-c num">spad</th></tr></thead>
+          <tbody>
+            <tr><td>I</td><td>A</td><td class="num">0</td><td class="num">15</td><td class="num">21,4</td><td class="num">5</td><td class="num">38,2</td></tr>
+            <tr><td>I</td><td>A</td><td class="num">60</td><td class="num">15</td><td class="num">24,1</td><td class="num">6</td><td class="num">41,5</td></tr>
+            <tr><td>I</td><td>A</td><td class="num">120</td><td class="num">15</td><td class="num">26,0</td><td class="num">6</td><td class="num">43,9</td></tr>
+            <tr><td>I</td><td>B</td><td class="num">0</td><td class="num">15</td><td class="num">18,9</td><td class="num">4</td><td class="num">36,7</td></tr>
+            <tr class="row-ellipsis"><td colspan="7">…</td></tr>
+            <tr><td>III</td><td>A</td><td class="num">60</td><td class="num">15</td><td class="num">NA</td><td class="num">NA</td><td class="num">NA</td></tr>
+            <tr class="row-ellipsis"><td colspan="7">…</td></tr>
+            <tr><td>I</td><td>A</td><td class="num">0</td><td class="num">30</td><td class="num">38,7</td><td class="num">9</td><td class="num">40,1</td></tr>
+            <tr class="row-ellipsis"><td colspan="7">…</td></tr>
+            <tr><td>IV</td><td>B</td><td class="num">120</td><td class="num">45</td><td class="num">61,3</td><td class="num">14</td><td class="num">45,8</td></tr>
+          </tbody>
+          <caption>2 cultivares × 3 doses × 4 blocos × 3 avaliações = 72 linhas. Colunas em roxo identificam a observação; em rosa, as variáveis medidas.</caption>
+        </table></div>
+      </figure>
+      <p class="guide-p">O que mudou:</p>
+      <ul class="guide-list">
+        <li><strong>Todos os tratamentos na mesma coluna</strong>, separados por fator: a cultivar (qualitativa) numa coluna, a dose (quantitativa) em outra, como número puro. Juntar os dois de novo, se precisar, é um comando.</li>
+        <li><strong>Todos os dias de avaliação na mesma coluna</strong> (<code>das</code>). Uma aba a mais por data vira só mais linhas.</li>
+        <li><strong>Cada variável resposta na sua coluna:</strong> altura, número de folhas e SPAD lado a lado, medidas na mesma parcela e no mesmo dia.</li>
+        <li><strong>O dado perdido vira <code>NA</code></strong> (ou célula vazia), nunca zero nem traço. Zero é um valor medido; parcela perdida não é zero.</li>
+      </ul>
+      <div class="callout">
+        <span class="callout-title">A ordem das linhas não importa</span>
+        Para a análise, tanto faz se a planilha está ordenada por bloco, por tratamento ou por data. Ordene do
+        jeito que facilita a anotação no campo (por exemplo, na ordem do croqui). O que importa é que cada linha
+        seja uma observação completa e que as colunas estejam certas.
+      </div>
+    </div>
+  </section>
+
+  <section class="guide" id="boas-praticas">
+    <div class="container guide-article">
+      <span class="guide-number">04</span>
+      <div class="section-head">
+        <h2>Checklist da planilha</h2>
+        <p class="section-lead">Vale para Excel, LibreOffice, Google Planilhas ou o caderno de campo digitado depois.</p>
+      </div>
+
+      <ul class="check-list">
+        <li><strong>Uma linha de cabeçalho</strong>, na primeira linha. Nada de título, logo ou cabeçalho em duas linhas.</li>
+        <li><strong>Nomes de coluna curtos, sem espaço e sem acento:</strong> <code>altura_cm</code>, <code>massa_seca_g</code>, <code>dose_n</code>. A unidade vai no nome, não na célula.</li>
+        <li><strong>Sem células mescladas</strong> e sem informação guardada em cor ou negrito. Se a cor significa algo, crie uma coluna para isso (<code>obs = "planta atacada"</code>).</li>
+        <li><strong>Níveis escritos sempre do mesmo jeito:</strong> “Cultivar A”, “cultivar A” e “Cult. A ” (com espaço no fim) viram três tratamentos diferentes para o programa.</li>
+        <li><strong>Separador decimal consistente.</strong> No Excel em português é a vírgula; na hora de importar, use <code>read.csv2()</code> ou <code>dec = ","</code>.</li>
+        <li><strong>Sem médias, totais ou gráficos</strong> dentro da aba de dados. Faça os resumos em outra aba ou, melhor, no R.</li>
+        <li><strong>Uma coluna de observações</strong> para anotar o que aconteceu (chuva de granizo, parcela pisoteada). Ajuda a explicar valores estranhos depois.</li>
+        <li><strong>Aba separada de dicionário</strong>, se quiser: o que é cada coluna, unidade e como foi medida. Os dados continuam numa aba só.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="guide" id="ja-tenho">
+    <div class="container guide-article">
+      <span class="guide-number">05</span>
+      <div class="section-head">
+        <h2>Já tenho os dados espalhados. E agora?</h2>
+        <p class="section-lead">Dá para consertar no R sem copiar e colar, e o código serve para os próximos experimentos.</p>
+      </div>
+
+      <h3 class="guide-h3" style="margin-top:0">Juntar várias abas (uma por dia) numa tabela só</h3>
+      <pre class="code-block"><code>library(readxl)
+library(dplyr)
+library(purrr)
+
+arquivo &lt;- "altura.xlsx"
+
+altura &lt;- excel_sheets(arquivo) |&gt;              # "15 DAS", "30 DAS", "45 DAS"
+  set_names() |&gt;
+  map(\(aba) read_excel(arquivo, sheet = aba)) |&gt;
+  list_rbind(names_to = "das") |&gt;                # o nome da aba vira coluna
+  mutate(das = readr::parse_number(das))         # "15 DAS" -&gt; 15</code></pre>
+      <h3 class="guide-h3">Passar os blocos (ou tratamentos) das colunas para as linhas</h3>
+      <pre class="code-block"><code>library(tidyr)
+
+altura_longa &lt;- altura |&gt;
+  pivot_longer(cols = starts_with("Bloco"),
+               names_to = "bloco", names_prefix = "Bloco ",
+               values_to = "altura_cm") |&gt;
+  separate_wider_delim(Tratamento, delim = " + ",
+                       names = c("cultivar", "dose_n")) |&gt;
+  mutate(dose_n = readr::parse_number(dose_n))</code></pre>
+      <p class="guide-p">
+        Depois de fazer o mesmo com folhas e SPAD, as três tabelas se juntam pelas colunas de identificação com
+        <code>left_join(altura_longa, folhas_longa, by = c("bloco", "cultivar", "dose_n", "das"))</code>.
+      </p>
+      <div class="callout callout-good">
+        <span class="callout-title">Melhor ainda</span>
+        Na próxima coleta, monte a planilha de campo já no formato longo: imprima uma folha com as colunas
+        <code>bloco</code>, <code>cultivar</code>, <code>dose_n</code> e as variáveis, na ordem do croqui, e
+        acrescente a coluna <code>das</code>. Cada avaliação nova são mais linhas na mesma tabela.
+      </div>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="container guide-article">
+      <nav class="article-nav" aria-label="Navegação entre artigos">
+        <a href="guia-repeticao.html"><small>← Anterior</small><strong>Repetição de verdade × pseudorrepetição</strong></a><a href="guia-tukey-ou-regressao.html" class="is-next"><small>Próximo →</small><strong>Tukey ou regressão?</strong></a>
+      </nav>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" id="contato">
+  <div class="container footer-inner">
+    <div>
+      <p class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="38" height="38" /><span>Marlenildo<span class="brand-dot">.online</span></span></p>
+      <p class="footer-note">Apps em R &amp; Shiny para pesquisa e gestão de dados.</p>
+      <ul class="social-icons" aria-label="Perfis profissionais e acadêmicos">
+        <li>
+          <a href="https://github.com/Marlenildo" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://orcid.org/0000-0001-7449-6916" target="_blank" rel="noopener" aria-label="ORCID">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" font-size="10" font-weight="700" fill="currentColor" stroke="none" font-family="Arial, sans-serif">iD</text></svg>
+          </a>
+        </li>
+        <li>
+          <a href="http://lattes.cnpq.br/6931262930637371" target="_blank" rel="noopener" aria-label="Currículo Lattes">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="mailto:marlenildo@gmail.com" aria-label="E-mail">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2.5"/><path d="m3 6.5 9 6.5 9-6.5"/></svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <p class="footer-copy">&copy; <span id="year"></span> Marlenildo. Todos os direitos reservados.</p>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

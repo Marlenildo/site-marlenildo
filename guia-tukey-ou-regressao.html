@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tukey ou regressão? Tratamentos qualitativos e quantitativos — Marlenildo</title>
+<meta name="description" content="Quando usar teste de médias (Tukey, Scott-Knott) e quando usar regressão em experimentos: tratamentos qualitativos x quantitativos, doses, desdobramento da ANOVA e código em R." />
+<meta property="og:title" content="Tukey ou regressão?" />
+<meta property="og:description" content="Quando usar teste de médias (Tukey, Scott-Knott) e quando usar regressão em experimentos: tratamentos qualitativos x quantitativos, doses, desdobramento da ANOVA e código em R." />
+<meta property="og:type" content="article" />
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/style.css" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130340973057636" crossorigin="anonymous"></script>
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+<div class="bg-glow" aria-hidden="true"></div>
+
+<header class="site-header">
+  <nav class="nav container">
+    <a href="index.html#topo" class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="46" height="46" /><span>Marlenildo<span class="brand-dot">.online</span></span></a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#apps">Apps</a></li>
+      <li><a href="guia.html" aria-current="page">Guia</a></li>
+      <li><a href="index.html#sobre">Sobre</a></li>
+      <li><a href="index.html#contato">Contato</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="conteudo">
+
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <nav class="breadcrumb" aria-label="Você está em"><a href="guia.html">Guia</a><span aria-hidden="true">/</span><span>Etapa 4 · Análise</span></nav>
+      <h1>Tukey ou <span class="text-gradient">regressão</span>?</h1>
+      <p class="hero-lead">Tratamentos qualitativos pedem comparação de médias. Doses, lâminas, temperaturas e dias pedem regressão. Um exemplo com nitrogênio mostra por quê.</p>
+      <ul class="article-meta">
+        <li>Etapa 4 · Análise</li>
+        <li>6 min de leitura</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="guide" id="tipo">
+    <div class="container guide-article">
+      <span class="guide-number">01</span>
+      <div class="section-head">
+        <h2>Olhe para o tipo de tratamento</h2>
+        <p class="section-lead">A escolha do teste vem da natureza do fator, não do programa.</p>
+      </div>
+
+      <div class="summary-grid">
+        <div class="summary-card"><h4>Qualitativo → comparar médias</h4><p>Os níveis são categorias sem ordem numérica: cultivares, produtos comerciais, tipos de manejo, substratos, espécies. A pergunta é “qual é melhor?”. Use Tukey, Scott-Knott, Duncan…</p></div>
+        <div class="summary-card"><h4>Quantitativo → regressão</h4><p>Os níveis são números com distância entre eles: doses, lâminas de irrigação, temperaturas, densidades, dias após a semeadura. A pergunta é “como a resposta muda?” e “qual a dose ideal?”.</p></div>
+      </div>
+      <p class="guide-p">
+        Aplicar Tukey em doses é como perguntar se 60 kg/ha é diferente de 120 kg/ha, quando o que interessa
+        é o que acontece em 90 kg/ha, onde está o máximo e a partir de onde não compensa aumentar. O teste de
+        médias trata as doses como categorias e joga fora a informação mais valiosa: a distância entre elas.
+      </p>
+    </div>
+  </section>
+
+  <section class="guide" id="exemplo">
+    <div class="container guide-article">
+      <span class="guide-number">02</span>
+      <div class="section-head">
+        <h2>Um exemplo com doses de nitrogênio</h2>
+        <p class="section-lead">Produtividade de milho (t/ha) com 0, 40, 80, 120 e 160 kg/ha de N, 4 repetições. Dados ilustrativos.</p>
+      </div>
+
+      <div class="compare-grid">
+        <figure class="figure">
+          <span class="tag-bad">Informação pela metade</span>
+          <h4>Tukey nas doses</h4>
+          <svg viewBox="0 0 340 250" role="img" aria-labelledby="t-bars"><title id="t-bars">Médias de produtividade por dose de nitrogênio em barras com letras do teste de Tukey.</title><defs><linearGradient id="gBar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7c5cff" stop-opacity="0.9"/><stop offset="1" stop-color="#7c5cff" stop-opacity="0.25"/></linearGradient></defs><line x1="46" y1="180.9" x2="328" y2="180.9" stroke="rgba(255,255,255,0.08)"/><text x="38" y="184.9" text-anchor="end" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">3</text><line x1="46" y1="126.6" x2="328" y2="126.6" stroke="rgba(255,255,255,0.08)"/><text x="38" y="130.6" text-anchor="end" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">4</text><line x1="46" y1="72.3" x2="328" y2="72.3" stroke="rgba(255,255,255,0.08)"/><text x="38" y="76.3" text-anchor="end" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">5</text><line x1="46" y1="18.0" x2="328" y2="18.0" stroke="rgba(255,255,255,0.08)"/><text x="38" y="22.0" text-anchor="end" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">6</text><text x="187.0" y="244" text-anchor="middle" font-size="11.5" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">Dose de N (kg/ha)</text><text x="14" y="113.0" text-anchor="middle" font-size="11.5" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif" transform="rotate(-90 14 113.0)">Produtividade (t/ha)</text><rect x="58.4" y="171.4" width="31.6" height="36.6" rx="5" fill="url(#gBar)"/><text x="74.2" y="164.4" text-anchor="middle" font-size="13" font-weight="700" fill="#22d3ee" font-family="Inter, system-ui, sans-serif">d</text><text x="74.2" y="224" text-anchor="middle" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">0</text><rect x="114.8" y="96.7" width="31.6" height="111.3" rx="5" fill="url(#gBar)"/><text x="130.6" y="89.7" text-anchor="middle" font-size="13" font-weight="700" fill="#22d3ee" font-family="Inter, system-ui, sans-serif">c</text><text x="130.6" y="224" text-anchor="middle" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">40</text><rect x="171.2" y="72.3" width="31.6" height="135.7" rx="5" fill="url(#gBar)"/><text x="187.0" y="65.3" text-anchor="middle" font-size="13" font-weight="700" fill="#22d3ee" font-family="Inter, system-ui, sans-serif">b</text><text x="187.0" y="224" text-anchor="middle" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">80</text><rect x="227.6" y="45.1" width="31.6" height="162.9" rx="5" fill="url(#gBar)"/><text x="243.4" y="38.1" text-anchor="middle" font-size="13" font-weight="700" fill="#22d3ee" font-family="Inter, system-ui, sans-serif">a</text><text x="243.4" y="224" text-anchor="middle" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">120</text><rect x="284.0" y="56.0" width="31.6" height="152.0" rx="5" fill="url(#gBar)"/><text x="299.8" y="49.0" text-anchor="middle" font-size="13" font-weight="700" fill="#22d3ee" font-family="Inter, system-ui, sans-serif">ab</text><text x="299.8" y="224" text-anchor="middle" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">160</text></svg>
+          <figcaption>As letras dizem que 120 e 160 não diferem e que 80 é menor que 120. Não dizem qual dose
+          aplicar, nem o que acontece entre os níveis testados.</figcaption>
+        </figure>
+        <figure class="figure">
+          <span class="tag-good">Responde à pergunta</span>
+          <h4>Regressão nas doses</h4>
+          <svg viewBox="0 0 340 250" role="img" aria-labelledby="t-curve"><title id="t-curve">Mesmas médias com a curva de regressão quadrática ajustada; a produtividade máxima estimada ocorre perto de 127 kg/ha de N.</title><line x1="46" y1="180.9" x2="328" y2="180.9" stroke="rgba(255,255,255,0.08)"/><text x="38" y="184.9" text-anchor="end" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">3</text><line x1="46" y1="126.6" x2="328" y2="126.6" stroke="rgba(255,255,255,0.08)"/><text x="38" y="130.6" text-anchor="end" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">4</text><line x1="46" y1="72.3" x2="328" y2="72.3" stroke="rgba(255,255,255,0.08)"/><text x="38" y="76.3" text-anchor="end" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">5</text><line x1="46" y1="18.0" x2="328" y2="18.0" stroke="rgba(255,255,255,0.08)"/><text x="38" y="22.0" text-anchor="end" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">6</text><text x="187.0" y="244" text-anchor="middle" font-size="11.5" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">Dose de N (kg/ha)</text><text x="14" y="113.0" text-anchor="middle" font-size="11.5" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif" transform="rotate(-90 14 113.0)">Produtividade (t/ha)</text><text x="56.0" y="224" text-anchor="middle" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">0</text><text x="121.5" y="224" text-anchor="middle" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">40</text><text x="187.0" y="224" text-anchor="middle" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">80</text><text x="252.5" y="224" text-anchor="middle" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">120</text><text x="318.0" y="224" text-anchor="middle" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">160</text><defs><linearGradient id="gLine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7c5cff"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs><polyline points="56.0,168.8 59.3,165.0 62.5,161.3 65.8,157.6 69.1,154.0 72.4,150.5 75.7,147.0 78.9,143.6 82.2,140.2 85.5,136.9 88.8,133.6 92.0,130.5 95.3,127.3 98.6,124.3 101.8,121.3 105.1,118.3 108.4,115.4 111.7,112.6 115.0,109.9 118.2,107.2 121.5,104.5 124.8,101.9 128.1,99.4 131.3,96.9 134.6,94.5 137.9,92.2 141.2,89.9 144.4,87.7 147.7,85.5 151.0,83.4 154.2,81.4 157.5,79.4 160.8,77.5 164.1,75.6 167.3,73.8 170.6,72.1 173.9,70.4 177.2,68.8 180.4,67.2 183.7,65.7 187.0,64.3 190.3,62.9 193.6,61.6 196.8,60.3 200.1,59.1 203.4,58.0 206.7,56.9 209.9,55.9 213.2,54.9 216.5,54.0 219.8,53.1 223.0,52.4 226.3,51.6 229.6,51.0 232.8,50.4 236.1,49.8 239.4,49.4 242.7,48.9 245.9,48.6 249.2,48.3 252.5,48.1 255.8,47.9 259.1,47.8 262.3,47.7 265.6,47.7 268.9,47.8 272.1,47.9 275.4,48.1 278.7,48.3 282.0,48.6 285.2,49.0 288.5,49.4 291.8,49.9 295.1,50.4 298.4,51.0 301.6,51.7 304.9,52.4 308.2,53.2 311.4,54.0 314.7,54.9 318.0,55.9" fill="none" stroke="url(#gLine)" stroke-width="3" stroke-linecap="round"/><circle cx="56.0" cy="171.4" r="5.5" fill="#0a0b10" stroke="#eef0f6" stroke-width="2"/><circle cx="121.5" cy="96.7" r="5.5" fill="#0a0b10" stroke="#eef0f6" stroke-width="2"/><circle cx="187.0" cy="72.3" r="5.5" fill="#0a0b10" stroke="#eef0f6" stroke-width="2"/><circle cx="252.5" cy="45.1" r="5.5" fill="#0a0b10" stroke="#eef0f6" stroke-width="2"/><circle cx="318.0" cy="56.0" r="5.5" fill="#0a0b10" stroke="#eef0f6" stroke-width="2"/><line x1="264.0" y1="47.7" x2="264.0" y2="208.0" stroke="#fbbf24" stroke-dasharray="4 4" stroke-width="1.4"/><circle cx="264.0" cy="47.7" r="5" fill="#fbbf24"/><text x="258.0" y="35.7" text-anchor="end" font-size="11.5" font-weight="700" fill="#fbbf24" font-family="Inter, system-ui, sans-serif">máx.: 127 kg/ha → 5,45 t/ha</text></svg>
+          <figcaption><strong>ŷ = 3,222 + 0,03514x − 0,0001384x²</strong> (R² = 0,986). A curva descreve a
+          resposta em qualquer dose entre 0 e 160 kg/ha e estima o máximo (derivada igual a zero):
+          <strong>x = −b₁ / (2b₂) ≈ 127 kg/ha</strong>.</figcaption>
+        </figure>
+      </div>
+      <h3 class="guide-h3">Qual modelo? Deixe a ANOVA ajudar</h3>
+      <p class="guide-p">
+        A soma de quadrados das doses pode ser dividida em componentes: linear, quadrático e o que sobra
+        (desvios da regressão). O modelo escolhido é o de menor grau que deixa os desvios não significativos:
+      </p>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead><tr><th>FV</th><th class="num">GL</th><th class="num">SQ</th><th class="num">F</th><th class="num">p</th></tr></thead>
+          <tbody>
+            <tr><td>Doses</td><td class="num">4</td><td class="num">13,75</td><td class="num">103,7</td><td class="num">&lt; 0,001</td></tr>
+            <tr><td>&nbsp;&nbsp;Regressão linear</td><td class="num">1</td><td class="num">10,82</td><td class="num">326,1</td><td class="num">&lt; 0,001</td></tr>
+            <tr class="row-hl"><td>&nbsp;&nbsp;Regressão quadrática</td><td class="num">1</td><td class="num">2,75</td><td class="num">82,8</td><td class="num letter">&lt; 0,001</td></tr>
+            <tr><td>&nbsp;&nbsp;Desvios da regressão</td><td class="num">2</td><td class="num">0,19</td><td class="num">2,9</td><td class="num">0,088</td></tr>
+            <tr><td>Resíduo</td><td class="num">15</td><td class="num">0,50</td><td class="num"></td><td class="num"></td></tr>
+          </tbody>
+          <caption>O termo quadrático é significativo e os desvios não: o modelo quadrático descreve bem a resposta.</caption>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="guide" id="no-r">
+    <div class="container guide-article">
+      <span class="guide-number">03</span>
+      <div class="section-head">
+        <h2>No R</h2>
+      </div>
+
+      <pre class="code-block"><code># Dose como número (para a regressão) e como fator (para a ANOVA)
+dados$dose_f &lt;- factor(dados$dose)
+
+anova(aov(produtividade ~ dose_f, data = dados))        # há efeito de dose?
+
+linear     &lt;- lm(produtividade ~ dose, data = dados)
+quadratico &lt;- lm(produtividade ~ dose + I(dose^2), data = dados)
+anova(linear, quadratico)                                # o termo quadrático ajuda?
+summary(quadratico)
+
+# Dose de máxima eficiência técnica
+b &lt;- coef(quadratico)
+-b[2] / (2 * b[3])</code></pre>
+      <p class="guide-p">
+        No pacote <code>ExpDes.pt</code>, as funções <code>dic()</code> e <code>dbc()</code> fazem isso direto com
+        <code>quali = FALSE</code>: em vez de teste de médias, a saída traz os modelos de regressão com o
+        desdobramento da ANOVA.
+      </p>
+    </div>
+  </section>
+
+  <section class="guide" id="cuidados">
+    <div class="container guide-article">
+      <span class="guide-number">04</span>
+      <div class="section-head">
+        <h2>Cuidados e casos mistos</h2>
+      </div>
+
+      <ul class="check-list">
+        <li><strong>O modelo tem que fazer sentido biológico</strong>, não só ter o maior R². Com 5 doses dá para ajustar até um polinômio de 4º grau com R² = 1, e ele não significa nada.</li>
+        <li><strong>Para ajustar uma quadrática, use pelo menos 4 ou 5 níveis</strong>, espaçados de forma a cobrir a região em que a resposta muda. Com 3 doses só dá para ver se há curvatura.</li>
+        <li><strong>Não extrapole.</strong> A curva vale entre a menor e a maior dose testada.</li>
+        <li><strong>Fatorial qualitativo × quantitativo</strong> (cultivar × dose): se a interação for significativa, ajuste uma regressão de dose para cada cultivar e compare as cultivares dentro de cada dose com teste de médias.</li>
+        <li><strong>Dias de avaliação também são quantitativos</strong>, mas cuidado: se a mesma planta é medida várias vezes, as medidas não são independentes. Use parcela subdividida no tempo ou modelo misto.</li>
+        <li><strong>Dois níveis quantitativos</strong> (com e sem adubo, por exemplo) não permitem regressão: aí o teste F já responde.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="container guide-article">
+      <nav class="article-nav" aria-label="Navegação entre artigos">
+        <a href="guia-organizar-dados.html"><small>← Anterior</small><strong>Como organizar a planilha</strong></a><a href="guia-pressupostos.html" class="is-next"><small>Próximo →</small><strong>Pressupostos da ANOVA</strong></a>
+      </nav>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" id="contato">
+  <div class="container footer-inner">
+    <div>
+      <p class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="38" height="38" /><span>Marlenildo<span class="brand-dot">.online</span></span></p>
+      <p class="footer-note">Apps em R &amp; Shiny para pesquisa e gestão de dados.</p>
+      <ul class="social-icons" aria-label="Perfis profissionais e acadêmicos">
+        <li>
+          <a href="https://github.com/Marlenildo" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://orcid.org/0000-0001-7449-6916" target="_blank" rel="noopener" aria-label="ORCID">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" font-size="10" font-weight="700" fill="currentColor" stroke="none" font-family="Arial, sans-serif">iD</text></svg>
+          </a>
+        </li>
+        <li>
+          <a href="http://lattes.cnpq.br/6931262930637371" target="_blank" rel="noopener" aria-label="Currículo Lattes">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="mailto:marlenildo@gmail.com" aria-label="E-mail">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2.5"/><path d="m3 6.5 9 6.5 9-6.5"/></svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <p class="footer-copy">&copy; <span id="year"></span> Marlenildo. Todos os direitos reservados.</p>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+# Publica o site no GitHub Pages:
+#   - branch main -> https://marlenildo.online/
+#   - branch dev  -> https://marlenildo.online/dev/ (pré-visualização, fora dos buscadores)
+# Qualquer push em main ou dev reconstrói as duas versões juntas.
+name: Publicar site
+
+on:
+  push:
+    branches: [main, dev]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar a main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main
+
+      - name: Baixar a dev
+        id: dev
+        continue-on-error: true
+        uses: actions/checkout@v4
+        with:
+          ref: dev
+          path: dev
+
+      - name: Montar o site
+        run: |
+          mkdir -p _site
+          rsync -a --exclude '.git' --exclude '.github' main/ _site/
+
+          if [ -d dev ] && [ "${{ steps.dev.outcome }}" = "success" ]; then
+            rsync -a --exclude '.git' --exclude '.github' --exclude 'CNAME' --exclude 'ads.txt' dev/ _site/dev/
+            banner='<div style="position:relative;z-index:60;background:linear-gradient(90deg,#7c5cff,#22d3ee);color:#0a0b10;font:600 13px/1.4 Inter,system-ui,sans-serif;text-align:center;padding:7px 12px">Pré-visualização da branch dev · <a href="/" style="color:#0a0b10;text-decoration:underline">ver o site publicado</a></div>'
+            find _site/dev -name '*.html' | while read -r f; do
+              # fora dos buscadores e sem anúncios na prévia
+              sed -i 's#<head>#<head>\n<meta name="robots" content="noindex, nofollow" />#' "$f"
+              sed -i '/pagead2.googlesyndication.com/d' "$f"
+              sed -i "s|<body>|<body>\n${banner}|" "$f"
+            done
+          fi
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

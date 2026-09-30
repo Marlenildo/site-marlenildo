@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DIC ou DBC: diferença no campo e na ANOVA — Marlenildo</title>
+<meta name="description" content="Entenda a diferença entre DIC e DBC no campo e na análise de variância: croquis, sorteio, blocos perpendiculares ao gradiente e um exemplo numérico comparando as duas ANOVAs." />
+<meta property="og:title" content="DIC ou DBC: o que muda de verdade no campo e na análise" />
+<meta property="og:description" content="Entenda a diferença entre DIC e DBC no campo e na análise de variância: croquis, sorteio, blocos perpendiculares ao gradiente e um exemplo numérico comparando as duas ANOVAs." />
+<meta property="og:type" content="article" />
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/style.css" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130340973057636" crossorigin="anonymous"></script>
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+<div class="bg-glow" aria-hidden="true"></div>
+
+<header class="site-header">
+  <nav class="nav container">
+    <a href="index.html#topo" class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="46" height="46" /><span>Marlenildo<span class="brand-dot">.online</span></span></a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#apps">Apps</a></li>
+      <li><a href="guia.html" aria-current="page">Guia</a></li>
+      <li><a href="index.html#sobre">Sobre</a></li>
+      <li><a href="index.html#contato">Contato</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="conteudo">
+
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <nav class="breadcrumb" aria-label="Você está em"><a href="guia.html">Guia</a><span aria-hidden="true">/</span><span>Etapa 1 · Planejamento</span></nav>
+      <h1>DIC ou DBC: o que <span class="text-gradient">muda de verdade</span> no campo e na análise.</h1>
+      <p class="hero-lead">A dúvida mais comum do planejamento, respondida com croquis, a tabela da ANOVA e um exemplo em que a mesma planilha dá conclusões opostas.</p>
+      <ul class="article-meta">
+        <li>Etapa 1 · Planejamento</li>
+        <li>8 min de leitura</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="guide" id="pergunta">
+    <div class="container guide-article">
+      <span class="guide-number">01</span>
+      <div class="section-head">
+        <h2>A pergunta que decide tudo</h2>
+        <p class="section-lead">Antes de pensar em programa ou teste de médias, olhe para a área (ou para o material) onde o experimento vai ficar.</p>
+      </div>
+
+      <p class="guide-p">
+        DIC (delineamento inteiramente casualizado) e DBC (delineamento em blocos casualizados) não
+        são dois jeitos de analisar a mesma coisa. São <strong>dois jeitos de instalar</strong> o experimento,
+        e a análise só acompanha o que foi feito no campo. A escolha depende de uma pergunta:
+      </p>
+      <div class="callout">
+        <span class="callout-title">A pergunta</span>
+        <strong>Todas as parcelas estão em condições parecidas?</strong> Se sim, qualquer parcela pode receber
+        qualquer tratamento e o sorteio geral basta (DIC). Se existe alguma coisa que muda de um lado para
+        o outro (declive, fertilidade, sombra, umidade, distância do ventilador), agrupe as parcelas
+        parecidas em blocos (DBC).
+      </div>
+      <div class="summary-grid">
+        <div class="summary-card"><h4>Cenários típicos de DIC</h4><p>Casa de vegetação com bancada uniforme, câmara de crescimento, laboratório, vasos com o mesmo substrato peneirado e misturado.</p></div>
+        <div class="summary-card"><h4>Cenários típicos de DBC</h4><p>Campo com declive ou manchas de solo, estufa com gradiente de luz ou temperatura, experimento colhido em dias diferentes ou avaliado por pessoas diferentes.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="guide" id="campo">
+    <div class="container guide-article">
+      <span class="guide-number">02</span>
+      <div class="section-head">
+        <h2>Como isso fica no campo, de verdade</h2>
+        <p class="section-lead">Mesmos 5 tratamentos (A a E), mesmas 4 repetições, mesmas 20 parcelas. Muda só o sorteio.</p>
+      </div>
+
+      <div class="compare-wrap">
+        <figure class="figure figure-md">
+          <h4>DIC · sorteio geral</h4>
+          <svg viewBox="0 0 440 290" role="img" aria-labelledby="t-dic"><title id="t-dic">Croqui de um experimento em DIC: 20 parcelas com os tratamentos A a E sorteados em toda a área, sem blocos.</title><rect x="10" y="30" width="420" height="230" rx="14" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.14)" stroke-dasharray="5 5"/><text x="20" y="20" font-size="12" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">Área homogênea — sorteio geral das 20 parcelas</text><rect x="26" y="44" width="68" height="42" rx="7" fill="#ff5fa2" fill-opacity="0.2" stroke="#ff5fa2" stroke-width="1.5"/><text x="60.0" y="70.0" text-anchor="middle" font-size="15" font-weight="700" fill="#ff5fa2" font-family="Inter, system-ui, sans-serif">C</text><rect x="106" y="44" width="68" height="42" rx="7" fill="#7c5cff" fill-opacity="0.2" stroke="#7c5cff" stroke-width="1.5"/><text x="140.0" y="70.0" text-anchor="middle" font-size="15" font-weight="700" fill="#7c5cff" font-family="Inter, system-ui, sans-serif">A</text><rect x="186" y="44" width="68" height="42" rx="7" fill="#34d399" fill-opacity="0.2" stroke="#34d399" stroke-width="1.5"/><text x="220.0" y="70.0" text-anchor="middle" font-size="15" font-weight="700" fill="#34d399" font-family="Inter, system-ui, sans-serif">E</text><rect x="266" y="44" width="68" height="42" rx="7" fill="#22d3ee" fill-opacity="0.2" stroke="#22d3ee" stroke-width="1.5"/><text x="300.0" y="70.0" text-anchor="middle" font-size="15" font-weight="700" fill="#22d3ee" font-family="Inter, system-ui, sans-serif">B</text><rect x="346" y="44" width="68" height="42" rx="7" fill="#fbbf24" fill-opacity="0.2" stroke="#fbbf24" stroke-width="1.5"/><text x="380.0" y="70.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fbbf24" font-family="Inter, system-ui, sans-serif">D</text><rect x="26" y="96" width="68" height="42" rx="7" fill="#22d3ee" fill-opacity="0.2" stroke="#22d3ee" stroke-width="1.5"/><text x="60.0" y="122.0" text-anchor="middle" font-size="15" font-weight="700" fill="#22d3ee" font-family="Inter, system-ui, sans-serif">B</text><rect x="106" y="96" width="68" height="42" rx="7" fill="#fbbf24" fill-opacity="0.2" stroke="#fbbf24" stroke-width="1.5"/><text x="140.0" y="122.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fbbf24" font-family="Inter, system-ui, sans-serif">D</text><rect x="186" y="96" width="68" height="42" rx="7" fill="#7c5cff" fill-opacity="0.2" stroke="#7c5cff" stroke-width="1.5"/><text x="220.0" y="122.0" text-anchor="middle" font-size="15" font-weight="700" fill="#7c5cff" font-family="Inter, system-ui, sans-serif">A</text><rect x="266" y="96" width="68" height="42" rx="7" fill="#ff5fa2" fill-opacity="0.2" stroke="#ff5fa2" stroke-width="1.5"/><text x="300.0" y="122.0" text-anchor="middle" font-size="15" font-weight="700" fill="#ff5fa2" font-family="Inter, system-ui, sans-serif">C</text><rect x="346" y="96" width="68" height="42" rx="7" fill="#34d399" fill-opacity="0.2" stroke="#34d399" stroke-width="1.5"/><text x="380.0" y="122.0" text-anchor="middle" font-size="15" font-weight="700" fill="#34d399" font-family="Inter, system-ui, sans-serif">E</text><rect x="26" y="148" width="68" height="42" rx="7" fill="#34d399" fill-opacity="0.2" stroke="#34d399" stroke-width="1.5"/><text x="60.0" y="174.0" text-anchor="middle" font-size="15" font-weight="700" fill="#34d399" font-family="Inter, system-ui, sans-serif">E</text><rect x="106" y="148" width="68" height="42" rx="7" fill="#ff5fa2" fill-opacity="0.2" stroke="#ff5fa2" stroke-width="1.5"/><text x="140.0" y="174.0" text-anchor="middle" font-size="15" font-weight="700" fill="#ff5fa2" font-family="Inter, system-ui, sans-serif">C</text><rect x="186" y="148" width="68" height="42" rx="7" fill="#fbbf24" fill-opacity="0.2" stroke="#fbbf24" stroke-width="1.5"/><text x="220.0" y="174.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fbbf24" font-family="Inter, system-ui, sans-serif">D</text><rect x="266" y="148" width="68" height="42" rx="7" fill="#7c5cff" fill-opacity="0.2" stroke="#7c5cff" stroke-width="1.5"/><text x="300.0" y="174.0" text-anchor="middle" font-size="15" font-weight="700" fill="#7c5cff" font-family="Inter, system-ui, sans-serif">A</text><rect x="346" y="148" width="68" height="42" rx="7" fill="#22d3ee" fill-opacity="0.2" stroke="#22d3ee" stroke-width="1.5"/><text x="380.0" y="174.0" text-anchor="middle" font-size="15" font-weight="700" fill="#22d3ee" font-family="Inter, system-ui, sans-serif">B</text><rect x="26" y="200" width="68" height="42" rx="7" fill="#fbbf24" fill-opacity="0.2" stroke="#fbbf24" stroke-width="1.5"/><text x="60.0" y="226.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fbbf24" font-family="Inter, system-ui, sans-serif">D</text><rect x="106" y="200" width="68" height="42" rx="7" fill="#22d3ee" fill-opacity="0.2" stroke="#22d3ee" stroke-width="1.5"/><text x="140.0" y="226.0" text-anchor="middle" font-size="15" font-weight="700" fill="#22d3ee" font-family="Inter, system-ui, sans-serif">B</text><rect x="186" y="200" width="68" height="42" rx="7" fill="#ff5fa2" fill-opacity="0.2" stroke="#ff5fa2" stroke-width="1.5"/><text x="220.0" y="226.0" text-anchor="middle" font-size="15" font-weight="700" fill="#ff5fa2" font-family="Inter, system-ui, sans-serif">C</text><rect x="266" y="200" width="68" height="42" rx="7" fill="#34d399" fill-opacity="0.2" stroke="#34d399" stroke-width="1.5"/><text x="300.0" y="226.0" text-anchor="middle" font-size="15" font-weight="700" fill="#34d399" font-family="Inter, system-ui, sans-serif">E</text><rect x="346" y="200" width="68" height="42" rx="7" fill="#7c5cff" fill-opacity="0.2" stroke="#7c5cff" stroke-width="1.5"/><text x="380.0" y="226.0" text-anchor="middle" font-size="15" font-weight="700" fill="#7c5cff" font-family="Inter, system-ui, sans-serif">A</text><text x="220" y="282" text-anchor="middle" font-size="12" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">5 tratamentos × 4 repetições = 20 parcelas</text></svg>
+          <figcaption>Os 20 rótulos (4 de cada tratamento) vão para um sorteio único e caem em qualquer lugar.
+          Pode acontecer de duas parcelas de A ficarem vizinhas, e tudo bem: a área é homogênea.</figcaption>
+        </figure>
+        <figure class="figure figure-md">
+          <h4>DBC · sorteio dentro de cada bloco</h4>
+          <svg viewBox="0 0 460 290" role="img" aria-labelledby="t-dbc"><title id="t-dbc">Croqui de um experimento em DBC: quatro blocos em faixas perpendiculares ao gradiente do terreno, cada bloco com os cinco tratamentos sorteados.</title><defs><linearGradient id="gFert" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22d3ee" stop-opacity="0.26"/><stop offset="1" stop-color="#7c5cff" stop-opacity="0.04"/></linearGradient><marker id="arr" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9aa0b4"/></marker></defs><text x="20" y="20" font-size="12" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">Área com gradiente — um bloco por faixa</text><rect x="10" y="30" width="390" height="230" rx="14" fill="url(#gFert)" stroke="rgba(255,255,255,0.14)"/><rect x="16" y="38" width="378" height="50" rx="10" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/><rect x="62" y="44" width="58" height="38" rx="7" fill="#fbbf24" fill-opacity="0.2" stroke="#fbbf24" stroke-width="1.5"/><text x="91.0" y="68.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fbbf24" font-family="Inter, system-ui, sans-serif">D</text><rect x="128" y="44" width="58" height="38" rx="7" fill="#22d3ee" fill-opacity="0.2" stroke="#22d3ee" stroke-width="1.5"/><text x="157.0" y="68.0" text-anchor="middle" font-size="15" font-weight="700" fill="#22d3ee" font-family="Inter, system-ui, sans-serif">B</text><rect x="194" y="44" width="58" height="38" rx="7" fill="#7c5cff" fill-opacity="0.2" stroke="#7c5cff" stroke-width="1.5"/><text x="223.0" y="68.0" text-anchor="middle" font-size="15" font-weight="700" fill="#7c5cff" font-family="Inter, system-ui, sans-serif">A</text><rect x="260" y="44" width="58" height="38" rx="7" fill="#34d399" fill-opacity="0.2" stroke="#34d399" stroke-width="1.5"/><text x="289.0" y="68.0" text-anchor="middle" font-size="15" font-weight="700" fill="#34d399" font-family="Inter, system-ui, sans-serif">E</text><rect x="326" y="44" width="58" height="38" rx="7" fill="#ff5fa2" fill-opacity="0.2" stroke="#ff5fa2" stroke-width="1.5"/><text x="355.0" y="68.0" text-anchor="middle" font-size="15" font-weight="700" fill="#ff5fa2" font-family="Inter, system-ui, sans-serif">C</text><text x="38" y="68" text-anchor="middle" font-size="11" font-weight="700" fill="#eef0f6" font-family="Inter, system-ui, sans-serif">B1</text><rect x="16" y="93" width="378" height="50" rx="10" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/><rect x="62" y="99" width="58" height="38" rx="7" fill="#7c5cff" fill-opacity="0.2" stroke="#7c5cff" stroke-width="1.5"/><text x="91.0" y="123.0" text-anchor="middle" font-size="15" font-weight="700" fill="#7c5cff" font-family="Inter, system-ui, sans-serif">A</text><rect x="128" y="99" width="58" height="38" rx="7" fill="#ff5fa2" fill-opacity="0.2" stroke="#ff5fa2" stroke-width="1.5"/><text x="157.0" y="123.0" text-anchor="middle" font-size="15" font-weight="700" fill="#ff5fa2" font-family="Inter, system-ui, sans-serif">C</text><rect x="194" y="99" width="58" height="38" rx="7" fill="#34d399" fill-opacity="0.2" stroke="#34d399" stroke-width="1.5"/><text x="223.0" y="123.0" text-anchor="middle" font-size="15" font-weight="700" fill="#34d399" font-family="Inter, system-ui, sans-serif">E</text><rect x="260" y="99" width="58" height="38" rx="7" fill="#fbbf24" fill-opacity="0.2" stroke="#fbbf24" stroke-width="1.5"/><text x="289.0" y="123.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fbbf24" font-family="Inter, system-ui, sans-serif">D</text><rect x="326" y="99" width="58" height="38" rx="7" fill="#22d3ee" fill-opacity="0.2" stroke="#22d3ee" stroke-width="1.5"/><text x="355.0" y="123.0" text-anchor="middle" font-size="15" font-weight="700" fill="#22d3ee" font-family="Inter, system-ui, sans-serif">B</text><text x="38" y="123" text-anchor="middle" font-size="11" font-weight="700" fill="#eef0f6" font-family="Inter, system-ui, sans-serif">B2</text><rect x="16" y="148" width="378" height="50" rx="10" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/><rect x="62" y="154" width="58" height="38" rx="7" fill="#34d399" fill-opacity="0.2" stroke="#34d399" stroke-width="1.5"/><text x="91.0" y="178.0" text-anchor="middle" font-size="15" font-weight="700" fill="#34d399" font-family="Inter, system-ui, sans-serif">E</text><rect x="128" y="154" width="58" height="38" rx="7" fill="#fbbf24" fill-opacity="0.2" stroke="#fbbf24" stroke-width="1.5"/><text x="157.0" y="178.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fbbf24" font-family="Inter, system-ui, sans-serif">D</text><rect x="194" y="154" width="58" height="38" rx="7" fill="#22d3ee" fill-opacity="0.2" stroke="#22d3ee" stroke-width="1.5"/><text x="223.0" y="178.0" text-anchor="middle" font-size="15" font-weight="700" fill="#22d3ee" font-family="Inter, system-ui, sans-serif">B</text><rect x="260" y="154" width="58" height="38" rx="7" fill="#ff5fa2" fill-opacity="0.2" stroke="#ff5fa2" stroke-width="1.5"/><text x="289.0" y="178.0" text-anchor="middle" font-size="15" font-weight="700" fill="#ff5fa2" font-family="Inter, system-ui, sans-serif">C</text><rect x="326" y="154" width="58" height="38" rx="7" fill="#7c5cff" fill-opacity="0.2" stroke="#7c5cff" stroke-width="1.5"/><text x="355.0" y="178.0" text-anchor="middle" font-size="15" font-weight="700" fill="#7c5cff" font-family="Inter, system-ui, sans-serif">A</text><text x="38" y="178" text-anchor="middle" font-size="11" font-weight="700" fill="#eef0f6" font-family="Inter, system-ui, sans-serif">B3</text><rect x="16" y="203" width="378" height="50" rx="10" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/><rect x="62" y="209" width="58" height="38" rx="7" fill="#22d3ee" fill-opacity="0.2" stroke="#22d3ee" stroke-width="1.5"/><text x="91.0" y="233.0" text-anchor="middle" font-size="15" font-weight="700" fill="#22d3ee" font-family="Inter, system-ui, sans-serif">B</text><rect x="128" y="209" width="58" height="38" rx="7" fill="#7c5cff" fill-opacity="0.2" stroke="#7c5cff" stroke-width="1.5"/><text x="157.0" y="233.0" text-anchor="middle" font-size="15" font-weight="700" fill="#7c5cff" font-family="Inter, system-ui, sans-serif">A</text><rect x="194" y="209" width="58" height="38" rx="7" fill="#34d399" fill-opacity="0.2" stroke="#34d399" stroke-width="1.5"/><text x="223.0" y="233.0" text-anchor="middle" font-size="15" font-weight="700" fill="#34d399" font-family="Inter, system-ui, sans-serif">E</text><rect x="260" y="209" width="58" height="38" rx="7" fill="#fbbf24" fill-opacity="0.2" stroke="#fbbf24" stroke-width="1.5"/><text x="289.0" y="233.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fbbf24" font-family="Inter, system-ui, sans-serif">D</text><rect x="326" y="209" width="58" height="38" rx="7" fill="#ff5fa2" fill-opacity="0.2" stroke="#ff5fa2" stroke-width="1.5"/><text x="355.0" y="233.0" text-anchor="middle" font-size="15" font-weight="700" fill="#ff5fa2" font-family="Inter, system-ui, sans-serif">C</text><text x="38" y="233" text-anchor="middle" font-size="11" font-weight="700" fill="#eef0f6" font-family="Inter, system-ui, sans-serif">B4</text><line x1="420" y1="44" x2="420" y2="248" stroke="#9aa0b4" stroke-width="1.6" marker-end="url(#arr)"/><text x="440" y="150" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif" transform="rotate(90 440 150)" text-anchor="middle">mais fértil → menos fértil</text><text x="205" y="282" text-anchor="middle" font-size="12" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">Cada bloco tem A, B, C, D e E uma vez, sorteados dentro dele</text></svg>
+          <figcaption>A área tem um gradiente. Cada faixa é um bloco e recebe <strong>todos</strong> os
+          tratamentos uma vez, sorteados só dentro dela. Cada bloco funciona como um miniexperimento completo.</figcaption>
+        </figure>
+      </div>
+      <h3 class="guide-h3">Os blocos ficam perpendiculares ao gradiente</h3>
+      <p class="guide-p">
+        O bloco serve para juntar parcelas parecidas. Se o terreno fica menos fértil de cima para baixo, os
+        blocos são faixas horizontais: dentro de cada faixa o solo é quase igual, e a diferença entre as
+        faixas o modelo separa como efeito de bloco. Bloco que atravessa o gradiente não controla nada.
+      </p>
+      <div class="compare-grid">
+        <figure class="figure">
+          <span class="tag-good">Certo</span>
+          <svg viewBox="0 0 260 190" role="img" aria-labelledby="t-bd-ok"><title id="t-bd-ok">Blocos em faixas perpendiculares ao gradiente: dentro de cada bloco o solo é parecido.</title><defs><linearGradient id="gB1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22d3ee" stop-opacity="0.3"/><stop offset="1" stop-color="#7c5cff" stop-opacity="0.04"/></linearGradient></defs><rect x="8" y="8" width="210" height="170" rx="12" fill="url(#gB1)" stroke="rgba(255,255,255,0.14)"/><rect x="16" y="16" width="194" height="34" rx="8" fill="none" stroke="#34d399" stroke-width="1.6"/><text x="113" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="#eef0f6" font-family="Inter, system-ui, sans-serif">Bloco 1</text><rect x="16" y="56" width="194" height="34" rx="8" fill="none" stroke="#34d399" stroke-width="1.6"/><text x="113" y="78" text-anchor="middle" font-size="12" font-weight="700" fill="#eef0f6" font-family="Inter, system-ui, sans-serif">Bloco 2</text><rect x="16" y="96" width="194" height="34" rx="8" fill="none" stroke="#34d399" stroke-width="1.6"/><text x="113" y="118" text-anchor="middle" font-size="12" font-weight="700" fill="#eef0f6" font-family="Inter, system-ui, sans-serif">Bloco 3</text><rect x="16" y="136" width="194" height="34" rx="8" fill="none" stroke="#34d399" stroke-width="1.6"/><text x="113" y="158" text-anchor="middle" font-size="12" font-weight="700" fill="#eef0f6" font-family="Inter, system-ui, sans-serif">Bloco 4</text><line x1="238" y1="18" x2="238" y2="166" stroke="#9aa0b4" stroke-width="1.6"/><path d="M232,160 L238,172 L244,160 z" fill="#9aa0b4"/><text x="252" y="93" font-size="10" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif" transform="rotate(90 252 93)" text-anchor="middle">gradiente</text></svg>
+          <figcaption>Cada bloco fica numa faixa de solo parecido.</figcaption>
+        </figure>
+        <figure class="figure">
+          <span class="tag-bad">Errado</span>
+          <svg viewBox="0 0 260 190" role="img" aria-labelledby="t-bd-bad"><title id="t-bd-bad">Blocos paralelos ao gradiente: cada bloco atravessa solos diferentes e não controla nada.</title><defs><linearGradient id="gB2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22d3ee" stop-opacity="0.3"/><stop offset="1" stop-color="#7c5cff" stop-opacity="0.04"/></linearGradient></defs><rect x="8" y="8" width="210" height="170" rx="12" fill="url(#gB2)" stroke="rgba(255,255,255,0.14)"/><rect x="16" y="16" width="43" height="154" rx="8" fill="none" stroke="#ff5fa2" stroke-width="1.6"/><text x="37.5" y="98" text-anchor="middle" font-size="12" font-weight="700" fill="#eef0f6" font-family="Inter, system-ui, sans-serif">B1</text><rect x="65" y="16" width="43" height="154" rx="8" fill="none" stroke="#ff5fa2" stroke-width="1.6"/><text x="86.5" y="98" text-anchor="middle" font-size="12" font-weight="700" fill="#eef0f6" font-family="Inter, system-ui, sans-serif">B2</text><rect x="114" y="16" width="43" height="154" rx="8" fill="none" stroke="#ff5fa2" stroke-width="1.6"/><text x="135.5" y="98" text-anchor="middle" font-size="12" font-weight="700" fill="#eef0f6" font-family="Inter, system-ui, sans-serif">B3</text><rect x="163" y="16" width="43" height="154" rx="8" fill="none" stroke="#ff5fa2" stroke-width="1.6"/><text x="184.5" y="98" text-anchor="middle" font-size="12" font-weight="700" fill="#eef0f6" font-family="Inter, system-ui, sans-serif">B4</text><line x1="238" y1="18" x2="238" y2="166" stroke="#9aa0b4" stroke-width="1.6"/><path d="M232,160 L238,172 L244,160 z" fill="#9aa0b4"/><text x="252" y="93" font-size="10" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif" transform="rotate(90 252 93)" text-anchor="middle">gradiente</text></svg>
+          <figcaption>Cada bloco pega do solo mais fértil ao menos fértil: o gradiente vai inteiro para o resíduo.</figcaption>
+        </figure>
+      </div>
+      <h3 class="guide-h3">Bloco nem sempre é um pedaço de terra</h3>
+      <p class="guide-p">
+        Bloco é qualquer fonte de variação conhecida que você consegue organizar. No laboratório, se não dá para
+        montar todas as repetições no mesmo dia, <strong>cada dia vira um bloco</strong>: monta-se uma repetição
+        de cada tratamento por dia. O mesmo vale para lote de sementes, bancada, câmara, avaliador ou turno de colheita.
+      </p>
+      <h3 class="guide-h3">O sorteio na prática</h3>
+      <ol class="guide-steps">
+        <li><strong>DIC:</strong> numere as parcelas de 1 a 20 e sorteie a ordem dos 20 rótulos
+          (A1, A2, …, E4) de uma vez. No R: <code>sample(rep(LETTERS[1:5], 4))</code>.</li>
+        <li><strong>DBC:</strong> para cada bloco, sorteie a ordem de A a E separadamente.
+          No R: <code>replicate(4, sample(LETTERS[1:5]))</code>, uma coluna por bloco.</li>
+        <li>Desenhe o croqui com o número da parcela, o tratamento e o bloco, e leve uma cópia para o campo.
+          Etiquete as parcelas antes de aplicar qualquer tratamento.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="guide" id="analise">
+    <div class="container guide-article">
+      <span class="guide-number">03</span>
+      <div class="section-head">
+        <h2>Como isso vira uma ANOVA diferente</h2>
+        <p class="section-lead">O DBC tem uma fonte de variação a mais: o bloco. Ela sai do resíduo.</p>
+      </div>
+
+      <p class="guide-p">Os modelos, escritos do jeito que o R entende:</p>
+      <pre class="code-block"><code># DIC: a variação é tratamento + acaso
+modelo_dic &lt;- aov(produtividade ~ cultivar, data = dados)
+
+# DBC: a variação é bloco + tratamento + acaso
+dados$bloco &lt;- factor(dados$bloco)   # bloco é fator, não número
+modelo_dbc &lt;- aov(produtividade ~ bloco + cultivar, data = dados)
+summary(modelo_dbc)</code></pre>
+      <p class="guide-p">
+        Com 5 tratamentos e 4 repetições, os graus de liberdade se dividem assim:
+      </p>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead><tr><th>Fonte de variação</th><th class="num">GL no DIC</th><th class="num">GL no DBC</th></tr></thead>
+          <tbody>
+            <tr><td>Blocos</td><td class="num">—</td><td class="num">b − 1 = 3</td></tr>
+            <tr><td>Tratamentos</td><td class="num">t − 1 = 4</td><td class="num">t − 1 = 4</td></tr>
+            <tr><td>Resíduo</td><td class="num">t(r − 1) = 15</td><td class="num">(t − 1)(b − 1) = 12</td></tr>
+            <tr class="row-total"><td>Total</td><td class="num">19</td><td class="num">19</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="guide-p" style="margin-top:18px">
+        O DBC “paga” 3 graus de liberdade do resíduo pelos blocos. Em troca, tira do resíduo toda a
+        variação que vinha do gradiente. Se o gradiente existe, a troca compensa muito.
+      </p>
+    </div>
+  </section>
+
+  <section class="guide" id="exemplo">
+    <div class="container guide-article">
+      <span class="guide-number">04</span>
+      <div class="section-head">
+        <h2>Mesmos dados, conclusões diferentes</h2>
+        <p class="section-lead">Produtividade (t/ha) de 5 cultivares num campo com gradiente de fertilidade. Dados ilustrativos.</p>
+      </div>
+
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead><tr><th>Cultivar</th><th class="num">Bloco 1</th><th class="num">Bloco 2</th><th class="num">Bloco 3</th><th class="num">Bloco 4</th><th class="num">Média</th></tr></thead>
+          <tbody>
+<tr><td class="col-b">A</td><td class="num">6,6</td><td class="num">6,4</td><td class="num">5,4</td><td class="num">5,3</td><td class="num">5,92</td></tr>
+<tr><td class="col-b">B</td><td class="num">7,4</td><td class="num">6,6</td><td class="num">6,3</td><td class="num">5,4</td><td class="num">6,43</td></tr>
+<tr><td class="col-b">C</td><td class="num">6,3</td><td class="num">5,5</td><td class="num">5,4</td><td class="num">4,3</td><td class="num">5,38</td></tr>
+<tr><td class="col-b">D</td><td class="num">7,6</td><td class="num">7,3</td><td class="num">6,5</td><td class="num">6,2</td><td class="num">6,90</td></tr>
+<tr><td class="col-b">E</td><td class="num">6,9</td><td class="num">6,0</td><td class="num">5,7</td><td class="num">4,8</td><td class="num">5,85</td></tr>
+<tr class="row-total"><td>Média do bloco</td><td class="num">6,96</td><td class="num">6,36</td><td class="num">5,86</td><td class="num">5,20</td><td class="num">6,10</td></tr>
+          </tbody>
+          <caption>Resumo para leitura. Para analisar, a planilha fica em formato longo, com uma linha por parcela (veja abaixo).</caption>
+        </table>
+      </div>
+      <p class="guide-p" style="margin-top:18px">
+        Repare na última linha: o bloco 1 (a faixa mais fértil) produziu quase 2 t/ha a mais que o bloco 4.
+        Essa diferença não tem nada a ver com as cultivares. Veja o que acontece com a ANOVA:
+      </p>
+      <div class="compare-grid">
+        <figure class="figure">
+          <h4>Analisado como DIC</h4>
+          <div class="table-scroll"><table class="data-table">
+            <thead><tr><th>FV</th><th class="num">GL</th><th class="num">SQ</th><th class="num">QM</th><th class="num">F</th><th class="num">p</th></tr></thead>
+            <tbody>
+              <tr><td>Cultivar</td><td class="num">4</td><td class="num">5,46</td><td class="num">1,36</td><td class="num">2,28</td><td class="num cell-bad">0,11</td></tr>
+              <tr class="row-hl"><td>Resíduo</td><td class="num">15</td><td class="num">8,97</td><td class="num">0,598</td><td></td><td></td></tr>
+              <tr class="row-total"><td>Total</td><td class="num">19</td><td class="num">14,43</td><td></td><td></td><td></td></tr>
+            </tbody>
+          </table></div>
+          <figcaption>CV = 12,7%. Nenhuma diferença entre cultivares (p = 0,11).</figcaption>
+        </figure>
+        <figure class="figure">
+          <h4>Analisado como DBC</h4>
+          <div class="table-scroll"><table class="data-table">
+            <thead><tr><th>FV</th><th class="num">GL</th><th class="num">SQ</th><th class="num">QM</th><th class="num">F</th><th class="num">p</th></tr></thead>
+            <tbody>
+              <tr><td>Bloco</td><td class="num">3</td><td class="num">8,37</td><td class="num">2,79</td><td class="num">55,9</td><td class="num">&lt; 0,001</td></tr>
+              <tr><td>Cultivar</td><td class="num">4</td><td class="num">5,46</td><td class="num">1,36</td><td class="num">27,3</td><td class="num letter">&lt; 0,001</td></tr>
+              <tr class="row-hl"><td>Resíduo</td><td class="num">12</td><td class="num">0,60</td><td class="num">0,050</td><td></td><td></td></tr>
+              <tr class="row-total"><td>Total</td><td class="num">19</td><td class="num">14,43</td><td></td><td></td><td></td></tr>
+            </tbody>
+          </table></div>
+          <figcaption>CV = 3,7%. Cultivares diferem (p &lt; 0,001).</figcaption>
+        </figure>
+      </div>
+      <p class="guide-p" style="margin-top:22px">
+        A soma de quadrados das cultivares é a mesma nas duas tabelas (5,46). O que mudou foi o resíduo: no DIC
+        ele carrega os 8,37 do gradiente do terreno, e o QM do resíduo fica 12 vezes maior. Com o resíduo inflado,
+        o teste F e o Tukey perdem a capacidade de enxergar diferenças.
+      </p>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead><tr><th>Cultivar</th><th class="num">Média (t/ha)</th><th class="num">Tukey no DIC</th><th class="num">Tukey no DBC</th></tr></thead>
+          <tbody>
+            <tr><td class="col-b">D</td><td class="num">6,90</td><td class="num">a</td><td class="num letter">a</td></tr>
+            <tr><td class="col-b">B</td><td class="num">6,43</td><td class="num">a</td><td class="num letter">a</td></tr>
+            <tr><td class="col-b">A</td><td class="num">5,92</td><td class="num">a</td><td class="num letter">b</td></tr>
+            <tr><td class="col-b">E</td><td class="num">5,85</td><td class="num">a</td><td class="num letter">bc</td></tr>
+            <tr><td class="col-b">C</td><td class="num">5,38</td><td class="num">a</td><td class="num letter">c</td></tr>
+          </tbody>
+          <caption>DMS de Tukey (5%): 1,69 t/ha no DIC e 0,50 t/ha no DBC.</caption>
+        </table>
+      </div>
+      <h3 class="guide-h3">A mesma planilha em formato longo</h3>
+      <p class="guide-p">É assim que os dados entram no R: uma linha por parcela, o bloco numa coluna, a cultivar em outra.</p>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead><tr><th>bloco</th><th>cultivar</th><th class="num">produtividade</th></tr></thead>
+          <tbody>
+<tr><td class="col-a">1</td><td class="col-b">A</td><td class="num">6,6</td></tr>
+<tr><td class="col-a">1</td><td class="col-b">B</td><td class="num">7,4</td></tr>
+<tr><td class="col-a">1</td><td class="col-b">C</td><td class="num">6,3</td></tr>
+<tr><td class="col-a">1</td><td class="col-b">D</td><td class="num">7,6</td></tr>
+<tr><td class="col-a">1</td><td class="col-b">E</td><td class="num">6,9</td></tr>
+<tr><td class="col-a">2</td><td class="col-b">A</td><td class="num">6,4</td></tr>
+<tr><td class="col-a">2</td><td class="col-b">B</td><td class="num">6,6</td></tr>
+<tr class="row-ellipsis"><td colspan="3">…</td></tr>
+<tr><td class="col-a">4</td><td class="col-b">E</td><td class="num">4,8</td></tr>
+          </tbody>
+          <caption>20 linhas no total. Mais sobre esse formato em <a href="guia-organizar-dados.html">Como organizar a planilha</a>.</caption>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="guide" id="cuidados">
+    <div class="container guide-article">
+      <span class="guide-number">05</span>
+      <div class="section-head">
+        <h2>Cuidados que evitam dor de cabeça</h2>
+      </div>
+
+      <ul class="check-list">
+        <li><strong>A análise segue o campo.</strong> Se o sorteio foi feito dentro de blocos, analise como DBC. Se foi sorteio geral, é DIC. Não dá para “escolher” o modelo depois de ver o resultado.</li>
+        <li><strong>Bloco não significativo não muda o modelo.</strong> O bloco faz parte do delineamento. Mantenha-o na análise e registre que o controle local não foi necessário naquele ensaio.</li>
+        <li><strong>Cada bloco precisa ter todos os tratamentos.</strong> Se um bloco não comporta todos, ele não é um bloco completo e a análise muda (blocos incompletos).</li>
+        <li><strong>Na dúvida, use DBC.</strong> Se a área parece homogênea mas você não tem certeza, blocar custa pouco (alguns graus de liberdade) e protege contra um gradiente que você não enxergou.</li>
+        <li><strong>Bloco é fator.</strong> Se a coluna bloco tiver números 1 a 4, transforme em fator (<code>factor(bloco)</code>); senão o R ajusta uma reta de bloco e usa só 1 GL.</li>
+      </ul>
+      <div class="summary-grid">
+        <div class="summary-card"><h4>DIC</h4><p>Área homogênea · sorteio geral · modelo y = tratamento + erro · resíduo com mais GL.</p></div>
+        <div class="summary-card"><h4>DBC</h4><p>Área com gradiente conhecido · sorteio dentro dos blocos · modelo y = bloco + tratamento + erro · resíduo menor quando o gradiente existe.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="container guide-article">
+      <nav class="article-nav" aria-label="Navegação entre artigos">
+        <a href="guia.html"><small>← Voltar</small><strong>Índice do guia</strong></a><a href="guia-repeticao.html" class="is-next"><small>Próximo →</small><strong>Repetição de verdade × pseudorrepetição</strong></a>
+      </nav>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" id="contato">
+  <div class="container footer-inner">
+    <div>
+      <p class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="38" height="38" /><span>Marlenildo<span class="brand-dot">.online</span></span></p>
+      <p class="footer-note">Apps em R &amp; Shiny para pesquisa e gestão de dados.</p>
+      <ul class="social-icons" aria-label="Perfis profissionais e acadêmicos">
+        <li>
+          <a href="https://github.com/Marlenildo" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://orcid.org/0000-0001-7449-6916" target="_blank" rel="noopener" aria-label="ORCID">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" font-size="10" font-weight="700" fill="currentColor" stroke="none" font-family="Arial, sans-serif">iD</text></svg>
+          </a>
+        </li>
+        <li>
+          <a href="http://lattes.cnpq.br/6931262930637371" target="_blank" rel="noopener" aria-label="Currículo Lattes">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="mailto:marlenildo@gmail.com" aria-label="E-mail">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2.5"/><path d="m3 6.5 9 6.5 9-6.5"/></svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <p class="footer-copy">&copy; <span id="year"></span> Marlenildo. Todos os direitos reservados.</p>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
