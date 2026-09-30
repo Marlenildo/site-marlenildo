@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Interação significativa na ANOVA: como desdobrar — Marlenildo</title>
+<meta name="description" content="Como interpretar interação significativa em experimento fatorial: gráfico de interação, desdobramento da ANOVA, tabela de dupla entrada com letras e código em R." />
+<meta property="og:title" content="Interação significativa: e agora?" />
+<meta property="og:description" content="Como interpretar interação significativa em experimento fatorial: gráfico de interação, desdobramento da ANOVA, tabela de dupla entrada com letras e código em R." />
+<meta property="og:type" content="article" />
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/style.css" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130340973057636" crossorigin="anonymous"></script>
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+<div class="bg-glow" aria-hidden="true"></div>
+
+<header class="site-header">
+  <nav class="nav container">
+    <a href="index.html#topo" class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="46" height="46" /><span>Marlenildo<span class="brand-dot">.online</span></span></a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#apps">Apps</a></li>
+      <li><a href="guia.html" aria-current="page">Guia</a></li>
+      <li><a href="index.html#sobre">Sobre</a></li>
+      <li><a href="index.html#contato">Contato</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="conteudo">
+
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <nav class="breadcrumb" aria-label="Você está em"><a href="guia.html">Guia</a><span aria-hidden="true">/</span><span>Etapa 5 · Interpretação</span></nav>
+      <h1>Interação significativa: <span class="text-gradient">e agora?</span></h1>
+      <p class="hero-lead">O que a interação quer dizer, por que ela anula a leitura dos efeitos principais e como fazer o desdobramento passo a passo.</p>
+      <ul class="article-meta">
+        <li>Etapa 5 · Interpretação</li>
+        <li>8 min de leitura</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="guide" id="o-que-e">
+    <div class="container guide-article">
+      <span class="guide-number">01</span>
+      <div class="section-head">
+        <h2>O que é interação</h2>
+        <p class="section-lead">Interação quer dizer: o efeito de um fator depende do nível do outro.</p>
+      </div>
+
+      <p class="guide-p">
+        Exemplo: 3 cultivares de milho (A, B e C) em 2 manejos (sequeiro e irrigado), em DBC com 4 blocos. Se a
+        irrigação aumentasse a produtividade de todas as cultivares na mesma quantidade, não haveria interação.
+        O gráfico mostraria linhas paralelas.
+      </p>
+      <div class="compare-grid">
+        <figure class="figure">
+          <span class="tag-good">Sem interação</span>
+          <svg viewBox="0 0 330 240" role="img" aria-labelledby="t-int-sem"><title id="t-int-sem">Sem interação: as linhas das cultivares são paralelas; a irrigação aumenta a produtividade igualmente em todas.</title><line x1="44" y1="179.8" x2="260" y2="179.8" stroke="rgba(255,255,255,0.08)"/><text x="36" y="183.8" text-anchor="end" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">3</text><line x1="44" y1="139.3" x2="260" y2="139.3" stroke="rgba(255,255,255,0.08)"/><text x="36" y="143.3" text-anchor="end" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">4</text><line x1="44" y1="98.9" x2="260" y2="98.9" stroke="rgba(255,255,255,0.08)"/><text x="36" y="102.9" text-anchor="end" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">5</text><line x1="44" y1="58.4" x2="260" y2="58.4" stroke="rgba(255,255,255,0.08)"/><text x="36" y="62.4" text-anchor="end" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">6</text><line x1="44" y1="18.0" x2="260" y2="18.0" stroke="rgba(255,255,255,0.08)"/><text x="36" y="22.0" text-anchor="end" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">7</text><text x="74" y="226" text-anchor="middle" font-size="11.5" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">Sequeiro</text><text x="230" y="226" text-anchor="middle" font-size="11.5" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">Irrigado</text><text x="14" y="109.0" text-anchor="middle" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif" transform="rotate(-90 14 109.0)">Produtividade (t/ha)</text><line x1="74" y1="147.4" x2="230" y2="82.7" stroke="#7c5cff" stroke-width="2.6"/><circle cx="74" cy="147.4" r="5" fill="#0a0b10" stroke="#7c5cff" stroke-width="2.2"/><circle cx="230" cy="82.7" r="5" fill="#0a0b10" stroke="#7c5cff" stroke-width="2.2"/><text x="242" y="86.7" font-size="12" font-weight="700" fill="#7c5cff" font-family="Inter, system-ui, sans-serif">Cultivar A</text><line x1="74" y1="163.6" x2="230" y2="98.9" stroke="#22d3ee" stroke-width="2.6"/><circle cx="74" cy="163.6" r="5" fill="#0a0b10" stroke="#22d3ee" stroke-width="2.2"/><circle cx="230" cy="98.9" r="5" fill="#0a0b10" stroke="#22d3ee" stroke-width="2.2"/><text x="242" y="102.9" font-size="12" font-weight="700" fill="#22d3ee" font-family="Inter, system-ui, sans-serif">Cultivar B</text><line x1="74" y1="179.8" x2="230" y2="115.1" stroke="#ff5fa2" stroke-width="2.6"/><circle cx="74" cy="179.8" r="5" fill="#0a0b10" stroke="#ff5fa2" stroke-width="2.2"/><circle cx="230" cy="115.1" r="5" fill="#0a0b10" stroke="#ff5fa2" stroke-width="2.2"/><text x="242" y="119.1" font-size="12" font-weight="700" fill="#ff5fa2" font-family="Inter, system-ui, sans-serif">Cultivar C</text></svg>
+          <figcaption>A irrigação soma o mesmo ganho para todas. A ordem das cultivares é igual nos dois manejos.
+          Dá para falar de “melhor cultivar” e de “efeito da irrigação” separadamente.</figcaption>
+        </figure>
+        <figure class="figure">
+          <span class="tag-bad">Com interação</span>
+          <svg viewBox="0 0 330 240" role="img" aria-labelledby="t-int-com"><title id="t-int-com">Com interação: as linhas se cruzam; no sequeiro a cultivar A é a melhor e no irrigado a C é a melhor.</title><line x1="44" y1="179.8" x2="260" y2="179.8" stroke="rgba(255,255,255,0.08)"/><text x="36" y="183.8" text-anchor="end" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">3</text><line x1="44" y1="139.3" x2="260" y2="139.3" stroke="rgba(255,255,255,0.08)"/><text x="36" y="143.3" text-anchor="end" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">4</text><line x1="44" y1="98.9" x2="260" y2="98.9" stroke="rgba(255,255,255,0.08)"/><text x="36" y="102.9" text-anchor="end" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">5</text><line x1="44" y1="58.4" x2="260" y2="58.4" stroke="rgba(255,255,255,0.08)"/><text x="36" y="62.4" text-anchor="end" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">6</text><line x1="44" y1="18.0" x2="260" y2="18.0" stroke="rgba(255,255,255,0.08)"/><text x="36" y="22.0" text-anchor="end" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">7</text><text x="74" y="226" text-anchor="middle" font-size="11.5" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">Sequeiro</text><text x="230" y="226" text-anchor="middle" font-size="11.5" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">Irrigado</text><text x="14" y="109.0" text-anchor="middle" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif" transform="rotate(-90 14 109.0)">Produtividade (t/ha)</text><line x1="74" y1="131.2" x2="230" y2="98.9" stroke="#7c5cff" stroke-width="2.6"/><circle cx="74" cy="131.2" r="5" fill="#0a0b10" stroke="#7c5cff" stroke-width="2.2"/><circle cx="230" cy="98.9" r="5" fill="#0a0b10" stroke="#7c5cff" stroke-width="2.2"/><text x="242" y="102.9" font-size="12" font-weight="700" fill="#7c5cff" font-family="Inter, system-ui, sans-serif">Cultivar A</text><line x1="74" y1="155.5" x2="230" y2="73.4" stroke="#22d3ee" stroke-width="2.6"/><circle cx="74" cy="155.5" r="5" fill="#0a0b10" stroke="#22d3ee" stroke-width="2.2"/><circle cx="230" cy="73.4" r="5" fill="#0a0b10" stroke="#22d3ee" stroke-width="2.2"/><text x="242" y="77.4" font-size="12" font-weight="700" fill="#22d3ee" font-family="Inter, system-ui, sans-serif">Cultivar B</text><line x1="74" y1="179.8" x2="230" y2="41.1" stroke="#ff5fa2" stroke-width="2.6"/><circle cx="74" cy="179.8" r="5" fill="#0a0b10" stroke="#ff5fa2" stroke-width="2.2"/><circle cx="230" cy="41.1" r="5" fill="#0a0b10" stroke="#ff5fa2" stroke-width="2.2"/><text x="242" y="45.1" font-size="12" font-weight="700" fill="#ff5fa2" font-family="Inter, system-ui, sans-serif">Cultivar C</text></svg>
+          <figcaption>No sequeiro, A é a melhor; no irrigado, C é a melhor. Qual cultivar recomendar
+          <strong>depende do manejo</strong>. Dados do exemplo desta página.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="guide" id="anova">
+    <div class="container guide-article">
+      <span class="guide-number">02</span>
+      <div class="section-head">
+        <h2>Na ANOVA do exemplo</h2>
+      </div>
+
+      <div class="table-scroll"><table class="data-table">
+        <thead><tr><th>FV</th><th class="num">GL</th><th class="num">SQ</th><th class="num">QM</th><th class="num">F</th><th class="num">p</th></tr></thead>
+        <tbody>
+          <tr><td>Bloco</td><td class="num">3</td><td class="num">1,50</td><td class="num">0,501</td><td class="num">5,81</td><td class="num">0,008</td></tr>
+          <tr><td>Cultivar (C)</td><td class="num">2</td><td class="num">0,06</td><td class="num">0,030</td><td class="num">0,35</td><td class="num cell-bad">0,708</td></tr>
+          <tr><td>Manejo (M)</td><td class="num">1</td><td class="num">26,04</td><td class="num">26,04</td><td class="num">302,0</td><td class="num">&lt; 0,001</td></tr>
+          <tr class="row-hl"><td>C × M</td><td class="num">2</td><td class="num">6,90</td><td class="num">3,450</td><td class="num">40,0</td><td class="num letter">&lt; 0,001</td></tr>
+          <tr><td>Resíduo</td><td class="num">15</td><td class="num">1,29</td><td class="num">0,086</td><td></td><td></td></tr>
+          <tr class="row-total"><td>Total</td><td class="num">23</td><td class="num">35,80</td><td></td><td></td><td></td></tr>
+        </tbody>
+        <caption>CV = 6,3%.</caption>
+      </table></div>
+      <div class="callout callout-bad" style="margin-top:22px">
+        <span class="callout-title">A armadilha</span>
+        Olhando só a linha de cultivar (p = 0,71), a conclusão seria “as cultivares não diferem”. As médias
+        gerais de fato são quase iguais (4,60, 4,61 e 4,71 t/ha), mas porque as vantagens de cada uma se
+        anulam entre os manejos. <strong>Com interação significativa, não se interpreta o efeito principal
+        sozinho.</strong>
+      </div>
+    </div>
+  </section>
+
+  <section class="guide" id="desdobrar">
+    <div class="container guide-article">
+      <span class="guide-number">03</span>
+      <div class="section-head">
+        <h2>Desdobramento: um fator dentro de cada nível do outro</h2>
+        <p class="section-lead">Em vez de perguntar “qual cultivar é melhor?”, pergunta-se “qual é melhor no sequeiro?” e “qual é melhor no irrigado?”.</p>
+      </div>
+
+      <div class="table-scroll"><table class="data-table">
+        <thead><tr><th>Desdobramento</th><th class="num">GL</th><th class="num">SQ</th><th class="num">F</th><th class="num">p</th></tr></thead>
+        <tbody>
+          <tr><td>Cultivar dentro de sequeiro</td><td class="num">2</td><td class="num">2,88</td><td class="num">16,7</td><td class="num">&lt; 0,001</td></tr>
+          <tr><td>Cultivar dentro de irrigado</td><td class="num">2</td><td class="num">4,08</td><td class="num">23,7</td><td class="num">&lt; 0,001</td></tr>
+          <tr><td>Manejo dentro de A</td><td class="num">1</td><td class="num">1,28</td><td class="num">14,9</td><td class="num">0,002</td></tr>
+          <tr><td>Manejo dentro de B</td><td class="num">1</td><td class="num">8,20</td><td class="num">95,1</td><td class="num">&lt; 0,001</td></tr>
+          <tr><td>Manejo dentro de C</td><td class="num">1</td><td class="num">23,46</td><td class="num">272,1</td><td class="num">&lt; 0,001</td></tr>
+          <tr><td>Resíduo</td><td class="num">15</td><td class="num">1,29</td><td></td><td></td></tr>
+        </tbody>
+        <caption>Todos os testes usam o mesmo QM do resíduo (0,086). Repare: 2,88 + 4,08 = SQ de cultivar + SQ da interação.</caption>
+      </table></div>
+      <h3 class="guide-h3">A tabela de dupla entrada</h3>
+      <p class="guide-p">É o jeito clássico de apresentar o resultado de um fatorial com interação:</p>
+      <div class="table-scroll"><table class="data-table">
+        <thead><tr><th>Cultivar</th><th class="num">Sequeiro</th><th class="num">Irrigado</th></tr></thead>
+        <tbody>
+          <tr><td class="col-b">A</td><td class="num">4,20 <span class="letter">a</span> B</td><td class="num">5,00 <span class="letter">c</span> A</td></tr>
+          <tr><td class="col-b">B</td><td class="num">3,60 <span class="letter">b</span> B</td><td class="num">5,63 <span class="letter">b</span> A</td></tr>
+          <tr><td class="col-b">C</td><td class="num">3,00 <span class="letter">c</span> B</td><td class="num">6,43 <span class="letter">a</span> A</td></tr>
+        </tbody>
+        <caption>Produtividade (t/ha). Letras minúsculas comparam cultivares na coluna (Tukey 5%, DMS = 0,54); maiúsculas comparam manejos na linha (F, 5%).</caption>
+      </table></div>
+      <p class="guide-p" style="margin-top:18px">
+        Leitura: no sequeiro, A &gt; B &gt; C; no irrigado, a ordem se inverte, C &gt; B &gt; A. A irrigação aumentou a
+        produtividade das três, mas muito mais a de C (de 3,00 para 6,43 t/ha) do que a de A (de 4,20 para 5,00).
+      </p>
+    </div>
+  </section>
+
+  <section class="guide" id="no-r">
+    <div class="container guide-article">
+      <span class="guide-number">04</span>
+      <div class="section-head">
+        <h2>No R</h2>
+      </div>
+
+      <pre class="code-block"><code>library(emmeans)
+
+modelo &lt;- aov(prod ~ factor(bloco) + cultivar * manejo, data = dados)
+summary(modelo)                                  # olhe primeiro a linha cultivar:manejo
+
+# Cultivares dentro de cada manejo (Tukey)
+emmeans(modelo, pairwise ~ cultivar | manejo, adjust = "tukey")
+
+# Manejos dentro de cada cultivar
+emmeans(modelo, pairwise ~ manejo | cultivar)
+
+# Gráfico de interação
+with(dados, interaction.plot(manejo, cultivar, prod))
+
+# Em português, com o desdobramento completo:
+# ExpDes.pt::fat2.dbc(dados$cultivar, dados$manejo, dados$bloco, dados$prod)</code></pre>
+    </div>
+  </section>
+
+  <section class="guide" id="resumo">
+    <div class="container guide-article">
+      <span class="guide-number">05</span>
+      <div class="section-head">
+        <h2>Roteiro</h2>
+      </div>
+
+      <ul class="check-list">
+        <li><strong>Interação não significativa:</strong> interprete cada fator pelo seu efeito principal (médias gerais de cultivar, médias gerais de manejo).</li>
+        <li><strong>Interação significativa:</strong> desdobre. Compare os níveis de um fator dentro de cada nível do outro e apresente a tabela de dupla entrada ou o gráfico.</li>
+        <li><strong>Fator quantitativo na jogada</strong> (doses, dias): o desdobramento dele é uma regressão para cada nível do outro fator (veja <a href="guia-tukey-ou-regressao.html">Tukey ou regressão?</a>).</li>
+        <li><strong>Parcela subdividida:</strong> o desdobramento usa resíduos combinados; deixe o programa fazer (<code>psub2.dbc</code>, <code>emmeans</code> com modelo misto).</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="container guide-article">
+      <nav class="article-nav" aria-label="Navegação entre artigos">
+        <a href="guia-tabela-anova.html"><small>← Anterior</small><strong>Como ler a tabela da ANOVA</strong></a><a href="guia-cv.html" class="is-next"><small>Próximo →</small><strong>CV alto é problema?</strong></a>
+      </nav>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" id="contato">
+  <div class="container footer-inner">
+    <div>
+      <p class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="38" height="38" /><span>Marlenildo<span class="brand-dot">.online</span></span></p>
+      <p class="footer-note">Apps em R &amp; Shiny para pesquisa e gestão de dados.</p>
+      <ul class="social-icons" aria-label="Perfis profissionais e acadêmicos">
+        <li>
+          <a href="https://github.com/Marlenildo" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://orcid.org/0000-0001-7449-6916" target="_blank" rel="noopener" aria-label="ORCID">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" font-size="10" font-weight="700" fill="currentColor" stroke="none" font-family="Arial, sans-serif">iD</text></svg>
+          </a>
+        </li>
+        <li>
+          <a href="http://lattes.cnpq.br/6931262930637371" target="_blank" rel="noopener" aria-label="Currículo Lattes">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="mailto:marlenildo@gmail.com" aria-label="E-mail">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2.5"/><path d="m3 6.5 9 6.5 9-6.5"/></svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <p class="footer-copy">&copy; <span id="year"></span> Marlenildo. Todos os direitos reservados.</p>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

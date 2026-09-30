@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fatorial ou parcela subdividida? — Marlenildo</title>
+<meta name="description" content="Diferença entre experimento fatorial e parcela subdividida: croqui, quando usar cada um, os dois resíduos da ANOVA e o código em R com Error()." />
+<meta property="og:title" content="Fatorial ou parcela subdividida?" />
+<meta property="og:description" content="Diferença entre experimento fatorial e parcela subdividida: croqui, quando usar cada um, os dois resíduos da ANOVA e o código em R com Error()." />
+<meta property="og:type" content="article" />
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/style.css" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130340973057636" crossorigin="anonymous"></script>
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+<div class="bg-glow" aria-hidden="true"></div>
+
+<header class="site-header">
+  <nav class="nav container">
+    <a href="index.html#topo" class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="46" height="46" /><span>Marlenildo<span class="brand-dot">.online</span></span></a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#apps">Apps</a></li>
+      <li><a href="guia.html" aria-current="page">Guia</a></li>
+      <li><a href="index.html#sobre">Sobre</a></li>
+      <li><a href="index.html#contato">Contato</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="conteudo">
+
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <nav class="breadcrumb" aria-label="Você está em"><a href="guia.html">Guia</a><span aria-hidden="true">/</span><span>Etapa 1 · Planejamento</span></nav>
+      <h1>Fatorial ou <span class="text-gradient">parcela subdividida</span>?</h1>
+      <p class="hero-lead">Quando dois fatores entram juntos no experimento, o jeito de instalar decide quantos resíduos a ANOVA tem e com que precisão cada fator é testado.</p>
+      <ul class="article-meta">
+        <li>Etapa 1 · Planejamento</li>
+        <li>7 min de leitura</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="guide" id="dois-fatores">
+    <div class="container guide-article">
+      <span class="guide-number">01</span>
+      <div class="section-head">
+        <h2>Dois fatores, dois jeitos de instalar</h2>
+        <p class="section-lead">Exemplo: 3 lâminas de irrigação (L1, L2, L3) × 4 doses de nitrogênio (D1 a D4), em 4 blocos. São 12 combinações e 48 unidades de observação nos dois casos.</p>
+      </div>
+
+      <p class="guide-p">
+        “Fatorial” descreve os <strong>tratamentos</strong>: todas as combinações dos níveis de dois (ou mais)
+        fatores. “Parcela subdividida” descreve a <strong>instalação</strong>: um fator vai em parcelas grandes e o
+        outro em partes menores dentro delas. Os dois têm as mesmas 12 combinações; o que muda é como elas são
+        sorteadas no campo, e isso muda a análise.
+      </p>
+      <div class="compare-wrap">
+        <figure class="figure figure-md">
+          <h4>Fatorial em DBC · 12 parcelas independentes por bloco</h4>
+          <svg viewBox="0 0 470 150" role="img" aria-labelledby="t-fat"><title id="t-fat">Um bloco de um fatorial 3 × 4 em DBC: as 12 combinações de lâmina e dose sorteadas em 12 parcelas pequenas.</title><text x="10" y="16" font-size="12" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">Bloco 1 — 12 parcelas, uma por combinação, sorteio único</text><rect x="10.0" y="30" width="33" height="84" rx="7" fill="#22d3ee" fill-opacity="0.18" stroke="#22d3ee" stroke-width="1.5"/><text x="26.5" y="62" text-anchor="middle" font-size="11" font-weight="700" fill="#22d3ee" font-family="Inter, system-ui, sans-serif">L2</text><circle cx="26.5" cy="88" r="9" fill="#fbbf24" fill-opacity="0.9"/><text x="26.5" y="92" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0b10" font-family="Inter, system-ui, sans-serif">D3</text><rect x="48.5" y="30" width="33" height="84" rx="7" fill="#7c5cff" fill-opacity="0.18" stroke="#7c5cff" stroke-width="1.5"/><text x="65.0" y="62" text-anchor="middle" font-size="11" font-weight="700" fill="#7c5cff" font-family="Inter, system-ui, sans-serif">L1</text><circle cx="65.0" cy="88" r="9" fill="#7c5cff" fill-opacity="0.9"/><text x="65.0" y="92" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0b10" font-family="Inter, system-ui, sans-serif">D1</text><rect x="87.0" y="30" width="33" height="84" rx="7" fill="#34d399" fill-opacity="0.18" stroke="#34d399" stroke-width="1.5"/><text x="103.5" y="62" text-anchor="middle" font-size="11" font-weight="700" fill="#34d399" font-family="Inter, system-ui, sans-serif">L3</text><circle cx="103.5" cy="88" r="9" fill="#ff5fa2" fill-opacity="0.9"/><text x="103.5" y="92" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0b10" font-family="Inter, system-ui, sans-serif">D4</text><rect x="125.5" y="30" width="33" height="84" rx="7" fill="#7c5cff" fill-opacity="0.18" stroke="#7c5cff" stroke-width="1.5"/><text x="142.0" y="62" text-anchor="middle" font-size="11" font-weight="700" fill="#7c5cff" font-family="Inter, system-ui, sans-serif">L1</text><circle cx="142.0" cy="88" r="9" fill="#fbbf24" fill-opacity="0.9"/><text x="142.0" y="92" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0b10" font-family="Inter, system-ui, sans-serif">D3</text><rect x="164.0" y="30" width="33" height="84" rx="7" fill="#34d399" fill-opacity="0.18" stroke="#34d399" stroke-width="1.5"/><text x="180.5" y="62" text-anchor="middle" font-size="11" font-weight="700" fill="#34d399" font-family="Inter, system-ui, sans-serif">L3</text><circle cx="180.5" cy="88" r="9" fill="#7c5cff" fill-opacity="0.9"/><text x="180.5" y="92" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0b10" font-family="Inter, system-ui, sans-serif">D1</text><rect x="202.5" y="30" width="33" height="84" rx="7" fill="#22d3ee" fill-opacity="0.18" stroke="#22d3ee" stroke-width="1.5"/><text x="219.0" y="62" text-anchor="middle" font-size="11" font-weight="700" fill="#22d3ee" font-family="Inter, system-ui, sans-serif">L2</text><circle cx="219.0" cy="88" r="9" fill="#22d3ee" fill-opacity="0.9"/><text x="219.0" y="92" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0b10" font-family="Inter, system-ui, sans-serif">D2</text><rect x="241.0" y="30" width="33" height="84" rx="7" fill="#7c5cff" fill-opacity="0.18" stroke="#7c5cff" stroke-width="1.5"/><text x="257.5" y="62" text-anchor="middle" font-size="11" font-weight="700" fill="#7c5cff" font-family="Inter, system-ui, sans-serif">L1</text><circle cx="257.5" cy="88" r="9" fill="#ff5fa2" fill-opacity="0.9"/><text x="257.5" y="92" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0b10" font-family="Inter, system-ui, sans-serif">D4</text><rect x="279.5" y="30" width="33" height="84" rx="7" fill="#34d399" fill-opacity="0.18" stroke="#34d399" stroke-width="1.5"/><text x="296.0" y="62" text-anchor="middle" font-size="11" font-weight="700" fill="#34d399" font-family="Inter, system-ui, sans-serif">L3</text><circle cx="296.0" cy="88" r="9" fill="#22d3ee" fill-opacity="0.9"/><text x="296.0" y="92" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0b10" font-family="Inter, system-ui, sans-serif">D2</text><rect x="318.0" y="30" width="33" height="84" rx="7" fill="#22d3ee" fill-opacity="0.18" stroke="#22d3ee" stroke-width="1.5"/><text x="334.5" y="62" text-anchor="middle" font-size="11" font-weight="700" fill="#22d3ee" font-family="Inter, system-ui, sans-serif">L2</text><circle cx="334.5" cy="88" r="9" fill="#7c5cff" fill-opacity="0.9"/><text x="334.5" y="92" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0b10" font-family="Inter, system-ui, sans-serif">D1</text><rect x="356.5" y="30" width="33" height="84" rx="7" fill="#34d399" fill-opacity="0.18" stroke="#34d399" stroke-width="1.5"/><text x="373.0" y="62" text-anchor="middle" font-size="11" font-weight="700" fill="#34d399" font-family="Inter, system-ui, sans-serif">L3</text><circle cx="373.0" cy="88" r="9" fill="#fbbf24" fill-opacity="0.9"/><text x="373.0" y="92" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0b10" font-family="Inter, system-ui, sans-serif">D3</text><rect x="395.0" y="30" width="33" height="84" rx="7" fill="#7c5cff" fill-opacity="0.18" stroke="#7c5cff" stroke-width="1.5"/><text x="411.5" y="62" text-anchor="middle" font-size="11" font-weight="700" fill="#7c5cff" font-family="Inter, system-ui, sans-serif">L1</text><circle cx="411.5" cy="88" r="9" fill="#22d3ee" fill-opacity="0.9"/><text x="411.5" y="92" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0b10" font-family="Inter, system-ui, sans-serif">D2</text><rect x="433.5" y="30" width="33" height="84" rx="7" fill="#22d3ee" fill-opacity="0.18" stroke="#22d3ee" stroke-width="1.5"/><text x="450.0" y="62" text-anchor="middle" font-size="11" font-weight="700" fill="#22d3ee" font-family="Inter, system-ui, sans-serif">L2</text><circle cx="450.0" cy="88" r="9" fill="#ff5fa2" fill-opacity="0.9"/><text x="450.0" y="92" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0b10" font-family="Inter, system-ui, sans-serif">D4</text><text x="235" y="140" text-anchor="middle" font-size="11.5" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">L = lâmina de irrigação · D = dose de N</text></svg>
+          <figcaption>Cada combinação lâmina × dose é um tratamento. As 12 são sorteadas juntas dentro do bloco,
+          como se fossem 12 tratamentos quaisquer.</figcaption>
+        </figure>
+        <figure class="figure figure-md">
+          <h4>Parcela subdividida em DBC · 3 parcelas com 4 subparcelas</h4>
+          <svg viewBox="0 0 470 150" role="img" aria-labelledby="t-split"><title id="t-split">Um bloco de parcela subdividida: três parcelas grandes com as lâminas de irrigação, cada uma dividida em quatro subparcelas com as doses sorteadas dentro dela.</title><text x="10" y="16" font-size="12" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">Bloco 1 — 3 parcelas (lâminas), cada uma com 4 subparcelas (doses)</text><rect x="10" y="26" width="146" height="92" rx="10" fill="#22d3ee" fill-opacity="0.12" stroke="#22d3ee" stroke-width="2"/><text x="83" y="44" text-anchor="middle" font-size="12" font-weight="700" fill="#22d3ee" font-family="Inter, system-ui, sans-serif">L2</text><rect x="18.0" y="54" width="29" height="56" rx="6" fill="rgba(255,255,255,0.04)" stroke="#22d3ee" stroke-opacity="0.6"/><circle cx="32.5" cy="82" r="9" fill="#22d3ee" fill-opacity="0.9"/><text x="32.5" y="86" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0b10" font-family="Inter, system-ui, sans-serif">D2</text><rect x="51.5" y="54" width="29" height="56" rx="6" fill="rgba(255,255,255,0.04)" stroke="#22d3ee" stroke-opacity="0.6"/><circle cx="66.0" cy="82" r="9" fill="#ff5fa2" fill-opacity="0.9"/><text x="66.0" y="86" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0b10" font-family="Inter, system-ui, sans-serif">D4</text><rect x="85.0" y="54" width="29" height="56" rx="6" fill="rgba(255,255,255,0.04)" stroke="#22d3ee" stroke-opacity="0.6"/><circle cx="99.5" cy="82" r="9" fill="#7c5cff" fill-opacity="0.9"/><text x="99.5" y="86" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0b10" font-family="Inter, system-ui, sans-serif">D1</text><rect x="118.5" y="54" width="29" height="56" rx="6" fill="rgba(255,255,255,0.04)" stroke="#22d3ee" stroke-opacity="0.6"/><circle cx="133.0" cy="82" r="9" fill="#fbbf24" fill-opacity="0.9"/><text x="133.0" y="86" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0b10" font-family="Inter, system-ui, sans-serif">D3</text><rect x="164" y="26" width="146" height="92" rx="10" fill="#34d399" fill-opacity="0.12" stroke="#34d399" stroke-width="2"/><text x="237" y="44" text-anchor="middle" font-size="12" font-weight="700" fill="#34d399" font-family="Inter, system-ui, sans-serif">L3</text><rect x="172.0" y="54" width="29" height="56" rx="6" fill="rgba(255,255,255,0.04)" stroke="#34d399" stroke-opacity="0.6"/><circle cx="186.5" cy="82" r="9" fill="#fbbf24" fill-opacity="0.9"/><text x="186.5" y="86" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0b10" font-family="Inter, system-ui, sans-serif">D3</text><rect x="205.5" y="54" width="29" height="56" rx="6" fill="rgba(255,255,255,0.04)" stroke="#34d399" stroke-opacity="0.6"/><circle cx="220.0" cy="82" r="9" fill="#7c5cff" fill-opacity="0.9"/><text x="220.0" y="86" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0b10" font-family="Inter, system-ui, sans-serif">D1</text><rect x="239.0" y="54" width="29" height="56" rx="6" fill="rgba(255,255,255,0.04)" stroke="#34d399" stroke-opacity="0.6"/><circle cx="253.5" cy="82" r="9" fill="#ff5fa2" fill-opacity="0.9"/><text x="253.5" y="86" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0b10" font-family="Inter, system-ui, sans-serif">D4</text><rect x="272.5" y="54" width="29" height="56" rx="6" fill="rgba(255,255,255,0.04)" stroke="#34d399" stroke-opacity="0.6"/><circle cx="287.0" cy="82" r="9" fill="#22d3ee" fill-opacity="0.9"/><text x="287.0" y="86" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0b10" font-family="Inter, system-ui, sans-serif">D2</text><rect x="318" y="26" width="146" height="92" rx="10" fill="#7c5cff" fill-opacity="0.12" stroke="#7c5cff" stroke-width="2"/><text x="391" y="44" text-anchor="middle" font-size="12" font-weight="700" fill="#7c5cff" font-family="Inter, system-ui, sans-serif">L1</text><rect x="326.0" y="54" width="29" height="56" rx="6" fill="rgba(255,255,255,0.04)" stroke="#7c5cff" stroke-opacity="0.6"/><circle cx="340.5" cy="82" r="9" fill="#7c5cff" fill-opacity="0.9"/><text x="340.5" y="86" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0b10" font-family="Inter, system-ui, sans-serif">D1</text><rect x="359.5" y="54" width="29" height="56" rx="6" fill="rgba(255,255,255,0.04)" stroke="#7c5cff" stroke-opacity="0.6"/><circle cx="374.0" cy="82" r="9" fill="#fbbf24" fill-opacity="0.9"/><text x="374.0" y="86" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0b10" font-family="Inter, system-ui, sans-serif">D3</text><rect x="393.0" y="54" width="29" height="56" rx="6" fill="rgba(255,255,255,0.04)" stroke="#7c5cff" stroke-opacity="0.6"/><circle cx="407.5" cy="82" r="9" fill="#22d3ee" fill-opacity="0.9"/><text x="407.5" y="86" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0b10" font-family="Inter, system-ui, sans-serif">D2</text><rect x="426.5" y="54" width="29" height="56" rx="6" fill="rgba(255,255,255,0.04)" stroke="#7c5cff" stroke-opacity="0.6"/><circle cx="441.0" cy="82" r="9" fill="#ff5fa2" fill-opacity="0.9"/><text x="441.0" y="86" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0b10" font-family="Inter, system-ui, sans-serif">D4</text><text x="235" y="140" text-anchor="middle" font-size="11.5" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">Dois sorteios: lâminas nas parcelas, doses dentro de cada parcela</text></svg>
+          <figcaption>Primeiro sorteiam-se as lâminas nas 3 parcelas do bloco; depois, dentro de cada parcela, as
+          4 doses. Cada lâmina fica numa área contínua, o que torna a irrigação viável na prática.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="guide" id="quando">
+    <div class="container guide-article">
+      <span class="guide-number">02</span>
+      <div class="section-head">
+        <h2>Quando usar cada um</h2>
+      </div>
+
+      <div class="summary-grid">
+        <div class="summary-card"><h4>Fatorial</h4><p>Os dois fatores podem ser aplicados parcela a parcela sem dificuldade: cultivar × dose de adubo, produto × concentração, substrato × recipiente.</p></div>
+        <div class="summary-card"><h4>Parcela subdividida</h4><p>Um fator exige área grande ou é difícil de variar entre parcelas vizinhas: irrigação, preparo do solo, época de semeadura, cobertura do solo, temperatura da câmara.</p></div>
+      </div>
+      <p class="guide-p">
+        Também é parcela subdividida quando a mesma parcela é avaliada várias vezes (dias após a semeadura,
+        cortes sucessivos, anos). É a chamada <strong>parcela subdividida no tempo</strong>: o tratamento fica na
+        parcela e o tempo entra como subparcela, porque as medições da mesma parcela não são independentes.
+      </p>
+    </div>
+  </section>
+
+  <section class="guide" id="anova">
+    <div class="container guide-article">
+      <span class="guide-number">03</span>
+      <div class="section-head">
+        <h2>Como isso muda a ANOVA</h2>
+        <p class="section-lead">Mesmas 48 observações, mesma soma total de graus de liberdade. O que muda é quantos resíduos existem.</p>
+      </div>
+
+      <div class="compare-grid">
+        <figure class="figure">
+          <h4>Fatorial em DBC</h4>
+          <div class="table-scroll"><table class="data-table">
+            <thead><tr><th>FV</th><th class="num">GL</th></tr></thead>
+            <tbody>
+              <tr><td>Blocos</td><td class="num">3</td></tr>
+              <tr><td>Lâmina (L)</td><td class="num">2</td></tr>
+              <tr><td>Dose (D)</td><td class="num">3</td></tr>
+              <tr><td>L × D</td><td class="num">6</td></tr>
+              <tr class="row-hl"><td>Resíduo</td><td class="num">33</td></tr>
+              <tr class="row-total"><td>Total</td><td class="num">47</td></tr>
+            </tbody>
+          </table></div>
+          <figcaption>Um resíduo só, com 33 GL, que testa todos os efeitos.</figcaption>
+        </figure>
+        <figure class="figure">
+          <h4>Parcela subdividida em DBC</h4>
+          <div class="table-scroll"><table class="data-table">
+            <thead><tr><th>FV</th><th class="num">GL</th></tr></thead>
+            <tbody>
+              <tr><td>Blocos</td><td class="num">3</td></tr>
+              <tr><td>Lâmina (L)</td><td class="num">2</td></tr>
+              <tr class="row-hl"><td>Resíduo (a)</td><td class="num">6</td></tr>
+              <tr><td>Dose (D)</td><td class="num">3</td></tr>
+              <tr><td>L × D</td><td class="num">6</td></tr>
+              <tr class="row-hl"><td>Resíduo (b)</td><td class="num">27</td></tr>
+              <tr class="row-total"><td>Total</td><td class="num">47</td></tr>
+            </tbody>
+          </table></div>
+          <figcaption>Dois resíduos: o (a), entre parcelas, testa a lâmina; o (b), entre subparcelas, testa a dose e a interação.</figcaption>
+        </figure>
+      </div>
+      <p class="guide-p" style="margin-top:22px">
+        Na parcela subdividida, o fator da parcela é testado com apenas 6 GL de resíduo: é estimado com
+        <strong>menos precisão</strong>. Em troca, o fator da subparcela e a interação ficam mais precisos, porque
+        subparcelas vizinhas são muito parecidas. Por isso a regra prática: <strong>na parcela, o fator difícil
+        de aplicar ou o de menor interesse; na subparcela, o fator que você mais quer comparar</strong>.
+      </p>
+      <div class="callout callout-bad">
+        <span class="callout-title">Erro comum</span>
+        Analisar uma parcela subdividida como se fosse fatorial. O fator da parcela passa a ser testado com o
+        resíduo das subparcelas, que é menor e tem mais GL, e aparecem diferenças que não existem.
+      </div>
+    </div>
+  </section>
+
+  <section class="guide" id="no-r">
+    <div class="container guide-article">
+      <span class="guide-number">04</span>
+      <div class="section-head">
+        <h2>No R</h2>
+      </div>
+
+      <pre class="code-block"><code>dados$bloco  &lt;- factor(dados$bloco)
+dados$lamina &lt;- factor(dados$lamina)
+dados$dose_f &lt;- factor(dados$dose)
+
+# Fatorial em DBC: um único resíduo
+fatorial &lt;- aov(prod ~ bloco + lamina * dose_f, data = dados)
+summary(fatorial)
+
+# Parcela subdividida em DBC: o Error() diz onde está a parcela
+subdividida &lt;- aov(prod ~ lamina * dose_f + Error(bloco / lamina), data = dados)
+summary(subdividida)   # dois quadros: "bloco:lamina" (resíduo a) e "Within" (resíduo b)
+
+# Em português, com desdobramento pronto:
+# ExpDes.pt::psub2.dbc(dados$lamina, dados$dose_f, dados$bloco, dados$prod)</code></pre>
+      <p class="guide-p">
+        Se preferir não montar o modelo à mão, o app <a href="index.html#apps">Ranova</a> faz DIC, DBC, fatorial e
+        parcelas subdivididas com o resíduo certo em cada teste F.
+      </p>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="container guide-article">
+      <nav class="article-nav" aria-label="Navegação entre artigos">
+        <a href="guia-dic-dbc.html"><small>← Anterior</small><strong>DIC ou DBC?</strong></a><a href="guia-repeticao.html" class="is-next"><small>Próximo →</small><strong>Repetição de verdade × pseudorrepetição</strong></a>
+      </nav>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" id="contato">
+  <div class="container footer-inner">
+    <div>
+      <p class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="38" height="38" /><span>Marlenildo<span class="brand-dot">.online</span></span></p>
+      <p class="footer-note">Apps em R &amp; Shiny para pesquisa e gestão de dados.</p>
+      <ul class="social-icons" aria-label="Perfis profissionais e acadêmicos">
+        <li>
+          <a href="https://github.com/Marlenildo" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://orcid.org/0000-0001-7449-6916" target="_blank" rel="noopener" aria-label="ORCID">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" font-size="10" font-weight="700" fill="currentColor" stroke="none" font-family="Arial, sans-serif">iD</text></svg>
+          </a>
+        </li>
+        <li>
+          <a href="http://lattes.cnpq.br/6931262930637371" target="_blank" rel="noopener" aria-label="Currículo Lattes">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="mailto:marlenildo@gmail.com" aria-label="E-mail">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2.5"/><path d="m3 6.5 9 6.5 9-6.5"/></svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <p class="footer-copy">&copy; <span id="year"></span> Marlenildo. Todos os direitos reservados.</p>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Como ler a tabela da ANOVA — Marlenildo</title>
+<meta name="description" content="Guia para interpretar a tabela da análise de variância: FV, GL, SQ, QM, teste F, valor-p e CV, com exemplo da saída do R e como redigir o resultado." />
+<meta property="og:title" content="Como ler a tabela da ANOVA" />
+<meta property="og:description" content="Guia para interpretar a tabela da análise de variância: FV, GL, SQ, QM, teste F, valor-p e CV, com exemplo da saída do R e como redigir o resultado." />
+<meta property="og:type" content="article" />
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/style.css" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130340973057636" crossorigin="anonymous"></script>
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+<div class="bg-glow" aria-hidden="true"></div>
+
+<header class="site-header">
+  <nav class="nav container">
+    <a href="index.html#topo" class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="46" height="46" /><span>Marlenildo<span class="brand-dot">.online</span></span></a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#apps">Apps</a></li>
+      <li><a href="guia.html" aria-current="page">Guia</a></li>
+      <li><a href="index.html#sobre">Sobre</a></li>
+      <li><a href="index.html#contato">Contato</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="conteudo">
+
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <nav class="breadcrumb" aria-label="Você está em"><a href="guia.html">Guia</a><span aria-hidden="true">/</span><span>Etapa 5 · Interpretação</span></nav>
+      <h1>Como ler a <span class="text-gradient">tabela da ANOVA</span>.</h1>
+      <p class="hero-lead">Graus de liberdade, somas de quadrados, quadrados médios, F e valor-p: o que cada coluna diz e como transformar isso em texto de resultado.</p>
+      <ul class="article-meta">
+        <li>Etapa 5 · Interpretação</li>
+        <li>6 min de leitura</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="guide" id="saida">
+    <div class="container guide-article">
+      <span class="guide-number">01</span>
+      <div class="section-head">
+        <h2>A saída do R</h2>
+        <p class="section-lead">O exemplo é o DBC do guia de DIC e DBC: 5 cultivares, 4 blocos, produtividade em t/ha.</p>
+      </div>
+
+      <pre class="code-block"><code>&gt; summary(aov(produtividade ~ bloco + cultivar, data = dados))
+
+            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+bloco        3  8.373  2.7912   55.92 2.52e-07 ***
+cultivar     4  5.457  1.3642   27.33 6.00e-06 ***
+Residuals   12  0.599  0.0499                     
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</code></pre>
+      <p class="guide-p">
+        Outros programas (SISVAR, ExpDes.pt, Excel) mostram a mesma tabela com nomes em português:
+        FV, GL, SQ, QM, Fc e Pr&gt;Fc. Vamos coluna por coluna.
+      </p>
+    </div>
+  </section>
+
+  <section class="guide" id="colunas">
+    <div class="container guide-article">
+      <span class="guide-number">02</span>
+      <div class="section-head">
+        <h2>Coluna por coluna</h2>
+      </div>
+
+      <div class="table-scroll"><table class="data-table">
+        <thead><tr><th>Coluna</th><th>O que é</th><th>No exemplo</th></tr></thead>
+        <tbody>
+          <tr><td class="col-a">FV</td><td>Fonte de variação: de onde vem cada parte da variação dos dados</td><td>bloco, cultivar, resíduo</td></tr>
+          <tr><td class="col-a">GL (Df)</td><td>Graus de liberdade: nº de níveis − 1; o resíduo fica com o que sobra</td><td>3, 4 e 12 (total 19)</td></tr>
+          <tr><td class="col-a">SQ (Sum Sq)</td><td>Soma de quadrados: quanto da variação total cada fonte explica</td><td>8,37 + 5,46 + 0,60 = 14,43</td></tr>
+          <tr><td class="col-a">QM (Mean Sq)</td><td>Quadrado médio = SQ / GL. O QM do resíduo é a variância do erro experimental</td><td>5,457 / 4 = 1,364</td></tr>
+          <tr><td class="col-a">F (F value)</td><td>QM da fonte / QM do resíduo. Quanto maior, mais a fonte se destaca do acaso</td><td>1,364 / 0,0499 = 27,3</td></tr>
+          <tr><td class="col-a">p (Pr&gt;F)</td><td>Probabilidade de um F desse tamanho aparecer se não houvesse efeito nenhum</td><td>0,000006</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout" style="margin-top:22px">
+        <span class="callout-title">A ideia em uma frase</span>
+        O teste F compara a variação <strong>entre</strong> as médias dos tratamentos com a variação
+        <strong>dentro</strong> deles (o resíduo). Se as cultivares fossem iguais, o F ficaria perto de 1.
+      </div>
+    </div>
+  </section>
+
+  <section class="guide" id="ler">
+    <div class="container guide-article">
+      <span class="guide-number">03</span>
+      <div class="section-head">
+        <h2>Como tirar a conclusão</h2>
+      </div>
+
+      <ol class="guide-steps">
+        <li><strong>Olhe a linha do tratamento.</strong> p = 0,000006 é menor que 0,05: rejeita-se a hipótese de que todas as cultivares têm a mesma média. Equivale a dizer que o F calculado (27,3) é maior que o F tabelado a 5% com 4 e 12 GL (3,26).</li>
+        <li><strong>A ANOVA diz <em>que</em> há diferença, não <em>onde</em>.</strong> Para saber quais cultivares diferem, vem o teste de médias (Tukey, Scott-Knott) ou, se o fator for quantitativo, a <a href="guia-tukey-ou-regressao.html">regressão</a>.</li>
+        <li><strong>Bloco significativo é boa notícia:</strong> quer dizer que havia heterogeneidade na área e que os blocos a tiraram do resíduo. Ele não é testado para conclusões sobre os tratamentos.</li>
+        <li><strong>Olhe o CV</strong> (√QM resíduo / média × 100): 3,7% aqui. Ele resume a precisão do experimento (veja <a href="guia-cv.html">CV alto é problema?</a>).</li>
+        <li><strong>Em fatorial, olhe primeiro a interação.</strong> Se for significativa, os efeitos principais sozinhos contam uma história incompleta (veja <a href="guia-interacao.html">interação significativa</a>).</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="guide" id="escrever">
+    <div class="container guide-article">
+      <span class="guide-number">04</span>
+      <div class="section-head">
+        <h2>Como escrever no trabalho</h2>
+      </div>
+
+      <div class="compare-grid">
+        <figure class="figure">
+          <span class="tag-good">No texto</span>
+          <p class="guide-p" style="margin:0">“A produtividade diferiu entre as cultivares (F<sub>4,12</sub> = 27,3; p &lt; 0,001), com destaque para D e B (Tabela 2).”</p>
+        </figure>
+        <figure class="figure">
+          <span class="tag-good">Na tabela resumo</span>
+          <div class="table-scroll"><table class="data-table">
+            <thead><tr><th>FV</th><th class="num">GL</th><th class="num">QM</th></tr></thead>
+            <tbody>
+              <tr><td>Bloco</td><td class="num">3</td><td class="num">2,791**</td></tr>
+              <tr><td>Cultivar</td><td class="num">4</td><td class="num">1,364**</td></tr>
+              <tr><td>Resíduo</td><td class="num">12</td><td class="num">0,050</td></tr>
+              <tr class="row-total"><td>CV (%)</td><td class="num"></td><td class="num">3,7</td></tr>
+            </tbody>
+          </table></div>
+          <figcaption>** significativo a 1%; * a 5%; ns não significativo.</figcaption>
+        </figure>
+      </div>
+      <ul class="check-list" style="margin-top:22px">
+        <li><strong>Informe o valor-p exato</strong> (ou p &lt; 0,001) quando a revista permitir; o asterisco sozinho esconde informação.</li>
+        <li><strong>“Não significativo” não é “igual”.</strong> Quer dizer que o experimento não detectou diferença, o que depende também do número de repetições e do CV.</li>
+        <li><strong>Significativo não é importante.</strong> Uma diferença de 2% pode ser significativa num experimento muito preciso e irrelevante no campo. Mostre as médias e discuta a magnitude.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="container guide-article">
+      <nav class="article-nav" aria-label="Navegação entre artigos">
+        <a href="r-para-pesquisa.html"><small>← Anterior</small><strong>Primeiros passos no R</strong></a><a href="guia-interacao.html" class="is-next"><small>Próximo →</small><strong>Interação significativa: e agora?</strong></a>
+      </nav>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" id="contato">
+  <div class="container footer-inner">
+    <div>
+      <p class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="38" height="38" /><span>Marlenildo<span class="brand-dot">.online</span></span></p>
+      <p class="footer-note">Apps em R &amp; Shiny para pesquisa e gestão de dados.</p>
+      <ul class="social-icons" aria-label="Perfis profissionais e acadêmicos">
+        <li>
+          <a href="https://github.com/Marlenildo" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://orcid.org/0000-0001-7449-6916" target="_blank" rel="noopener" aria-label="ORCID">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" font-size="10" font-weight="700" fill="currentColor" stroke="none" font-family="Arial, sans-serif">iD</text></svg>
+          </a>
+        </li>
+        <li>
+          <a href="http://lattes.cnpq.br/6931262930637371" target="_blank" rel="noopener" aria-label="Currículo Lattes">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="mailto:marlenildo@gmail.com" aria-label="E-mail">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2.5"/><path d="m3 6.5 9 6.5 9-6.5"/></svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <p class="footer-copy">&copy; <span id="year"></span> Marlenildo. Todos os direitos reservados.</p>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
