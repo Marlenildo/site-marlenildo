@@ -4,9 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Repetição e pseudorrepetição em experimentos — Marlenildo</title>
-<meta name="description" content="O que é unidade experimental, como reconhecer pseudorrepetição em vasos, bandejas, parcelas e tanques, e como tratar subamostras antes da ANOVA." />
+<meta name="description" content="O que é unidade experimental, como reconhecer pseudorrepetição e como analisar subamostras no R: média por parcela, ANOVA com dois resíduos e modelo misto, com exemplo e interpretação." />
 <meta property="og:title" content="Repetição de verdade × pseudorrepetição" />
-<meta property="og:description" content="O que é unidade experimental, como reconhecer pseudorrepetição em vasos, bandejas, parcelas e tanques, e como tratar subamostras antes da ANOVA." />
+<meta property="og:description" content="O que é unidade experimental, como reconhecer pseudorrepetição e como analisar subamostras no R: média por parcela, ANOVA com dois resíduos e modelo misto, com exemplo e interpretação." />
 <meta property="og:type" content="article" />
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -41,10 +41,10 @@
     <div class="container page-hero-inner">
       <nav class="breadcrumb" aria-label="Você está em"><a href="guia.html">Guia</a><span aria-hidden="true">/</span><span>Etapa 1 · Planejamento</span></nav>
       <h1>Repetição de verdade × <span class="text-gradient">pseudorrepetição</span>.</h1>
-      <p class="hero-lead">Medir dez plantas da mesma parcela não é ter dez repetições. Como reconhecer a unidade experimental e o que fazer com as subamostras.</p>
+      <p class="hero-lead">Medir dez plantas da mesma parcela não é ter dez repetições. Como reconhecer a unidade experimental e analisar as subamostras do jeito certo no R, com exemplo e interpretação.</p>
       <ul class="article-meta">
         <li>Etapa 1 · Planejamento</li>
-        <li>6 min de leitura</li>
+        <li>14 min de leitura</li>
       </ul>
     </div>
   </section>
@@ -150,27 +150,258 @@
       </div>
 
       <p class="guide-p">
-        Registre cada planta na planilha (uma linha por planta, com a coluna <code>planta</code>), e antes da ANOVA
-        resuma para <strong>uma linha por parcela</strong>, com a média das plantas:
+        Registre cada planta na planilha (uma linha por planta, com uma coluna que diga de qual parcela ela veio).
+        Na análise, o modelo tem que “saber” que as plantas estão agrupadas na parcela. Há três jeitos corretos
+        de fazer isso, e em dados balanceados os três dão <strong>o mesmo teste F para os tratamentos</strong>:
       </p>
-      <pre class="code-block"><code>library(dplyr)
-
-por_parcela &lt;- dados |&gt;
-  group_by(bloco, tratamento) |&gt;            # identifica a parcela
-  summarise(altura = mean(altura, na.rm = TRUE), .groups = "drop")
-
-modelo &lt;- aov(altura ~ factor(bloco) + tratamento, data = por_parcela)
-summary(modelo)   # GL do resíduo = (t - 1)(b - 1), não o nº de plantas</code></pre>
-      <p class="guide-p">
-        Alternativa mais completa: um modelo misto com a parcela como efeito aleatório
-        (<code>lme4::lmer(altura ~ tratamento + (1 | bloco/parcela))</code>). Para dados balanceados, a média por
-        parcela dá o mesmo teste F para tratamentos e é bem mais simples.
-      </p>
-      <ul class="check-list">
+      <div class="summary-grid">
+        <div class="summary-card"><h4>1 · Média por parcela</h4><p>Resume as plantas em uma linha por parcela e roda a ANOVA de sempre. O mais simples e o mais fácil de explicar no trabalho.</p></div>
+        <div class="summary-card"><h4>2 · ANOVA com dois resíduos</h4><p>Usa todas as plantas, mas separa o erro entre parcelas (que testa os tratamentos) do erro entre plantas da mesma parcela. É o “erro de amostragem” dos livros clássicos.</p></div>
+        <div class="summary-card"><h4>3 · Modelo misto</h4><p>A parcela entra como efeito aleatório. É o mais flexível: lida bem com número diferente de plantas por parcela e com parcelas perdidas.</p></div>
+      </div>
+      <ul class="check-list" style="margin-top:22px">
         <li><strong>Conte repetições pelas unidades que receberam o tratamento</strong>, não pelas medições.</li>
         <li><strong>Guarde as subamostras na planilha</strong>, com uma coluna que diga de qual parcela vieram.</li>
         <li><strong>Resuma por parcela antes da ANOVA</strong>, ou use um modelo que saiba que elas estão agrupadas.</li>
       </ul>
+    </div>
+  </section>
+
+  <section class="guide" id="exemplo">
+    <div class="container guide-article">
+      <span class="guide-number">05</span>
+      <div class="section-head">
+        <h2>Exemplo completo no R</h2>
+        <p class="section-lead">Quatro cultivares de melão em DBC com 4 blocos. Em cada parcela, 5 frutos tiveram o teor de sólidos solúveis (°Brix) medido. São 80 frutos, mas só 16 parcelas.</p>
+      </div>
+
+      <p class="guide-p">A planilha tem uma linha por fruto:</p>
+      <div class="table-scroll"><table class="data-table">
+        <thead><tr><th class="num">bloco</th><th>cultivar</th><th class="num">fruto</th><th class="num">brix</th></tr></thead>
+        <tbody>
+          <tr><td class="num">1</td><td>Gália</td><td class="num">1</td><td class="num">10.4</td></tr>
+          <tr><td class="num">1</td><td>Gália</td><td class="num">2</td><td class="num">9.4</td></tr>
+          <tr><td class="num">1</td><td>Gália</td><td class="num">3</td><td class="num">10.9</td></tr>
+          <tr><td class="num">1</td><td>Gália</td><td class="num">4</td><td class="num">10.6</td></tr>
+          <tr><td class="num">1</td><td>Gália</td><td class="num">5</td><td class="num">11.3</td></tr>
+          <tr><td class="num">1</td><td>Amarelo</td><td class="num">1</td><td class="num">11.7</td></tr>
+          <tr><td class="num">…</td><td>…</td><td class="num">…</td><td class="num">…</td></tr>
+        </tbody>
+        <caption>Dados fictícios, gerados para o exemplo. A parcela é identificada pela combinação bloco + cultivar.</caption>
+      </table></div>
+
+      <pre class="code-block"><code>library(dplyr)
+
+dados &lt;- read.csv("melao_brix.csv")
+dados$bloco    &lt;- factor(dados$bloco)      # bloco é fator, não número
+dados$cultivar &lt;- factor(dados$cultivar)</code></pre>
+
+      <h3 class="guide-h3">O jeito errado: cada fruto como repetição</h3>
+      <pre class="code-block" data-lang="output"><code>&gt; summary(aov(brix ~ bloco + cultivar, data = dados))
+            Df Sum Sq Mean Sq F value   Pr(&gt;F)
+bloco        3  9.786   3.262   7.811 0.000136 ***
+cultivar     3 18.769   6.256  14.981 1.08e-07 ***
+Residuals   73 30.485   0.418                     </code></pre>
+      <p class="guide-p">
+        O sinal de alarme está nos graus de liberdade: <strong>73 GL no resíduo</strong> para um experimento com
+        16 parcelas. Num DBC com 4 tratamentos e 4 blocos o resíduo tem (4 − 1)(4 − 1) = <strong>9 GL</strong>.
+        Os 64 GL que sobram são a variação entre frutos da mesma parcela, que não tem nada a ver com o
+        efeito da cultivar.
+      </p>
+
+      <h3 class="guide-h3">Jeito 1: média por parcela</h3>
+      <pre class="code-block"><code>por_parcela &lt;- dados |&gt;
+  group_by(bloco, cultivar) |&gt;               # uma linha por parcela
+  summarise(brix = mean(brix, na.rm = TRUE), .groups = "drop")
+
+modelo &lt;- aov(brix ~ bloco + cultivar, data = por_parcela)
+summary(modelo)</code></pre>
+      <pre class="code-block" data-lang="output"><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
+bloco        3  1.957  0.6524   2.678 0.1101
+cultivar     3  3.754  1.2512   5.137 0.0242 *
+Residuals    9  2.192  0.2436                 </code></pre>
+      <p class="guide-p">
+        Agora são 16 linhas e os GL fecham: 3 + 3 + 9 = 15 = 16 − 1. O CV fica em 4,8%.
+      </p>
+
+      <h3 class="guide-h3">Jeito 2: ANOVA com dois resíduos, usando todos os frutos</h3>
+      <pre class="code-block"><code>modelo2 &lt;- aov(brix ~ bloco + cultivar + Error(bloco:cultivar), data = dados)
+summary(modelo2)</code></pre>
+      <pre class="code-block" data-lang="output"><code>Error: bloco:cultivar
+          Df Sum Sq Mean Sq F value Pr(&gt;F)
+bloco      3  9.786   3.262   2.678 0.1101
+cultivar   3 18.769   6.256   5.137 0.0242 *
+Residuals  9 10.961   1.218
+
+Error: Within
+          Df Sum Sq Mean Sq F value Pr(&gt;F)
+Residuals 64  19.52  0.3051               </code></pre>
+      <p class="guide-p">
+        O <code>Error(bloco:cultivar)</code> diz ao R que a parcela é a combinação bloco + cultivar. A saída
+        vem em dois andares: o de cima (<em>entre parcelas</em>) tem o resíduo com 9 GL, que é o que testa a
+        cultivar; o de baixo (<em>Within</em>, entre frutos da mesma parcela) tem os 64 GL da subamostragem.
+        Repare que o F (5,137) e o p (0,0242) são idênticos aos do jeito 1: as somas de quadrados ficam
+        5 vezes maiores porque cada parcela conta com 5 frutos, mas as razões não mudam. O R pode avisar
+        <code>Error() model is singular</code>; aqui o aviso é inofensivo e vem de o bloco aparecer também
+        dentro do termo da parcela.
+      </p>
+
+      <h3 class="guide-h3">Jeito 3: modelo misto</h3>
+      <pre class="code-block"><code>library(lmerTest)   # carrega o lme4 e acrescenta os valores-p
+
+modelo3 &lt;- lmer(brix ~ bloco + cultivar + (1 | bloco:cultivar), data = dados)
+anova(modelo3)
+VarCorr(modelo3)</code></pre>
+      <pre class="code-block" data-lang="output"><code>Type III Analysis of Variance Table with Satterthwaite's method
+         Sum Sq Mean Sq NumDF DenDF F value  Pr(&gt;F)
+bloco     2.451   0.817     3     9  2.6781 0.11014
+cultivar  4.701   1.567     3     9  5.1367 0.02424 *
+
+ Groups         Name        Variance
+ bloco:cultivar (Intercept) 0.18258
+ Residual                   0.30506 </code></pre>
+      <p class="guide-p">
+        Mesmo F, mesmo p, e o <code>DenDF = 9</code> confirma que o modelo testou a cultivar contra a variação
+        entre parcelas. O <code>(1 | bloco:cultivar)</code> é a forma de dizer “os frutos da mesma parcela
+        compartilham um efeito em comum”. De brinde, o <code>VarCorr</code> separa a variação em duas partes,
+        que vamos usar na seção 07.
+      </p>
+
+      <h3 class="guide-h3">Teste de médias</h3>
+      <pre class="code-block"><code>library(emmeans)
+library(multcomp)   # para a função cld()
+
+medias &lt;- emmeans(modelo3, ~ cultivar)   # funciona igual com o 'modelo' do jeito 1
+cld(medias, Letters = letters, adjust = "tukey")</code></pre>
+      <p class="guide-p">
+        Compare as letras do Tukey nas duas análises. As médias são as mesmas, o que muda é o erro usado para
+        compará-las:
+      </p>
+      <div class="table-scroll"><table class="data-table">
+        <thead><tr><th>Cultivar</th><th class="num">°Brix</th><th class="num">Errado (73 GL)</th><th class="num">Correto (9 GL)</th></tr></thead>
+        <tbody>
+          <tr><td>Gália</td><td class="num">10,62</td><td class="num">a</td><td class="num">a</td></tr>
+          <tr><td>Pele de sapo</td><td class="num">10,50</td><td class="num">a</td><td class="num">a</td></tr>
+          <tr class="row-hl"><td>Amarelo</td><td class="num">10,40</td><td class="num">a</td><td class="num">ab</td></tr>
+          <tr><td>Cantaloupe</td><td class="num">9,40</td><td class="num">b</td><td class="num">b</td></tr>
+          <tr class="row-total"><td>Erro-padrão da média</td><td class="num"></td><td class="num cell-bad">0,145</td><td class="num">0,247</td></tr>
+          <tr class="row-total"><td>DMS do Tukey (5%)</td><td class="num"></td><td class="num cell-bad">0,54</td><td class="num">1,09</td></tr>
+        </tbody>
+        <caption>Letras reordenadas da maior para a menor média, como se costuma publicar. Médias seguidas da mesma letra não diferem pelo Tukey a 5%.</caption>
+      </table></div>
+    </div>
+  </section>
+
+  <section class="guide" id="interpretacao">
+    <div class="container guide-article">
+      <span class="guide-number">06</span>
+      <div class="section-head">
+        <h2>Interpretando o resultado</h2>
+        <p class="section-lead">A conclusão principal se mantém, mas duas afirmações da análise errada não se sustentam.</p>
+      </div>
+
+      <ol class="guide-steps">
+        <li><strong>Há diferença entre cultivares</strong> (F<sub>3,9</sub> = 5,14; p = 0,024). Isso as duas análises
+        dizem, mas a errada exagera a evidência: p = 0,0000001 contra p = 0,024. Com dados um pouco mais
+        ruidosos, a análise errada daria “significativo” e a correta, não.</li>
+        <li><strong>O Amarelo não se separa do Cantaloupe.</strong> A análise errada afirmava que sim. A diferença
+        de 1 °Brix entre eles é menor que a DMS correta (1,09), que tem que considerar a variação entre
+        parcelas, e não só entre frutos. Pelo teste pareado, p = 0,075.</li>
+        <li><strong>O bloco deixa de ser significativo</strong> (p = 0,11 contra p = 0,0001). Na análise errada, qualquer
+        diferença entre parcelas parece “efeito de bloco” porque o resíduo só enxerga os frutos vizinhos.</li>
+        <li><strong>O erro-padrão real é 70% maior</strong> (0,247 contra 0,145). Tudo que depende dele, como barras
+        de erro no gráfico, intervalos de confiança e DMS, estava subestimado.</li>
+      </ol>
+
+      <div class="compare-grid" style="margin-top:22px">
+        <figure class="figure">
+          <span class="tag-bad">Como não escrever</span>
+          <p class="guide-p" style="margin:0">“Os frutos de Gália, Pele de sapo e Amarelo apresentaram teor de sólidos solúveis superior ao do Cantaloupe (F<sub>3,73</sub> = 14,98; p &lt; 0,001; n = 20 frutos por cultivar).”</p>
+        </figure>
+        <figure class="figure">
+          <span class="tag-good">Como escrever</span>
+          <p class="guide-p" style="margin:0">“O teor de sólidos solúveis diferiu entre cultivares (F<sub>3,9</sub> = 5,14; p = 0,024). Gália (10,6 °Brix) e Pele de sapo (10,5 °Brix) superaram o Cantaloupe (9,4 °Brix); o Amarelo foi intermediário. A análise foi feita com a média de cinco frutos por parcela.”</p>
+        </figure>
+      </div>
+      <div class="callout" style="margin-top:22px">
+        <span class="callout-title">No Material e Métodos</span>
+        Diga qual é a unidade experimental e o que foi feito com as subamostras: “Cada parcela foi representada
+        pela média de cinco frutos” ou “A parcela foi incluída como efeito aleatório no modelo”. É a primeira
+        coisa que um revisor atento procura quando vê várias medições por parcela.
+      </div>
+    </div>
+  </section>
+
+  <section class="guide" id="componentes">
+    <div class="container guide-article">
+      <span class="guide-number">07</span>
+      <div class="section-head">
+        <h2>Mais frutos ou mais parcelas?</h2>
+        <p class="section-lead">As duas variâncias do modelo misto respondem a pergunta de planejamento do próximo experimento.</p>
+      </div>
+
+      <p class="guide-p">
+        O <code>VarCorr</code> mostrou duas fontes de variação: <strong>entre parcelas</strong> (0,183), que é o
+        quanto parcelas da mesma cultivar diferem por solo, microclima e manejo; e <strong>entre frutos da mesma
+        parcela</strong> (0,305). A variância da média de uma parcela com <em>n</em> frutos é:
+      </p>
+      <div class="callout">
+        <span class="callout-title">Variância da média da parcela</span>
+        σ²<sub>parcela</sub> + σ²<sub>fruto</sub> / n &nbsp;=&nbsp; 0,183 + 0,305 / 5 &nbsp;=&nbsp; 0,244
+        &nbsp;·&nbsp; exatamente o QM do resíduo do jeito 1.
+      </div>
+      <p class="guide-p" style="margin-top:18px">
+        Medir mais frutos só diminui o segundo termo da conta. O primeiro só cai com mais repetições. Simulando
+        outros desenhos com essas variâncias:
+      </p>
+      <div class="table-scroll"><table class="data-table">
+        <thead><tr><th>Desenho</th><th class="num">Frutos por cultivar</th><th class="num">GL do resíduo</th><th class="num">Erro-padrão</th><th class="num">DMS Tukey</th></tr></thead>
+        <tbody>
+          <tr><td>4 repetições × 5 frutos (o atual)</td><td class="num">20</td><td class="num">9</td><td class="num">0,247</td><td class="num">1,09 (10,6%)</td></tr>
+          <tr><td>4 repetições × 10 frutos</td><td class="num">40</td><td class="num">9</td><td class="num">0,231</td><td class="num">1,02 (10,0%)</td></tr>
+          <tr><td>4 repetições × 20 frutos</td><td class="num">80</td><td class="num">9</td><td class="num">0,222</td><td class="num">0,98 (9,6%)</td></tr>
+          <tr><td>6 repetições × 5 frutos</td><td class="num">30</td><td class="num">15</td><td class="num">0,201</td><td class="num">0,82 (8,0%)</td></tr>
+          <tr class="row-hl"><td>8 repetições × 3 frutos</td><td class="num">24</td><td class="num">21</td><td class="num">0,189</td><td class="num">0,74 (7,3%)</td></tr>
+        </tbody>
+        <caption>DMS em °Brix e em % da média geral (10,23). Quadruplicar os frutos quase não muda nada; 8 parcelas com 3 frutos, com quase o mesmo trabalho de laboratório, detectam diferenças bem menores.</caption>
+      </table></div>
+      <pre class="code-block"><code># Planeje o seu: variâncias do VarCorr, t tratamentos, r repetições, n subamostras
+dms_sub &lt;- function(r, n, t = 4, s2_parc = 0.183, s2_sub = 0.305) {
+  gl &lt;- (t - 1) * (r - 1)                          # DBC
+  qtukey(0.95, nmeans = t, df = gl) * sqrt((s2_parc + s2_sub / n) / r)
+}
+dms_sub(r = 4, n = 5)    # 1.09
+dms_sub(r = 8, n = 3)    # 0.74</code></pre>
+      <p class="guide-p">
+        A regra geral: quando a variância entre parcelas é grande em relação à variância entre subamostras (aqui,
+        37% do total), vale mais investir em parcelas. Subamostras além de 3 a 5 por parcela raramente compensam.
+        Veja também <a href="guia-quantas-repeticoes.html">quantas repetições usar</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="guide" id="casos">
+    <div class="container guide-article">
+      <span class="guide-number">08</span>
+      <div class="section-head">
+        <h2>Casos que confundem</h2>
+      </div>
+      <div class="table-scroll"><table class="data-table table-wrap">
+        <thead><tr><th>Situação</th><th>O que fazer</th></tr></thead>
+        <tbody>
+          <tr><td>Número diferente de plantas por parcela (algumas morreram)</td><td>A média por parcela ainda funciona, mas dá o mesmo peso a uma média de 2 e de 5 plantas. O modelo misto (jeito 3) pondera sozinho e é a melhor opção.</td></tr>
+          <tr><td>A mesma parcela avaliada em várias datas</td><td>As datas não são repetições nem subamostras: são um fator no tempo. Use parcela subdividida no tempo ou modelo misto com medidas repetidas (veja <a href="guia-fatorial-parcela-subdividida.html">fatorial ou parcela subdividida</a>).</td></tr>
+          <tr><td>Várias folhas por planta, várias plantas por parcela</td><td>Dois níveis de subamostragem. Tire a média das folhas por planta e das plantas por parcela, ou use <code>(1 | bloco:cultivar/planta)</code> no modelo misto.</td></tr>
+          <tr><td>Triplicata de laboratório da mesma amostra</td><td>É subamostra (repetição analítica). Mostra a precisão do método, não a variação entre parcelas. Tire a média antes da ANOVA.</td></tr>
+          <tr><td>Uma bandeja, câmara ou linha por tratamento</td><td>Nenhum modelo resolve: com uma unidade por tratamento, o efeito do tratamento está confundido com o do local. Refaça com repetições verdadeiras, ou apresente como estudo descritivo.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout callout-warn" style="margin-top:22px">
+        <span class="callout-title">Confira pelos graus de liberdade</span>
+        Antes de interpretar qualquer ANOVA com subamostras, veja se o GL do resíduo que testa os tratamentos bate
+        com o número de parcelas, e não com o número de medições. O guia de <a href="guia-graus-de-liberdade.html">graus
+        de liberdade</a> mostra como fazer essa conferência para cada delineamento.
+      </div>
     </div>
   </section>
 

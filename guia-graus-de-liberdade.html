@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Graus de liberdade na prática — Marlenildo</title>
+<meta name="description" content="O que são graus de liberdade na prática, como ler a coluna GL da ANOVA no R e como usar os GL para conferir se o modelo está certo: bloco como fator, subamostras, fatorial e parcela subdividida." />
+<meta property="og:title" content="Graus de liberdade na prática" />
+<meta property="og:description" content="O que são graus de liberdade na prática, como ler a coluna GL da ANOVA no R e como usar os GL para conferir se o modelo está certo: bloco como fator, subamostras, fatorial e parcela subdividida." />
+<meta property="og:type" content="article" />
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/style.css" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130340973057636" crossorigin="anonymous"></script>
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+<div class="bg-glow" aria-hidden="true"></div>
+
+<header class="site-header">
+  <nav class="nav container">
+    <a href="index.html#topo" class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="46" height="46" /><span>Marlenildo<span class="brand-dot">.online</span></span></a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#apps">Apps</a></li>
+      <li><a href="guia.html" aria-current="page">Guia</a></li>
+      <li><a href="index.html#sobre">Sobre</a></li>
+      <li><a href="index.html#contato">Contato</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="conteudo">
+
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <nav class="breadcrumb" aria-label="Você está em"><a href="guia.html">Guia</a><span aria-hidden="true">/</span><span>Etapa 4 · Análise</span></nav>
+      <h1>Graus de liberdade <span class="text-gradient">na prática</span>.</h1>
+      <p class="hero-lead">O que é GL sem fórmula decorada, como ler essa coluna na ANOVA e como usá-la para descobrir, em dez segundos, se o modelo que você rodou é o do seu experimento.</p>
+      <ul class="article-meta">
+        <li>Etapa 4 · Análise</li>
+        <li>10 min de leitura</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="guide" id="o-que-e">
+    <div class="container guide-article">
+      <span class="guide-number">01</span>
+      <div class="section-head">
+        <h2>O que é, afinal, um grau de liberdade?</h2>
+        <p class="section-lead">É o número de informações independentes que sobram para estimar alguma coisa.</p>
+      </div>
+
+      <p class="guide-p">
+        Imagine 5 parcelas com média de 10 t/ha. Você pode escolher livremente a produtividade de quatro delas:
+        12, 8, 11, 9. A quinta não é mais livre: para a média dar 10, ela <strong>tem que ser</strong> 10. Depois
+        de calcular a média, só 4 dos 5 valores continuam trazendo informação sobre o quanto os dados variam.
+        Por isso a variância de uma amostra divide por <em>n</em> − 1: são 4 graus de liberdade.
+      </p>
+      <div class="callout">
+        <span class="callout-title">A ideia em uma frase</span>
+        Cada coisa que você estima a partir dos dados “gasta” graus de liberdade. O que sobra no fim, no resíduo,
+        é o que fica para medir o acaso.
+      </div>
+
+      <h3 class="guide-h3">Como isso vira a coluna GL da ANOVA</h3>
+      <p class="guide-p">
+        Um experimento com <em>N</em> parcelas tem <strong>N − 1</strong> GL no total (um é gasto com a média
+        geral). A ANOVA reparte esse total entre as fontes de variação:
+      </p>
+      <ul class="guide-list">
+        <li><strong>Um fator com k níveis gasta k − 1 GL.</strong> Com 4 cultivares, basta saber 3 diferenças em relação à média; a quarta sai por conta. Vale para tratamentos e para blocos.</li>
+        <li><strong>Uma interação gasta o produto dos GL dos fatores:</strong> (a − 1)(c − 1).</li>
+        <li><strong>O resíduo fica com o que sobra.</strong> É ele que estima o erro experimental, e é por isso que ele importa tanto.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="guide" id="ler">
+    <div class="container guide-article">
+      <span class="guide-number">02</span>
+      <div class="section-head">
+        <h2>Como ler os GL numa saída do R</h2>
+        <p class="section-lead">O exemplo é o do guia de <a href="guia-repeticao.html#exemplo">pseudorrepetição</a>: 4 cultivares de melão, DBC com 4 blocos, °Brix médio por parcela. São 16 parcelas.</p>
+      </div>
+      <pre class="code-block" data-lang="output"><code>&gt; summary(aov(brix ~ bloco + cultivar, data = por_parcela))
+            Df Sum Sq Mean Sq F value Pr(&gt;F)
+bloco        3  1.957  0.6524   2.678 0.1101
+cultivar     3  3.754  1.2512   5.137 0.0242 *
+Residuals    9  2.192  0.2436                 </code></pre>
+      <div class="table-scroll"><table class="data-table">
+        <thead><tr><th>Linha</th><th class="num">GL</th><th>De onde vem</th></tr></thead>
+        <tbody>
+          <tr><td class="col-a">bloco</td><td class="num">3</td><td>4 blocos − 1</td></tr>
+          <tr><td class="col-a">cultivar</td><td class="num">3</td><td>4 cultivares − 1</td></tr>
+          <tr><td class="col-a">Residuals</td><td class="num">9</td><td>(4 − 1)(4 − 1), ou o que sobra: 15 − 3 − 3</td></tr>
+          <tr class="row-total"><td>Total</td><td class="num">15</td><td>16 parcelas − 1 (o R não mostra, mas a soma tem que dar isso)</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 class="guide-h3">Os GL entram no teste F</h3>
+      <p class="guide-p">
+        O F da cultivar é QM cultivar / QM resíduo = 1,2512 / 0,2436 = 5,14, e ele é comparado com a distribuição
+        F com <strong>3 GL no numerador</strong> (da cultivar) e <strong>9 GL no denominador</strong> (do resíduo).
+        Por isso se escreve F<sub>3,9</sub> = 5,14 no texto. Quanto menos GL no resíduo, menos confiável é a
+        estimativa do erro, e maior o F precisa ser para dar significativo:
+      </p>
+      <div class="table-scroll"><table class="data-table">
+        <thead><tr><th>GL do resíduo</th><th class="num">3</th><th class="num">6</th><th class="num">9</th><th class="num">12</th><th class="num">20</th><th class="num">30</th><th class="num">60</th></tr></thead>
+        <tbody>
+          <tr><td>F crítico (5%, 3 GL no numerador)</td><td class="num cell-bad">9,28</td><td class="num cell-bad">4,76</td><td class="num">3,86</td><td class="num">3,49</td><td class="num">3,10</td><td class="num">2,92</td><td class="num">2,76</td></tr>
+        </tbody>
+        <caption>Entre 3 e 12 GL o valor crítico cai para menos da metade; depois de uns 20 GL, quase não muda mais. É daí que vem a regra de ter pelo menos 10 a 12 GL no resíduo.</caption>
+      </table></div>
+      <p class="guide-p" style="margin-top:18px">
+        O mesmo vale para o Tukey, o Scott-Knott e os intervalos de confiança: todos usam os GL do resíduo. Quando
+        os GL estão errados, <strong>todos os testes seguintes estão errados junto</strong>.
+      </p>
+    </div>
+  </section>
+
+  <section class="guide" id="formulas">
+    <div class="container guide-article">
+      <span class="guide-number">03</span>
+      <div class="section-head">
+        <h2>Os GL esperados em cada delineamento</h2>
+        <p class="section-lead">Antes de rodar a análise, escreva no papel a tabela que você espera ver. Depois é só comparar.</p>
+      </div>
+
+      <div class="table-scroll"><table class="data-table">
+        <thead><tr><th>Delineamento</th><th>Fonte de variação</th><th>GL</th><th class="num">Exemplo</th></tr></thead>
+        <tbody>
+          <tr><td rowspan="3" class="col-b">DIC<br><small>t tratamentos, r repetições</small></td><td>Tratamentos</td><td>t − 1</td><td class="num">3</td></tr>
+          <tr><td>Resíduo</td><td>t(r − 1)</td><td class="num">12</td></tr>
+          <tr class="row-total"><td>Total</td><td>tr − 1</td><td class="num">15</td></tr>
+
+          <tr><td rowspan="4" class="col-b">DBC<br><small>t tratamentos, b blocos</small></td><td>Blocos</td><td>b − 1</td><td class="num">3</td></tr>
+          <tr><td>Tratamentos</td><td>t − 1</td><td class="num">3</td></tr>
+          <tr><td>Resíduo</td><td>(t − 1)(b − 1)</td><td class="num">9</td></tr>
+          <tr class="row-total"><td>Total</td><td>tb − 1</td><td class="num">15</td></tr>
+
+          <tr><td rowspan="6" class="col-b">Fatorial A × C em DBC<br><small>a e c níveis, b blocos</small></td><td>Blocos</td><td>b − 1</td><td class="num">3</td></tr>
+          <tr><td>A</td><td>a − 1</td><td class="num">2</td></tr>
+          <tr><td>C</td><td>c − 1</td><td class="num">3</td></tr>
+          <tr><td>A × C</td><td>(a − 1)(c − 1)</td><td class="num">6</td></tr>
+          <tr><td>Resíduo</td><td>(ac − 1)(b − 1)</td><td class="num">33</td></tr>
+          <tr class="row-total"><td>Total</td><td>acb − 1</td><td class="num">47</td></tr>
+
+          <tr><td rowspan="7" class="col-b">Parcela subdividida em DBC<br><small>A na parcela, C na subparcela</small></td><td>Blocos</td><td>b − 1</td><td class="num">3</td></tr>
+          <tr><td>A</td><td>a − 1</td><td class="num">2</td></tr>
+          <tr class="row-hl"><td>Resíduo (a)</td><td>(a − 1)(b − 1)</td><td class="num">6</td></tr>
+          <tr><td>C</td><td>c − 1</td><td class="num">3</td></tr>
+          <tr><td>A × C</td><td>(a − 1)(c − 1)</td><td class="num">6</td></tr>
+          <tr class="row-hl"><td>Resíduo (b)</td><td>a(c − 1)(b − 1)</td><td class="num">27</td></tr>
+          <tr class="row-total"><td>Total</td><td>acb − 1</td><td class="num">47</td></tr>
+
+          <tr><td rowspan="5" class="col-b">DBC com subamostras<br><small>n medições por parcela</small></td><td>Blocos</td><td>b − 1</td><td class="num">3</td></tr>
+          <tr><td>Tratamentos</td><td>t − 1</td><td class="num">3</td></tr>
+          <tr class="row-hl"><td>Resíduo (entre parcelas)</td><td>(t − 1)(b − 1)</td><td class="num">9</td></tr>
+          <tr><td>Entre subamostras</td><td>tb(n − 1)</td><td class="num">64</td></tr>
+          <tr class="row-total"><td>Total</td><td>tbn − 1</td><td class="num">79</td></tr>
+        </tbody>
+        <caption>Exemplos: DIC e DBC com 4 tratamentos e 4 repetições; fatorial e parcela subdividida com 3 lâminas × 4 doses em 4 blocos (os do guia de <a href="guia-fatorial-parcela-subdividida.html">fatorial ou parcela subdividida</a>); subamostras com 5 frutos por parcela. Em destaque, o resíduo que testa os tratamentos da parcela.</caption>
+      </table></div>
+    </div>
+  </section>
+
+  <section class="guide" id="conferir">
+    <div class="container guide-article">
+      <span class="guide-number">04</span>
+      <div class="section-head">
+        <h2>Conferindo a sua ANOVA pelos GL</h2>
+        <p class="section-lead">Quatro perguntas, na ordem. Se alguma falhar, o problema está no modelo ou nos dados, não na estatística.</p>
+      </div>
+      <ol class="guide-steps">
+        <li><strong>A soma dos GL dá N − 1?</strong> Some a coluna Df, incluindo o resíduo, e compare com o número de linhas da planilha menos 1. Se der menos, o R descartou linhas.</li>
+        <li><strong>Cada fator tem níveis − 1?</strong> Bloco com 4 blocos tem que ter 3 GL. Se aparecer 1, o R leu a coluna como número.</li>
+        <li><strong>O resíduo tem o valor da fórmula?</strong> Resíduo grande demais costuma ser subamostra contada como repetição ou bloco esquecido.</li>
+        <li><strong>Aparecem todas as linhas que o delineamento exige?</strong> Bloco no DBC, interação no fatorial, dois resíduos na parcela subdividida.</li>
+      </ol>
+      <pre class="code-block"><code>nrow(dados) - 1                        # GL total esperado
+sum(summary(modelo)[[1]]$Df)           # GL total que o modelo usou
+str(dados)                             # bloco e tratamento aparecem como Factor?</code></pre>
+
+      <h3 class="guide-h3">O erro mais comum: bloco como número</h3>
+      <p class="guide-p">
+        Se os blocos foram digitados como 1, 2, 3, 4, o R lê a coluna como número e ajusta uma
+        <em>reta</em> de bloco, com 1 GL, em vez de um efeito para cada bloco:
+      </p>
+        <figure class="figure" style="margin-bottom:18px">
+          <span class="tag-bad">bloco numérico</span>
+          <pre class="code-block" data-lang="output"><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
+bloco        1  1.104  1.1045    3.99 0.0711 .
+cultivar     3  3.754  1.2512    4.52 0.0268 *
+Residuals   11  3.045  0.2768                 </code></pre>
+          <figcaption>1 GL para 4 blocos, e o resíduo ganha 2 GL que não são dele. O QM do resíduo e o F mudam.</figcaption>
+        </figure>
+        <figure class="figure" style="margin-bottom:18px">
+          <span class="tag-good">bloco como fator</span>
+          <pre class="code-block" data-lang="output"><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
+bloco        3  1.957  0.6524   2.678 0.1101
+cultivar     3  3.754  1.2512   5.137 0.0242 *
+Residuals    9  2.192  0.2436                 </code></pre>
+          <figcaption>3 + 3 + 9 = 15. Bate com a tabela esperada do DBC.</figcaption>
+        </figure>
+      <pre class="code-block"><code>str(dados)                           # $ bloco: int 1 1 1 1 2 ...  ← o problema
+dados$bloco &lt;- factor(dados$bloco)   # agora: Factor w/ 4 levels</code></pre>
+      <p class="guide-p">
+        O mesmo acontece com tratamentos codificados como 1, 2, 3 e com doses. Dose como número
+        (1 GL) é uma <a href="guia-tukey-ou-regressao.html">regressão linear</a>; dose como fator (níveis − 1 GL)
+        é a ANOVA com as doses como categorias. As duas podem ser o que você quer, mas precisa ser uma escolha.
+      </p>
+
+      <h3 class="guide-h3">Tabela de sintomas</h3>
+      <div class="table-scroll"><table class="data-table table-wrap">
+        <thead><tr><th>O que aparece nos GL</th><th>Causa provável</th><th>Correção</th></tr></thead>
+        <tbody>
+          <tr><td>Bloco ou tratamento com 1 GL</td><td>Coluna lida como número</td><td><code>factor()</code> antes do <code>aov()</code></td></tr>
+          <tr><td>Não há linha de bloco; resíduo com b − 1 GL a mais</td><td>Bloco esquecido na fórmula: o DBC foi analisado como DIC</td><td><code>aov(y ~ bloco + trat)</code></td></tr>
+          <tr><td>Resíduo muito maior que (t − 1)(b − 1)</td><td>Plantas, frutos ou leituras contados como repetição</td><td>Média por parcela ou modelo misto (veja <a href="guia-repeticao.html#exemplo">pseudorrepetição</a>)</td></tr>
+          <tr><td>Fatorial sem a linha A × C; resíduo maior</td><td>Fórmula com <code>+</code> em vez de <code>*</code></td><td><code>aov(y ~ bloco + A * C)</code></td></tr>
+          <tr><td>Parcela subdividida com um resíduo só</td><td>Modelo analisado como fatorial</td><td><code>+ Error(bloco:A)</code> ou modelo misto</td></tr>
+          <tr><td>Soma dos GL menor que N − 1</td><td>Linhas com <code>NA</code> descartadas, ou planilha com linhas a menos</td><td>Confira os dados; veja <a href="guia-dados-faltantes.html">dados faltantes</a></td></tr>
+          <tr><td>Resíduo com 0 GL, sem F nem valor-p</td><td>Uma observação por tratamento, ou o modelo usou todos os GL</td><td>Sem repetição não há teste; revise o delineamento</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <section class="guide" id="faltante">
+    <div class="container guide-article">
+      <span class="guide-number">05</span>
+      <div class="section-head">
+        <h2>Quando os GL diminuem de propósito</h2>
+      </div>
+      <p class="guide-p">
+        Uma parcela perdida tira 1 GL do total e 1 GL do resíduo. O R avisa discretamente, e os GL mostram o
+        que aconteceu:
+      </p>
+      <pre class="code-block" data-lang="output"><code>&gt; summary(aov(brix ~ bloco + cultivar, data = por_parcela))
+            Df Sum Sq Mean Sq F value  Pr(&gt;F)
+bloco        3  1.963  0.6543   3.707 0.06142 .
+cultivar     3  4.437  1.4789   8.379 0.00751 **
+Residuals    8  1.412  0.1765
+1 observation deleted due to missingness</code></pre>
+      <p class="guide-p">
+        3 + 3 + 8 = 14, um a menos que os 15 esperados. Isso é correto: a parcela não existe e não deve ser
+        inventada. O que não pode é a perda passar despercebida. Relate no trabalho quantas parcelas foram
+        perdidas e com quantos GL o resíduo ficou. Com o experimento desbalanceado, prefira as médias ajustadas
+        (<code>emmeans</code>) às médias simples.
+      </p>
+      <ul class="check-list">
+        <li><strong>Escreva a tabela de GL esperada antes de rodar a análise.</strong> Leva um minuto e pega a maioria dos erros de modelo.</li>
+        <li><strong>Olhe primeiro os GL, depois o valor-p.</strong> Um valor-p calculado com os GL errados não significa nada.</li>
+        <li><strong>Informe os GL no texto</strong> (F<sub>3,9</sub> = 5,14): assim o leitor e o revisor também conseguem conferir o seu modelo.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="container guide-article">
+      <nav class="article-nav" aria-label="Navegação entre artigos">
+        <a href="r-para-pesquisa.html"><small>← Anterior</small><strong>Primeiros passos no R</strong></a><a href="guia-tabela-anova.html" class="is-next"><small>Próximo →</small><strong>Como ler a tabela da ANOVA</strong></a>
+      </nav>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" id="contato">
+  <div class="container footer-inner">
+    <div>
+      <p class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="38" height="38" /><span>Marlenildo<span class="brand-dot">.online</span></span></p>
+      <p class="footer-note">Apps em R &amp; Shiny para pesquisa e gestão de dados.</p>
+      <ul class="social-icons" aria-label="Perfis profissionais e acadêmicos">
+        <li>
+          <a href="https://github.com/Marlenildo" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://orcid.org/0000-0001-7449-6916" target="_blank" rel="noopener" aria-label="ORCID">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" font-size="10" font-weight="700" fill="currentColor" stroke="none" font-family="Arial, sans-serif">iD</text></svg>
+          </a>
+        </li>
+        <li>
+          <a href="http://lattes.cnpq.br/6931262930637371" target="_blank" rel="noopener" aria-label="Currículo Lattes">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="mailto:marlenildo@gmail.com" aria-label="E-mail">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2.5"/><path d="m3 6.5 9 6.5 9-6.5"/></svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <p class="footer-copy">&copy; <span id="year"></span> Marlenildo. Todos os direitos reservados.</p>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
