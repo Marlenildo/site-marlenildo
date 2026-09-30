@@ -964,3 +964,14 @@ a.topic-card:hover {
 .figure-md { margin: 0; }
 .figure-md svg { max-width: 560px; margin-inline: auto; }
 .pkg-card code, .guide-steps code, .guide-list code, .check-list code { overflow-wrap: anywhere; }
+
+/* ---------- Realce de sintaxe (tema do site) ---------- */
+.code-block .tok-com { color: #6f7896; font-style: italic; }
+.code-block .tok-str { color: #34d399; }
+.code-block .tok-num { color: #fbbf24; }
+.code-block .tok-kw  { color: #ff5fa2; font-weight: 600; }
+.code-block .tok-op  { color: #a78bfa; }
+.code-block .tok-fn  { color: #22d3ee; }
+.code-block .tok-ns  { color: #b8a6ff; }
+.code-block .tok-arg { color: #fcd57a; }
+.code-block .tok-prompt { color: #7c5cff; font-weight: 700; }
