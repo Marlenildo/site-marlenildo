@@ -4,9 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Fatorial ou parcela subdividida? — Marlenildo</title>
-<meta name="description" content="Diferença entre experimento fatorial e parcela subdividida: croqui, quando usar cada um, os dois resíduos da ANOVA e o código em R com Error()." />
+<meta name="description" content="Diferença entre experimento fatorial e parcela subdividida: croqui completo, exemplos, por que às vezes só a subdividida é viável (irrigação, câmaras, tempo e profundidade), os dois resíduos da ANOVA e o código em R." />
 <meta property="og:title" content="Fatorial ou parcela subdividida?" />
-<meta property="og:description" content="Diferença entre experimento fatorial e parcela subdividida: croqui, quando usar cada um, os dois resíduos da ANOVA e o código em R com Error()." />
+<meta property="og:description" content="Diferença entre experimento fatorial e parcela subdividida: croqui completo, exemplos, por que às vezes só a subdividida é viável (irrigação, câmaras, tempo e profundidade), os dois resíduos da ANOVA e o código em R." />
 <meta property="og:type" content="article" />
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -41,10 +41,10 @@
     <div class="container page-hero-inner">
       <nav class="breadcrumb" aria-label="Você está em"><a href="guia.html">Guia</a><span aria-hidden="true">/</span><span>Etapa 1 · Planejamento</span></nav>
       <h1>Fatorial ou <span class="text-gradient">parcela subdividida</span>?</h1>
-      <p class="hero-lead">Quando dois fatores entram juntos no experimento, o jeito de instalar decide quantos resíduos a ANOVA tem e com que precisão cada fator é testado.</p>
+      <p class="hero-lead">Quando dois fatores entram juntos no experimento, o jeito de instalar decide quantos resíduos a ANOVA tem. Exemplos de cada um e por que, às vezes, só a subdividida é viável: irrigação, câmaras, tempo e profundidade.</p>
       <ul class="article-meta">
         <li>Etapa 1 · Planejamento</li>
-        <li>8 min de leitura</li>
+        <li>12 min de leitura</li>
       </ul>
     </div>
   </section>
@@ -88,28 +88,147 @@
     </div>
   </section>
 
-  <section class="guide" id="quando">
+  <section class="guide" id="fatorial">
     <div class="container guide-article">
       <span class="guide-number">02</span>
       <div class="section-head">
-        <h2>Quando usar cada um</h2>
-      </div>
-
-      <div class="summary-grid">
-        <div class="summary-card"><h4>Fatorial</h4><p>Os dois fatores podem ser aplicados parcela a parcela sem dificuldade: cultivar × dose de adubo, produto × concentração, substrato × recipiente.</p></div>
-        <div class="summary-card"><h4>Parcela subdividida</h4><p>Um fator exige área grande ou é difícil de variar entre parcelas vizinhas: irrigação, preparo do solo, época de semeadura, cobertura do solo, temperatura da câmara.</p></div>
+        <h2>Quando o fatorial funciona</h2>
+        <p class="section-lead">Quando qualquer combinação dos dois fatores pode ser aplicada numa parcela pequena, sem depender das vizinhas.</p>
       </div>
       <p class="guide-p">
-        Também é parcela subdividida quando a mesma parcela é avaliada várias vezes (dias após a semeadura,
-        cortes sucessivos, anos). É a chamada <strong>parcela subdividida no tempo</strong>: o tratamento fica na
-        parcela e o tempo entra como subparcela, porque as medições da mesma parcela não são independentes.
+        No fatorial, cada parcela recebe uma combinação sorteada, independente das outras. Isso só é possível
+        quando os <strong>dois fatores são fáceis de variar de uma parcela para a outra</strong>: basta trocar
+        a semente, pesar outro tanto de adubo, encher o vaso com outro substrato ou pipetar outra concentração.
+      </p>
+      <div class="table-scroll"><table class="data-table table-wrap">
+        <thead><tr><th>Experimento</th><th>Fator A × fator B</th><th>Por que dá para sortear tudo junto</th></tr></thead>
+        <tbody>
+          <tr><td>Adubação de milho no campo</td><td class="col-b">cultivar × dose de N</td><td>Cada parcela recebe sua semente e sua dose, aplicadas à mão ou com adubadora regulada parcela a parcela.</td></tr>
+          <tr><td>Produção de mudas em viveiro</td><td class="col-b">substrato × tamanho do recipiente</td><td>Cada bandeja ou grupo de tubetes pode receber qualquer combinação e ser posicionado ao acaso na bancada.</td></tr>
+          <tr><td>Controle de fungo em laboratório</td><td class="col-b">produto × concentração</td><td>Cada placa de Petri é preparada separadamente; o sorteio é das placas na incubadora.</td></tr>
+          <tr><td>Vasos em casa de vegetação</td><td class="col-b">inoculante × dose de P</td><td>Cada vaso é uma unidade, preparado individualmente e sorteado na bancada.</td></tr>
+          <tr><td>Pós-colheita em bancada</td><td class="col-b">revestimento × cultivar</td><td>Cada lote de frutos recebe um revestimento, e todos ficam no mesmo ambiente.</td></tr>
+        </tbody>
+      </table></div>
+      <p class="guide-p" style="margin-top:18px">
+        Se é possível, o fatorial é a escolha mais simples: um resíduo só, com mais GL, e os dois fatores
+        testados com a mesma precisão.
+      </p>
+    </div>
+  </section>
+
+  <section class="guide" id="por-que">
+    <div class="container guide-article">
+      <span class="guide-number">03</span>
+      <div class="section-head">
+        <h2>Por que às vezes só dá para fazer subdividida</h2>
+        <p class="section-lead">A parcela subdividida quase nunca é escolha estatística. Ela aparece quando um dos fatores não pode ser sorteado parcela a parcela.</p>
+      </div>
+
+      <h3 class="guide-h3">1 · É possível, mas inviável na prática</h3>
+      <p class="guide-p">
+        Dá para fazer em parcelas pequenas, mas o custo, a mão de obra ou a qualidade da aplicação não compensam.
+        O fator difícil vai para a parcela grande:
+      </p>
+      <ul class="guide-list">
+        <li><strong>Irrigação:</strong> cada lâmina precisa de linha, registro e tempo de rega próprios. Com 48 parcelas misturadas seriam 48 controles; com parcelas grandes, 12. Ainda evita que a água de uma lâmina escorra para a parcela vizinha.</li>
+        <li><strong>Preparo do solo e sistemas de manejo:</strong> arado, grade e subsolador precisam de espaço para entrar, trabalhar e manobrar. Plantio direto × convencional em parcelas de 3 m não funciona.</li>
+        <li><strong>Época de semeadura:</strong> semear no mesmo dia uma área contínua é bem mais simples que voltar em parcelas espalhadas pelo campo.</li>
+        <li><strong>Pulverização tratorizada ou aérea:</strong> a deriva atinge as parcelas vizinhas. Parcelas grandes com bordadura resolvem.</li>
+        <li><strong>Cobertura do solo:</strong> mulching, palhada ou tela de sombreamento são instalados em faixas contínuas.</li>
+      </ul>
+
+      <h3 class="guide-h3">2 · O ambiente só tem um nível de cada vez</h3>
+      <p class="guide-p">
+        Às vezes o fator é uma condição do ambiente inteiro: uma câmara de crescimento tem uma temperatura, uma
+        câmara fria tem uma temperatura, uma estufa tem um nível de sombreamento, um tanque tem uma
+        temperatura da água. Tudo o que está dentro recebe o mesmo nível. Aí a câmara é a parcela, e o que vai
+        dentro dela (cultivares, embalagens, doses) é a subparcela.
+      </p>
+      <div class="callout callout-warn">
+        <span class="callout-title">A parcela também precisa de repetição</span>
+        Com uma câmara por temperatura, o resíduo (a) tem 0 GL e a temperatura não pode ser testada: é a
+        <a href="guia-repeticao.html">pseudorrepetição</a> de novo. É preciso ter mais de uma câmara por
+        temperatura ou repetir o experimento no tempo, trocando a temperatura de câmara (cada rodada vira um
+        bloco).
+      </div>
+
+      <h3 class="guide-h3">3 · Tempo e espaço não se sorteiam</h3>
+      <p class="guide-p">
+        Quando a mesma unidade é avaliada várias vezes, ou em várias posições, o segundo fator não pode ser
+        sorteado: os 30 dias vêm sempre depois dos 15, e a camada de 20–40 cm está sempre abaixo da de 0–10 cm.
+        As medições da mesma parcela são parecidas entre si, como as subparcelas de uma parcela.
+      </p>
+      <div class="compare-grid">
+        <figure class="figure">
+          <span class="tag-good">No tempo</span>
+          <svg viewBox="0 0 306 204" role="img" aria-labelledby="t-tempo"><title id="t-tempo">Subdividida no tempo: a mesma parcela L2 D3 avaliada aos 15, 30, 45 e 60 dias após a semeadura; as datas seguem uma ordem fixa e não podem ser sorteadas.</title><line x1="20" y1="150" x2="286" y2="150" stroke="#9aa0b4" stroke-width="1.5"/><polygon points="286,145 296,150 286,155" fill="#9aa0b4"/><rect x="24" y="40" width="54" height="84" rx="8" fill="#22d3ee" fill-opacity="0.10" stroke="#22d3ee" stroke-width="1.5"/><text x="51" y="62" text-anchor="middle" font-size="10.5" font-weight="700" fill="#22d3ee" font-family="Inter, system-ui, sans-serif">L2 · D3</text><circle cx="37" cy="98" r="3.0" fill="#34d399" fill-opacity="0.85"/><circle cx="51" cy="98" r="3.0" fill="#34d399" fill-opacity="0.85"/><circle cx="65" cy="98" r="3.0" fill="#34d399" fill-opacity="0.85"/><line x1="51" y1="146" x2="51" y2="154" stroke="#9aa0b4" stroke-width="1.5"/><text x="51" y="170" text-anchor="middle" font-size="11" font-weight="600" fill="#c9cde0" font-family="Inter, system-ui, sans-serif">15 DAS</text><rect x="90" y="40" width="54" height="84" rx="8" fill="#22d3ee" fill-opacity="0.17" stroke="#22d3ee" stroke-width="1.5"/><text x="117" y="62" text-anchor="middle" font-size="10.5" font-weight="700" fill="#22d3ee" font-family="Inter, system-ui, sans-serif">L2 · D3</text><circle cx="103" cy="92" r="4.2" fill="#34d399" fill-opacity="0.85"/><circle cx="117" cy="92" r="4.2" fill="#34d399" fill-opacity="0.85"/><circle cx="131" cy="92" r="4.2" fill="#34d399" fill-opacity="0.85"/><line x1="117" y1="146" x2="117" y2="154" stroke="#9aa0b4" stroke-width="1.5"/><text x="117" y="170" text-anchor="middle" font-size="11" font-weight="600" fill="#c9cde0" font-family="Inter, system-ui, sans-serif">30 DAS</text><rect x="156" y="40" width="54" height="84" rx="8" fill="#22d3ee" fill-opacity="0.24" stroke="#22d3ee" stroke-width="1.5"/><text x="183" y="62" text-anchor="middle" font-size="10.5" font-weight="700" fill="#22d3ee" font-family="Inter, system-ui, sans-serif">L2 · D3</text><circle cx="169" cy="86" r="5.4" fill="#34d399" fill-opacity="0.85"/><circle cx="183" cy="86" r="5.4" fill="#34d399" fill-opacity="0.85"/><circle cx="197" cy="86" r="5.4" fill="#34d399" fill-opacity="0.85"/><line x1="183" y1="146" x2="183" y2="154" stroke="#9aa0b4" stroke-width="1.5"/><text x="183" y="170" text-anchor="middle" font-size="11" font-weight="600" fill="#c9cde0" font-family="Inter, system-ui, sans-serif">45 DAS</text><rect x="222" y="40" width="54" height="84" rx="8" fill="#22d3ee" fill-opacity="0.31" stroke="#22d3ee" stroke-width="1.5"/><text x="249" y="62" text-anchor="middle" font-size="10.5" font-weight="700" fill="#22d3ee" font-family="Inter, system-ui, sans-serif">L2 · D3</text><circle cx="235" cy="80" r="6.6" fill="#34d399" fill-opacity="0.85"/><circle cx="249" cy="80" r="6.6" fill="#34d399" fill-opacity="0.85"/><circle cx="263" cy="80" r="6.6" fill="#34d399" fill-opacity="0.85"/><line x1="249" y1="146" x2="249" y2="154" stroke="#9aa0b4" stroke-width="1.5"/><text x="249" y="170" text-anchor="middle" font-size="11" font-weight="600" fill="#c9cde0" font-family="Inter, system-ui, sans-serif">60 DAS</text><text x="150" y="22" text-anchor="middle" font-size="11.5" fill="#c9cde0" font-family="Inter, system-ui, sans-serif">A mesma parcela, avaliada em 4 datas</text><text x="150" y="194" text-anchor="middle" font-size="11" fill="#ff5fa2" font-family="Inter, system-ui, sans-serif">a ordem das datas não pode ser sorteada</text></svg>
+          <figcaption>Dias após a semeadura ou após a aplicação, cortes sucessivos de uma forrageira, safras e anos
+          na mesma área, dias de armazenamento do mesmo lote. O tratamento fica na parcela e a data entra como
+          subparcela.</figcaption>
+        </figure>
+        <figure class="figure">
+          <span class="tag-good">No espaço</span>
+          <svg viewBox="0 0 306 204" role="img" aria-labelledby="t-espaco"><title id="t-espaco">Subdividida no espaço: uma parcela com o sistema de manejo na superfície e o solo amostrado nas camadas de 0 a 10, 10 a 20 e 20 a 40 centímetros; a profundidade não pode ser sorteada.</title><text x="153" y="22" text-anchor="middle" font-size="11.5" fill="#c9cde0" font-family="Inter, system-ui, sans-serif">Uma parcela, amostrada em 3 camadas</text><rect x="80" y="34" width="190" height="16" rx="4" fill="#34d399" fill-opacity="0.35" stroke="#34d399"/><text x="175" y="46" text-anchor="middle" font-size="10" font-weight="700" fill="#0a0b10" font-family="Inter, system-ui, sans-serif">superfície · sistema de manejo</text><rect x="80" y="54" width="190" height="34" fill="#fbbf24" fill-opacity="0.3" stroke="#fbbf24" stroke-opacity="0.6"/><text x="72" y="75.0" text-anchor="end" font-size="10.5" font-weight="600" fill="#c9cde0" font-family="Inter, system-ui, sans-serif">0–10 cm</text><circle cx="175" cy="71.0" r="7" fill="#fbbf24" fill-opacity="0.95"/><rect x="80" y="88" width="190" height="34" fill="#fbbf24" fill-opacity="0.22" stroke="#fbbf24" stroke-opacity="0.6"/><text x="72" y="109.0" text-anchor="end" font-size="10.5" font-weight="600" fill="#c9cde0" font-family="Inter, system-ui, sans-serif">10–20 cm</text><circle cx="175" cy="105.0" r="7" fill="#fbbf24" fill-opacity="0.95"/><rect x="80" y="122" width="190" height="56" fill="#fbbf24" fill-opacity="0.14" stroke="#fbbf24" stroke-opacity="0.6"/><text x="72" y="154.0" text-anchor="end" font-size="10.5" font-weight="600" fill="#c9cde0" font-family="Inter, system-ui, sans-serif">20–40 cm</text><circle cx="175" cy="150.0" r="7" fill="#fbbf24" fill-opacity="0.95"/><line x1="175" y1="54" x2="175" y2="178" stroke="#0a0b10" stroke-opacity="0.5" stroke-dasharray="3 3"/><text x="153" y="196" text-anchor="middle" font-size="11" fill="#ff5fa2" font-family="Inter, system-ui, sans-serif">a camada não pode ser sorteada: está sempre lá</text></svg>
+          <figcaption>Camadas de solo na mesma trincheira, terço superior, médio e inferior da mesma planta, distância
+          do gotejador, posição do fruto no ramo. O tratamento fica na parcela e a posição entra como
+          subparcela.</figcaption>
+        </figure>
+      </div>
+      <p class="guide-p" style="margin-top:18px">
+        Na subdividida no tempo, o modelo clássico supõe que todas as datas são igualmente correlacionadas. Com
+        muitas datas, as vizinhas costumam ser mais parecidas que as distantes, e um modelo misto de medidas
+        repetidas (que modela essa correlação) é mais adequado. Para 3 ou 4 datas, a subdividida costuma ser
+        suficiente.
+      </p>
+
+      <h3 class="guide-h3">4 · Um fator é mais importante que o outro</h3>
+      <p class="guide-p">
+        Como a subparcela é testada com mais precisão, às vezes se escolhe a subdividida de propósito: o fator que
+        mais interessa comparar vai na subparcela. Também é o caminho quando se quer <strong>acrescentar um
+        fator a um experimento que já está instalado</strong>: cada parcela existente é dividida e recebe os
+        níveis do novo fator.
+      </p>
+    </div>
+  </section>
+
+  <section class="guide" id="exemplos">
+    <div class="container guide-article">
+      <span class="guide-number">04</span>
+      <div class="section-head">
+        <h2>Exemplos lado a lado</h2>
+        <p class="section-lead">Em cada caso, o fator da parcela é o que não dá para trocar parcela a parcela.</p>
+      </div>
+      <div class="table-scroll"><table class="data-table table-wrap">
+        <thead><tr><th>Experimento</th><th>Parcela</th><th>Subparcela</th><th>Por quê</th></tr></thead>
+        <tbody>
+          <tr><td>Irrigação e adubação no melão</td><td class="col-a">lâmina</td><td class="col-b">dose de N</td><td>Cada lâmina precisa de linha e registro próprios</td></tr>
+          <tr><td>Manejo do solo no milho</td><td class="col-a">preparo do solo</td><td class="col-b">cultivar</td><td>O implemento precisa de área para trabalhar e manobrar</td></tr>
+          <tr><td>Época de plantio do feijão</td><td class="col-a">época de semeadura</td><td class="col-b">cultivar</td><td>Toda a área de uma época é semeada no mesmo dia</td></tr>
+          <tr><td>Armazenamento de frutos</td><td class="col-a">temperatura da câmara</td><td class="col-b">embalagem</td><td>Tudo dentro da câmara fica na mesma temperatura</td></tr>
+          <tr><td>Crescimento ao longo do ciclo</td><td class="col-a">adubação</td><td class="col-b">dias após a semeadura</td><td>O tempo não se sorteia (subdividida no tempo)</td></tr>
+          <tr><td>Fertilidade em sistemas de manejo</td><td class="col-a">sistema de manejo</td><td class="col-b">camada do solo</td><td>A profundidade não se sorteia (subdividida no espaço)</td></tr>
+          <tr><td>Produção de forragem</td><td class="col-a">cultivar</td><td class="col-b">corte</td><td>A mesma planta é cortada várias vezes</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 class="guide-h3">Como decidir</h3>
+      <ol class="guide-steps">
+        <li><strong>Consigo aplicar qualquer combinação numa parcela pequena, independente das vizinhas?</strong> Então é fatorial.</li>
+        <li><strong>Um dos fatores precisa de área grande, equipamento ou um ambiente inteiro?</strong> Ele vai para a parcela; o outro, para a subparcela.</li>
+        <li><strong>Um dos fatores é data, profundidade ou posição dentro da mesma unidade?</strong> É subdividida no tempo ou no espaço, com esse fator na subparcela.</li>
+        <li><strong>Os dois fatores são difíceis?</strong> Por exemplo, irrigação e preparo do solo. Existe o delineamento em <strong>faixas</strong>: um fator em faixas numa direção e o outro em faixas cruzadas, com três resíduos na ANOVA.</li>
+      </ol>
+      <p class="guide-p">
+        Com três fatores, o raciocínio continua: lâmina na parcela, dose na subparcela e época de avaliação na
+        subsubparcela. É a <strong>parcela subsubdividida</strong>, com três resíduos.
       </p>
     </div>
   </section>
 
   <section class="guide" id="anova">
     <div class="container guide-article">
-      <span class="guide-number">03</span>
+      <span class="guide-number">05</span>
       <div class="section-head">
         <h2>Como isso muda a ANOVA</h2>
         <p class="section-lead">Mesmas 48 observações, mesma soma total de graus de liberdade. O que muda é quantos resíduos existem.</p>
@@ -164,7 +283,7 @@
 
   <section class="guide" id="no-r">
     <div class="container guide-article">
-      <span class="guide-number">04</span>
+      <span class="guide-number">06</span>
       <div class="section-head">
         <h2>No R</h2>
       </div>
@@ -180,6 +299,9 @@ summary(fatorial)
 # Parcela subdividida em DBC: o Error() diz onde está a parcela
 subdividida &lt;- aov(prod ~ lamina * dose_f + Error(bloco / lamina), data = dados)
 summary(subdividida)   # dois quadros: "bloco:lamina" (resíduo a) e "Within" (resíduo b)
+
+# Subdividida no tempo: mesma lógica, com a data na subparcela
+tempo &lt;- aov(altura ~ adubo * factor(dias) + Error(bloco / adubo), data = dados)
 
 # Em português, com desdobramento pronto:
 # ExpDes.pt::psub2.dbc(dados$lamina, dados$dose_f, dados$bloco, dados$prod)</code></pre>
