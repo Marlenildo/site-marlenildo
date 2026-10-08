@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://marlenildo.online/sitemap.xml
