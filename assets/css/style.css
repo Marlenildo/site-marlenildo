@@ -982,3 +982,12 @@ a.topic-card:hover {
 /* Páginas de texto corrido (Sobre, Privacidade): respiro entre seções */
 .guide-article .guide-p + .section-head,
 .guide-article .guide-list + .section-head { margin-top: 44px; }
+
+/* Páginas dos apps */
+.app-hero-title { display: flex; align-items: center; gap: 18px; margin-bottom: 18px; }
+.app-hero-title h1 { margin: 0; }
+.app-hero-title .app-logo-wrap { flex-shrink: 0; }
+.app-hero-actions { margin: 26px 0 0; }
+@media (max-width: 560px) {
+  .app-hero-title { flex-direction: column; align-items: flex-start; gap: 12px; }
+}

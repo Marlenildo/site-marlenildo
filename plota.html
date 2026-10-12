@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Plota: gráficos para publicação em R, sem programar — Marlenildo</title>
+<link rel="canonical" href="https://marlenildo.online/plota.html">
+<meta name="description" content="Como usar o Plota: qual gráfico escolher para cada pergunta, passo a passo, letras de médias, expoentes nas unidades, painéis e exportação em TIFF, PDF ou EPS no tamanho da revista." />
+<meta property="og:title" content="Plota: gráficos para publicação em R, sem programar" />
+<meta property="og:description" content="Como usar o Plota: qual gráfico escolher para cada pergunta, passo a passo, letras de médias, expoentes nas unidades, painéis e exportação em TIFF, PDF ou EPS no tamanho da revista." />
+<meta property="og:type" content="article" />
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/style.css" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130340973057636" crossorigin="anonymous"></script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Plota: gráficos para publicação em R, sem programar", "description": "Como usar o Plota: qual gráfico escolher para cada pergunta, passo a passo, letras de médias, expoentes nas unidades, painéis e exportação em TIFF, PDF ou EPS no tamanho da revista.", "inLanguage": "pt-BR", "datePublished": "2026-10-12", "dateModified": "2026-10-12", "mainEntityOfPage": "https://marlenildo.online/plota.html", "author": {"@type": "Person", "name": "Marlenildo", "url": "https://marlenildo.online/sobre.html"}, "publisher": {"@type": "Person", "name": "Marlenildo", "url": "https://marlenildo.online/"}}</script>
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+<div class="bg-glow" aria-hidden="true"></div>
+
+<header class="site-header">
+  <nav class="nav container">
+    <a href="index.html#topo" class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="46" height="46" /><span>Marlenildo<span class="brand-dot">.online</span></span></a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#apps" aria-current="page">Apps</a></li>
+      <li><a href="guia.html">Guia</a></li>
+      <li><a href="sobre.html">Sobre</a></li>
+      <li><a href="sobre.html#contato">Contato</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="conteudo">
+
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <nav class="breadcrumb" aria-label="Você está em"><a href="index.html#apps">Apps</a><span aria-hidden="true">/</span><span>Plota</span></nav>
+      <div class="app-hero-title">
+        <span class="app-logo-wrap"><img src="assets/img/logo-plota.png" alt="" class="app-logo" width="64" height="64" /></span>
+        <h1>Plota: gráficos <span class="text-gradient">prontos para publicar</span></h1>
+      </div>
+      <p class="hero-lead">
+        Barras, linhas, interação, regressão, boxplot e mais, com fonte, cor e tamanho sob medida. Agrupe em
+        painéis e baixe na resolução que a revista pede, sem escrever código.
+      </p>
+      <ul class="article-meta">
+        <li>Por <a href="sobre.html">Marlenildo</a></li>
+        <li>Gratuito · sem cadastro</li>
+        <li>10 min de leitura</li>
+      </ul>
+      <div class="hero-actions app-hero-actions">
+        <a href="https://marlenildo-plota.share.connect.posit.cloud/" target="_blank" rel="noopener" class="btn btn-primary">Abrir o Plota ↗</a>
+        <a href="https://github.com/Marlenildo/plota" target="_blank" rel="noopener" class="btn btn-ghost">Código no GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="container guide-article">
+      <span class="guide-number">01</span>
+      <div class="section-head"><h2>Qual gráfico para qual pergunta</h2></div>
+      <p class="guide-p">
+        O Plota tem dez tipos de gráfico. A escolha começa pelo que você quer mostrar, não pelo que fica mais bonito:
+      </p>
+      <figure class="figure">
+        <div class="table-scroll"><table class="data-table table-wrap">
+          <thead><tr><th>Você quer mostrar…</th><th>Tipo no Plota</th></tr></thead>
+          <tbody>
+            <tr><td>Médias de tratamentos qualitativos (cultivares, produtos), com erro e letras do teste</td><td>Barras, Barras horizontais ou Médias e erro</td></tr>
+            <tr><td>Interação entre dois fatores</td><td>Linhas ou Barras, com o segundo fator em <em>Cor (grupo)</em></td></tr>
+            <tr><td>Resposta a doses (fator quantitativo)</td><td>Dispersão e regressão: linear, quadrática, cúbica, logarítmica ou LOESS</td></tr>
+            <tr><td>Evolução no tempo (dias após a semeadura, avaliações)</td><td>Linhas</td></tr>
+            <tr><td>Composição de um total (frações, classes)</td><td>Empilhadas, em valores ou em 100%</td></tr>
+            <tr><td>Como os dados se distribuem, e não só a média</td><td>Boxplot, Violino, Histograma ou Densidade</td></tr>
+          </tbody>
+        </table></div>
+      </figure>
+      <p class="guide-p">
+        Doses são números, e o gráfico certo para elas é uma curva, não barras com letras. O porquê está em
+        <a href="guia-tukey-ou-regressao.html">Tukey ou regressão?</a>
+      </p>
+      <figure class="figure">
+        <img src="assets/img/examples/chart-regressao.svg" alt="Gráfico de dispersão com ajuste linear e quadrático, cada um com equação e R²" loading="lazy" />
+        <figcaption><strong>Dispersão com regressão.</strong> Equação e R² no gráfico ou na legenda; na quadrática, o
+        Plota marca a dose de máxima (ou de mínima) eficiência. Dados fictícios.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="container guide-article">
+      <span class="guide-number">02</span>
+      <div class="section-head"><h2>Passo a passo</h2></div>
+      <h3 class="guide-h3">Aba 1 · Dados</h3>
+      <p class="guide-p">
+        Cole as células do Excel (com a linha de títulos), envie um arquivo <code>.xlsx</code>, <code>.xls</code> ou
+        <code>.csv</code>, ou carregue um dos exemplos: <em>Cultivares × doses de N</em> (quatro cultivares, cinco doses
+        e quatro blocos, com produtividade, °Brix e uma coluna de letras) ou <em>Crescimento ao longo do ciclo</em>
+        (massa seca e índice de área foliar de 15 a 90 dias, irrigado × sequeiro). Você pode ter vários conjuntos de
+        dados na mesma sessão e editar qualquer valor na própria planilha do app. Vírgula decimal é aceita.
+      </p>
+      <p class="guide-p">
+        Os dados entram no formato longo: uma linha por observação, uma coluna por informação. Se precisar
+        reorganizar, veja <a href="guia-organizar-dados.html">Como organizar a planilha antes de analisar</a>.
+      </p>
+      <h3 class="guide-h3">Aba 2 · Gráficos</h3>
+      <ol class="guide-steps">
+        <li><strong>Novo</strong> cria um gráfico. Escolha o <em>Tipo de gráfico</em>.</li>
+        <li>Em <em>Dados e variáveis</em>, diga o que vai no <em>Eixo X</em> (tratamentos ou doses), no <em>Eixo Y</em> (variável resposta), em <em>Cor (grupo / 2º fator)</em> e, se quiser, em <em>Dividir em painéis por</em> um terceiro fator.</li>
+        <li>Em <em>Estatística e rótulos</em>, escolha o resumo (média, mediana ou soma), a barra de erro (erro-padrão, desvio-padrão ou IC 95%), os rótulos (letras de uma coluna ou o valor da média) e, na dispersão, o modelo de regressão.</li>
+        <li>Ajuste <em>Cores e formas</em>, <em>Textos e fonte</em> e <em>Eixos, legenda e tema</em>.</li>
+        <li>Precisa do mesmo gráfico para outra variável? <strong>Duplicar</strong> e troque só o eixo Y. O botão <strong>Estilo em todos</strong> iguala fonte, cores, tema e tamanhos de todos os gráficos.</li>
+      </ol>
+      <h3 class="guide-h3">Aba 3 · Painel</h3>
+      <p class="guide-p">
+        Escolha dois ou mais gráficos, o número de colunas, a identificação (A, B, C ou (a), (b), (c)…) e, se as
+        legendas forem iguais, junte-as numa só, abaixo, acima ou à direita. O painel é baixado como uma figura única.
+      </p>
+      <div class="callout callout-good">
+        <span class="callout-title">Salve o projeto</span>
+        <em>Salvar projeto</em> guarda dados e gráficos num arquivo <code>.plota</code> no seu computador. Na próxima
+        vez, <em>Abrir projeto</em> traz tudo de volta para continuar de onde parou. O app não guarda nada: ao fechar
+        a página sem salvar, o trabalho se perde.
+      </div>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="container guide-article">
+      <span class="guide-number">03</span>
+      <div class="section-head"><h2>Detalhes que as revistas cobram</h2></div>
+      <h3 class="guide-h3">Unidades com expoente e índice</h3>
+      <p class="guide-p">
+        Escreva <code>kg ha^-1</code>, <code>m^2</code> ou <code>CO_2</code> em títulos, nomes de colunas e níveis, e o
+        gráfico mostra kg ha<sup>−1</sup>, m<sup>2</sup> e CO<sub>2</sub>. Para mais de um caractere, use chaves:
+        <code>x^{0,5}</code>. Nada de "kg/ha" improvisado no eixo.
+      </p>
+      <h3 class="guide-h3">Letras do teste de médias</h3>
+      <p class="guide-p">
+        O Plota não faz o teste: ele desenha as letras que você já tem. Inclua na planilha uma coluna com as letras
+        (vindas do <a href="ranova.html">Ranova</a> ou de outro programa) e escolha <em>Rótulos → Letras de uma
+        coluna</em>. Assim, o gráfico sempre concorda com a tabela do artigo.
+      </p>
+      <h3 class="guide-h3">Tamanho, formato e resolução</h3>
+      <p class="guide-p">
+        Há tamanhos prontos (artigo em 1, 1,5 ou 2 colunas, página A4, slide 16:9, Full HD) ou qualquer tamanho em
+        cm, mm, polegadas ou pixels. Os formatos são TIFF (com compressão LZW, o mais pedido pelas revistas), PNG,
+        JPEG, PDF, SVG e EPS, de 72 a 2400 dpi. A maioria das revistas pede TIFF ou PNG a 300–600 dpi, ou PDF/EPS
+        vetorial; confira as instruções aos autores.
+      </p>
+      <p class="guide-p">
+        A prévia é desenhada no mesmo tamanho da exportação, então o que você vê é o que vai baixar: a fonte de
+        10 pt na tela é a fonte de 10 pt no arquivo. Isso evita o problema clássico do gráfico que fica lindo na
+        tela e com letras minúsculas quando reduzido para uma coluna.
+      </p>
+      <h3 class="guide-h3">Cor e impressão</h3>
+      <p class="guide-p">
+        Há paletas prontas, incluindo tons de cinza (para versão impressa) e Okabe-Ito, que continua distinguível
+        para pessoas com daltonismo. Para reforçar a diferença entre grupos sem depender da cor, ative formas e
+        tracejados diferentes por grupo.
+      </p>
+      <figure class="figure">
+        <img src="assets/img/examples/chart-linhas-erro.svg" alt="Gráfico de linhas com barras de erro comparando dois tratamentos ao longo do tempo" loading="lazy" />
+        <figcaption><strong>Linhas com erro-padrão, dois grupos.</strong> Exemplo de saída do Plota com dados fictícios.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="container guide-article">
+      <span class="guide-number">04</span>
+      <div class="section-head"><h2>Dúvidas comuns</h2></div>
+      <h3 class="guide-h3">Erro-padrão, desvio-padrão ou intervalo de confiança?</h3>
+      <p class="guide-p">
+        O desvio-padrão descreve a variação dos dados; o erro-padrão, a precisão da média; o IC 95% dá a faixa
+        provável da média verdadeira. Para comparar médias de tratamentos, o erro-padrão é o mais usado. O
+        importante é dizer na legenda da figura qual foi usado.
+      </p>
+      <h3 class="guide-h3">As fontes saem iguais em qualquer computador?</h3>
+      <p class="guide-p">
+        Sim. O Plota usa fontes livres (Liberation Sans, com as medidas do Arial; Liberation Serif, com as do
+        Times New Roman; PT Sans; Poppins e Crimson Text) embutidas no app. Nos formatos vetoriais, o texto sai
+        convertido em curvas, então o arquivo abre igual em qualquer lugar.
+      </p>
+      <h3 class="guide-h3">Prefiro fazer no R</h3>
+      <p class="guide-p">
+        O Plota é feito com <code>ggplot2</code> e o código é aberto (licença MIT) no
+        <a href="https://github.com/Marlenildo/plota" target="_blank" rel="noopener">GitHub</a>. Para começar a
+        programar seus próprios gráficos, veja <a href="r-para-pesquisa.html">R para pesquisa</a>.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div>
+      <p class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="38" height="38" /><span>Marlenildo<span class="brand-dot">.online</span></span></p>
+      <p class="footer-note">Apps em R &amp; Shiny para pesquisa e gestão de dados.</p>
+      <ul class="social-icons" aria-label="Perfis profissionais e acadêmicos">
+        <li>
+          <a href="https://github.com/Marlenildo" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://orcid.org/0000-0001-7449-6916" target="_blank" rel="noopener" aria-label="ORCID">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" font-size="10" font-weight="700" fill="currentColor" stroke="none" font-family="Arial, sans-serif">iD</text></svg>
+          </a>
+        </li>
+        <li>
+          <a href="http://lattes.cnpq.br/6931262930637371" target="_blank" rel="noopener" aria-label="Currículo Lattes">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="mailto:marlenildo@gmail.com" aria-label="E-mail">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2.5"/><path d="m3 6.5 9 6.5 9-6.5"/></svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <ul class="footer-links" aria-label="Páginas do site">
+      <li><a href="guia.html">Guia</a></li>
+      <li><a href="sobre.html">Sobre</a></li>
+      <li><a href="sobre.html#contato">Contato</a></li>
+      <li><a href="privacidade.html">Privacidade</a></li>
+    </ul>
+  </div>
+  <p class="footer-copy">&copy; <span id="year"></span> Marlenildo. Todos os direitos reservados.</p>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

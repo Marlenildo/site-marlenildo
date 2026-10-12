@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Calibra: curva de calibração e R² online — Marlenildo</title>
+<link rel="canonical" href="https://marlenildo.online/calibra.html">
+<meta name="description" content="Como montar e conferir uma curva de calibração: equação da reta, R², cálculo da concentração da amostra, resíduos e por que não extrapolar. Com exemplo numérico e código em R." />
+<meta property="og:title" content="Calibra: curva de calibração e R² online" />
+<meta property="og:description" content="Como montar e conferir uma curva de calibração: equação da reta, R², cálculo da concentração da amostra, resíduos e por que não extrapolar. Com exemplo numérico e código em R." />
+<meta property="og:type" content="article" />
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/style.css" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130340973057636" crossorigin="anonymous"></script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Calibra: curva de calibração e R² online", "description": "Como montar e conferir uma curva de calibração: equação da reta, R², cálculo da concentração da amostra, resíduos e por que não extrapolar. Com exemplo numérico e código em R.", "inLanguage": "pt-BR", "datePublished": "2026-10-12", "dateModified": "2026-10-12", "mainEntityOfPage": "https://marlenildo.online/calibra.html", "author": {"@type": "Person", "name": "Marlenildo", "url": "https://marlenildo.online/sobre.html"}, "publisher": {"@type": "Person", "name": "Marlenildo", "url": "https://marlenildo.online/"}}</script>
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+<div class="bg-glow" aria-hidden="true"></div>
+
+<header class="site-header">
+  <nav class="nav container">
+    <a href="index.html#topo" class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="46" height="46" /><span>Marlenildo<span class="brand-dot">.online</span></span></a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#apps" aria-current="page">Apps</a></li>
+      <li><a href="guia.html">Guia</a></li>
+      <li><a href="sobre.html">Sobre</a></li>
+      <li><a href="sobre.html#contato">Contato</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="conteudo">
+
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <nav class="breadcrumb" aria-label="Você está em"><a href="index.html#apps">Apps</a><span aria-hidden="true">/</span><span>Calibra</span></nav>
+      <div class="app-hero-title">
+        <span class="app-logo-wrap"><img src="assets/img/logo-calibra.png" alt="" class="app-logo" width="64" height="64" /></span>
+        <h1>Calibra: <span class="text-gradient">curva de calibração</span> e R² na hora</h1>
+      </div>
+      <p class="hero-lead">
+        Para quem lê padrões no espectrofotômetro (ou em qualquer equipamento que dê uma leitura proporcional
+        à concentração) e quer conferir, antes de seguir com as amostras, se a curva ficou boa.
+      </p>
+      <ul class="article-meta">
+        <li>Por <a href="sobre.html">Marlenildo</a></li>
+        <li>Gratuito · sem cadastro</li>
+        <li>7 min de leitura</li>
+      </ul>
+      <div class="hero-actions app-hero-actions">
+        <a href="https://marlenildo-calibra.share.connect.posit.cloud/" target="_blank" rel="noopener" class="btn btn-primary">Abrir o Calibra ↗</a>
+        <a href="https://github.com/Marlenildo/calibra" target="_blank" rel="noopener" class="btn btn-ghost">Código no GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="container guide-article">
+      <span class="guide-number">01</span>
+      <div class="section-head"><h2>Para que serve</h2></div>
+      <p class="guide-p">
+        Toda análise por curva de calibração tem o mesmo começo: você prepara soluções-padrão de concentração
+        conhecida, lê cada uma no equipamento e ajusta uma reta <code>leitura = b × concentração + a</code>.
+        Depois, a leitura de cada amostra é convertida em concentração por essa reta. Se a curva estiver ruim,
+        todos os resultados que vierem dela herdam o problema.
+      </p>
+      <p class="guide-p">
+        O Calibra faz só essa conferência, e rápido: você digita ou cola os pontos e o gráfico, a equação e o
+        R² aparecem ao lado, atualizando a cada número alterado. É útil na bancada, entre a leitura dos padrões
+        e a das amostras, quando ainda dá tempo de refazer um padrão.
+      </p>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="container guide-article">
+      <span class="guide-number">02</span>
+      <div class="section-head"><h2>Como usar</h2></div>
+      <ol class="guide-steps">
+        <li><strong>Abra o app.</strong> Ele já vem com cinco pontos de exemplo, para você ver como funciona.</li>
+        <li><strong>Preencha a planilha "Pontos da curva".</strong> Coluna <em>Concentração</em> com o valor de cada padrão e coluna <em>Leitura</em> com o que o equipamento mostrou. Vírgula decimal é aceita, e dá para copiar as duas colunas do Excel e colar com Ctrl+V.</li>
+        <li><strong>Adicione quantas linhas precisar.</strong> Linhas vazias ou incompletas são ignoradas no ajuste.</li>
+        <li><strong>Leia o painel "Curva".</strong> A reta, a equação no formato <code>y = bx + a</code> com quatro casas decimais e o R² se atualizam enquanto você digita.</li>
+      </ol>
+      <div class="callout callout-good">
+        <span class="callout-title">Seus dados</span>
+        Os pontos ficam só na sessão aberta do navegador. Nada é gravado em banco de dados, arquivo ou cookie:
+        ao fechar ou atualizar a página, tudo é descartado.
+      </div>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="container guide-article">
+      <span class="guide-number">03</span>
+      <div class="section-head"><h2>Exemplo: da curva à concentração da amostra</h2></div>
+      <p class="guide-p">Os cinco pontos que o app traz de exemplo:</p>
+      <figure class="figure">
+        <div class="table-scroll"><table class="data-table">
+          <thead><tr><th>Concentração</th><th class="num">0</th><th class="num">1</th><th class="num">2</th><th class="num">3</th><th class="num">4</th></tr></thead>
+          <tbody><tr><td><strong>Leitura</strong></td><td class="num">1</td><td class="num">2</td><td class="num">3,5</td><td class="num">4,7</td><td class="num">6,5</td></tr></tbody>
+        </table></div>
+      </figure>
+      <p class="guide-p">
+        O ajuste dá <strong>y = 1,3700x + 0,8000</strong> com <strong>R² = 0,9914</strong>. O coeficiente
+        <code>b = 1,37</code> é a sensibilidade (quanto a leitura sobe a cada unidade de concentração) e
+        <code>a = 0,80</code> é a leitura prevista para concentração zero, o "branco" da reta.
+      </p>
+      <p class="guide-p">
+        Para achar a concentração de uma amostra, isole o <em>x</em>: <code>x = (leitura − a) / b</code>.
+        Uma amostra que leu 3,0 tem concentração (3,0 − 0,80) / 1,37 = <strong>1,61</strong>, na mesma unidade
+        dos padrões. Se ela foi diluída antes da leitura, multiplique pelo fator de diluição.
+      </p>
+      <figure class="figure">
+        <svg viewBox="0 0 560 310" role="img" aria-labelledby="t-cal"><title id="t-cal">Curva de calibração com cinco padrões de 0 a 4, reta y = 1,37x + 0,80 e R² = 0,991. Uma amostra com leitura 3,0 corresponde à concentração 1,61. A área acima de 4 é marcada como fora da faixa da curva.</title><rect x="402.9" y="26" width="127.1" height="236" fill="#fbbf24" fill-opacity="0.07"/><text x="466.5" y="42" text-anchor="middle" font-size="11" fill="#fbbf24" font-family="Inter, system-ui, sans-serif">fora da faixa</text><line x1="64" y1="262.0" x2="530" y2="262.0" stroke="#ffffff" stroke-opacity="0.08"/><text x="56" y="266.0" text-anchor="end" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">0</text><line x1="64" y1="206.5" x2="530" y2="206.5" stroke="#ffffff" stroke-opacity="0.08"/><text x="56" y="210.5" text-anchor="end" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">2</text><line x1="64" y1="150.9" x2="530" y2="150.9" stroke="#ffffff" stroke-opacity="0.08"/><text x="56" y="154.9" text-anchor="end" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">4</text><line x1="64" y1="95.4" x2="530" y2="95.4" stroke="#ffffff" stroke-opacity="0.08"/><text x="56" y="99.4" text-anchor="end" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">6</text><line x1="64" y1="39.9" x2="530" y2="39.9" stroke="#ffffff" stroke-opacity="0.08"/><text x="56" y="43.9" text-anchor="end" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">8</text><text x="64.0" y="280" text-anchor="middle" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">0</text><text x="148.7" y="280" text-anchor="middle" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">1</text><text x="233.5" y="280" text-anchor="middle" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">2</text><text x="318.2" y="280" text-anchor="middle" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">3</text><text x="402.9" y="280" text-anchor="middle" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">4</text><text x="487.6" y="280" text-anchor="middle" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">5</text><line x1="64" y1="262" x2="530" y2="262" stroke="#9aa0b4" stroke-opacity="0.6"/><text x="297.0" y="302" text-anchor="middle" font-size="12" font-weight="700" fill="#eef0f6" font-family="Inter, system-ui, sans-serif">Concentração do padrão</text><text x="18" y="144.0" text-anchor="middle" font-size="12" font-weight="700" fill="#eef0f6" transform="rotate(-90 18 144.0)" font-family="Inter, system-ui, sans-serif">Leitura</text><line x1="64.0" y1="239.8" x2="402.9" y2="87.6" stroke="#22d3ee" stroke-width="2.4"/><line x1="402.9" y1="87.6" x2="513.1" y2="38.2" stroke="#22d3ee" stroke-width="2" stroke-dasharray="5 5" stroke-opacity="0.6"/><line x1="64" y1="178.7" x2="200.1" y2="178.7" stroke="#7c5cff" stroke-width="1.6" stroke-dasharray="4 4"/><line x1="200.1" y1="178.7" x2="200.1" y2="262" stroke="#7c5cff" stroke-width="1.6" stroke-dasharray="4 4"/><circle cx="200.1" cy="178.7" r="5" fill="none" stroke="#7c5cff" stroke-width="2"/><text x="210.1" y="198.7" font-size="11.5" font-weight="700" fill="#b8a6ff" font-family="Inter, system-ui, sans-serif">amostra: leitura 3,0 → 1,61</text><circle cx="64.0" cy="234.2" r="5" fill="#eef0f6"/><circle cx="148.7" cy="206.5" r="5" fill="#eef0f6"/><circle cx="233.5" cy="164.8" r="5" fill="#eef0f6"/><circle cx="318.2" cy="131.5" r="5" fill="#eef0f6"/><circle cx="402.9" cy="81.5" r="5" fill="#eef0f6"/><text x="76" y="42" font-size="13" font-weight="700" fill="#eef0f6" font-family="Inter, system-ui, sans-serif">y = 1,3700x + 0,8000</text><text x="76" y="60" font-size="12" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">R² = 0,9914</text></svg>
+        <figcaption><strong>Leitura da amostra convertida pela reta.</strong> Acima do padrão mais concentrado
+        (área amarela), a reta continua no desenho, mas não há padrão nenhum garantindo que a resposta do
+        equipamento continua linear ali.</figcaption>
+      </figure>
+      <div class="callout callout-warn">
+        <span class="callout-title">Não extrapole</span>
+        Uma amostra que leu 8,0 daria 5,26 pela equação, acima do maior padrão (4). O certo é diluir a amostra
+        até a leitura cair dentro da faixa da curva, ou acrescentar um padrão mais concentrado.
+      </div>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="container guide-article">
+      <span class="guide-number">04</span>
+      <div class="section-head"><h2>R² alto não basta: olhe os resíduos</h2></div>
+      <p class="guide-p">
+        O R² mede quanto da variação das leituras a reta explica. Muitos protocolos de laboratório pedem
+        R² de pelo menos 0,99 (ou 0,995) para aceitar a curva, mas o critério que vale é o do método que você
+        segue. E um R² alto pode esconder um problema: a resposta do equipamento pode estar curvando.
+      </p>
+      <p class="guide-p">
+        Resíduo é a diferença entre a leitura observada e a prevista pela reta. No exemplo, os resíduos são
+        +0,20, −0,17, −0,04, −0,21 e +0,22:
+      </p>
+      <figure class="figure">
+        <svg viewBox="0 0 560 186" role="img" aria-labelledby="t-res"><title id="t-res">Resíduos da curva de calibração: positivos nas pontas (+0,20 e +0,22) e negativos no meio, formando um U.</title><line x1="64" y1="90" x2="530" y2="90" stroke="#9aa0b4" stroke-opacity="0.6"/><text x="56" y="94" text-anchor="end" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">0</text><line x1="104.0" y1="90" x2="104.0" y2="42.0" stroke="#22d3ee" stroke-width="3"/><circle cx="104.0" cy="42.0" r="4.5" fill="#eef0f6"/><text x="104.0" y="32.0" text-anchor="middle" font-size="11" fill="#eef0f6" font-family="Inter, system-ui, sans-serif">+0,20</text><text x="104.0" y="172" text-anchor="middle" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">padrão 0</text><line x1="200.5" y1="90" x2="200.5" y2="130.8" stroke="#ff5fa2" stroke-width="3"/><circle cx="200.5" cy="130.8" r="4.5" fill="#eef0f6"/><text x="200.5" y="148.8" text-anchor="middle" font-size="11" fill="#eef0f6" font-family="Inter, system-ui, sans-serif">−0,17</text><text x="200.5" y="172" text-anchor="middle" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">padrão 1</text><line x1="297.0" y1="90" x2="297.0" y2="99.6" stroke="#ff5fa2" stroke-width="3"/><circle cx="297.0" cy="99.6" r="4.5" fill="#eef0f6"/><text x="297.0" y="117.6" text-anchor="middle" font-size="11" fill="#eef0f6" font-family="Inter, system-ui, sans-serif">−0,04</text><text x="297.0" y="172" text-anchor="middle" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">padrão 2</text><line x1="393.5" y1="90" x2="393.5" y2="140.4" stroke="#ff5fa2" stroke-width="3"/><circle cx="393.5" cy="140.4" r="4.5" fill="#eef0f6"/><text x="393.5" y="158.4" text-anchor="middle" font-size="11" fill="#eef0f6" font-family="Inter, system-ui, sans-serif">−0,21</text><text x="393.5" y="172" text-anchor="middle" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">padrão 3</text><line x1="490.0" y1="90" x2="490.0" y2="37.2" stroke="#22d3ee" stroke-width="3"/><circle cx="490.0" cy="37.2" r="4.5" fill="#eef0f6"/><text x="490.0" y="27.2" text-anchor="middle" font-size="11" fill="#eef0f6" font-family="Inter, system-ui, sans-serif">+0,22</text><text x="490.0" y="172" text-anchor="middle" font-size="11" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">padrão 4</text><path d="M 104.0 42.0 C 200.5 129.6, 393.5 129.6, 490.0 37.2" fill="none" stroke="#fbbf24" stroke-width="1.6" stroke-dasharray="5 5"/><text x="18" y="90" text-anchor="middle" font-size="12" font-weight="700" fill="#eef0f6" transform="rotate(-90 18 90)" font-family="Inter, system-ui, sans-serif">Resíduo</text></svg>
+        <figcaption><strong>Positivos nas pontas, negativos no meio.</strong> Se os pontos estivessem
+        espalhados ao acaso em volta da reta, os sinais se alternariam sem padrão. Um "U" como esse sugere
+        curvatura, mesmo com R² de 0,99.</figcaption>
+      </figure>
+      <p class="guide-p">
+        Com só cinco pontos, o padrão pode ser acaso. Mas, se ele se repetir em curvas de dias diferentes, vale
+        investigar: padrões mal preparados, faixa de concentração larga demais para a resposta linear do
+        equipamento, ou um método que de fato pede outro modelo. O raciocínio é o mesmo da escolha entre reta e
+        curva em experimentos com doses, discutido no guia
+        <a href="guia-tukey-ou-regressao.html">Tukey ou regressão?</a>
+      </p>
+      <p class="guide-p"><strong>Checklist rápido antes de ler as amostras:</strong></p>
+      <ul class="guide-list">
+        <li>R² dentro do critério do seu método.</li>
+        <li>Nenhum ponto muito longe da reta (geralmente é erro de pipetagem ou de digitação).</li>
+        <li>Resíduos sem padrão de "U" ou de "∩".</li>
+        <li>Intercepto <code>a</code> próximo da leitura do branco.</li>
+        <li>Todas as amostras com leitura entre o menor e o maior padrão.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="container guide-article">
+      <span class="guide-number">05</span>
+      <div class="section-head"><h2>Dúvidas comuns</h2></div>
+      <h3 class="guide-h3">Quantos padrões preciso?</h3>
+      <p class="guide-p">
+        O app ajusta a reta a partir de dois pontos com concentrações diferentes, mas com dois pontos o R² é
+        sempre 1 e não diz nada. Na prática, use pelo menos cinco padrões cobrindo toda a faixa esperada das
+        amostras, ou o número que o seu método exigir.
+      </p>
+      <h3 class="guide-h3">Faço a média das leituras repetidas de cada padrão?</h3>
+      <p class="guide-p">
+        Você pode lançar cada leitura em uma linha (mesmo valor de concentração repetido). Assim a reta usa
+        todas as leituras e você enxerga no gráfico se alguma repetição destoou.
+      </p>
+      <h3 class="guide-h3">Posso usar no R, sem o app?</h3>
+      <p class="guide-p">É o mesmo ajuste linear do R base:</p>
+      <pre class="code-block"><code>conc    &lt;- c(0, 1, 2, 3, 4)
+leitura &lt;- c(1, 2, 3.5, 4.7, 6.5)
+ajuste  &lt;- lm(leitura ~ conc)
+coef(ajuste)                 # a = 0,80 e b = 1,37
+summary(ajuste)$r.squared    # 0,9914
+resid(ajuste)                # resíduos
+(3.0 - coef(ajuste)[1]) / coef(ajuste)[2]   # amostra com leitura 3,0</code></pre>
+      <p class="guide-p">
+        Para começar no R, veja <a href="r-para-pesquisa.html">R para pesquisa</a>. O código do Calibra é
+        aberto (licença MIT) e está no <a href="https://github.com/Marlenildo/calibra" target="_blank" rel="noopener">GitHub</a>.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div>
+      <p class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="38" height="38" /><span>Marlenildo<span class="brand-dot">.online</span></span></p>
+      <p class="footer-note">Apps em R &amp; Shiny para pesquisa e gestão de dados.</p>
+      <ul class="social-icons" aria-label="Perfis profissionais e acadêmicos">
+        <li>
+          <a href="https://github.com/Marlenildo" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://orcid.org/0000-0001-7449-6916" target="_blank" rel="noopener" aria-label="ORCID">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" font-size="10" font-weight="700" fill="currentColor" stroke="none" font-family="Arial, sans-serif">iD</text></svg>
+          </a>
+        </li>
+        <li>
+          <a href="http://lattes.cnpq.br/6931262930637371" target="_blank" rel="noopener" aria-label="Currículo Lattes">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="mailto:marlenildo@gmail.com" aria-label="E-mail">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2.5"/><path d="m3 6.5 9 6.5 9-6.5"/></svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <ul class="footer-links" aria-label="Páginas do site">
+      <li><a href="guia.html">Guia</a></li>
+      <li><a href="sobre.html">Sobre</a></li>
+      <li><a href="sobre.html#contato">Contato</a></li>
+      <li><a href="privacidade.html">Privacidade</a></li>
+    </ul>
+  </div>
+  <p class="footer-copy">&copy; <span id="year"></span> Marlenildo. Todos os direitos reservados.</p>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

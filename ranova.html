@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ranova: ANOVA de experimentos online, passo a passo — Marlenildo</title>
+<link rel="canonical" href="https://marlenildo.online/ranova.html">
+<meta name="description" content="Como usar o Ranova para análise de variância em DIC, DBC, esquema fatorial e parcelas subdivididas: formato dos dados, pressupostos, discrepantes, teste de médias e desdobramento." />
+<meta property="og:title" content="Ranova: ANOVA de experimentos online, passo a passo" />
+<meta property="og:description" content="Como usar o Ranova para análise de variância em DIC, DBC, esquema fatorial e parcelas subdivididas: formato dos dados, pressupostos, discrepantes, teste de médias e desdobramento." />
+<meta property="og:type" content="article" />
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/style.css" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130340973057636" crossorigin="anonymous"></script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Ranova: ANOVA de experimentos online, passo a passo", "description": "Como usar o Ranova para análise de variância em DIC, DBC, esquema fatorial e parcelas subdivididas: formato dos dados, pressupostos, discrepantes, teste de médias e desdobramento.", "inLanguage": "pt-BR", "datePublished": "2026-10-12", "dateModified": "2026-10-12", "mainEntityOfPage": "https://marlenildo.online/ranova.html", "author": {"@type": "Person", "name": "Marlenildo", "url": "https://marlenildo.online/sobre.html"}, "publisher": {"@type": "Person", "name": "Marlenildo", "url": "https://marlenildo.online/"}}</script>
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+<div class="bg-glow" aria-hidden="true"></div>
+
+<header class="site-header">
+  <nav class="nav container">
+    <a href="index.html#topo" class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="46" height="46" /><span>Marlenildo<span class="brand-dot">.online</span></span></a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#apps" aria-current="page">Apps</a></li>
+      <li><a href="guia.html">Guia</a></li>
+      <li><a href="sobre.html">Sobre</a></li>
+      <li><a href="sobre.html#contato">Contato</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="conteudo">
+
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <nav class="breadcrumb" aria-label="Você está em"><a href="index.html#apps">Apps</a><span aria-hidden="true">/</span><span>Ranova</span></nav>
+      <div class="app-hero-title">
+        <span class="app-logo-wrap"><img src="assets/img/logo-ranova.png" alt="" class="app-logo" width="64" height="64" /></span>
+        <h1>Ranova: <span class="text-gradient">análise de variância</span> sem programar</h1>
+      </div>
+      <p class="hero-lead">
+        ANOVA, pressupostos, teste de médias, desdobramento da interação, gráficos e relatório para
+        experimentos em DIC e DBC, do experimento simples às parcelas subsubdivididas.
+      </p>
+      <ul class="article-meta">
+        <li>Por <a href="sobre.html">Marlenildo</a></li>
+        <li>Gratuito · sem cadastro</li>
+        <li>10 min de leitura</li>
+      </ul>
+      <div class="hero-actions app-hero-actions">
+        <a href="https://marlenildo-ranova.share.connect.posit.cloud/" target="_blank" rel="noopener" class="btn btn-primary">Abrir o Ranova ↗</a>
+        <a href="https://github.com/Marlenildo/ranova-app" target="_blank" rel="noopener" class="btn btn-ghost">Código no GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="container guide-article">
+      <span class="guide-number">01</span>
+      <div class="section-head"><h2>O que o Ranova analisa</h2></div>
+      <p class="guide-p">
+        O app cobre os arranjos mais comuns nas ciências agrárias, sempre em DIC (inteiramente casualizado) ou
+        DBC (blocos casualizados), com uma ou várias variáveis resposta de uma vez:
+      </p>
+      <figure class="figure">
+        <div class="table-scroll"><table class="data-table table-wrap">
+          <thead><tr><th>Situação no campo</th><th>Nome do arranjo</th></tr></thead>
+          <tbody>
+            <tr><td>1 fator</td><td>Experimento simples</td></tr>
+            <tr><td>2 ou 3 fatores sorteados juntos nas parcelas</td><td>Esquema fatorial</td></tr>
+            <tr><td>1 fator nas parcelas e 1 nas subparcelas</td><td>Parcelas subdivididas</td></tr>
+            <tr><td>2 fatores combinados nas parcelas (ou nas subparcelas) e 1 no outro nível</td><td>Parcelas subdivididas com esquema fatorial nas parcelas (ou nas subparcelas)</td></tr>
+            <tr><td>1 fator em cada nível: parcela, subparcela e subsubparcela</td><td>Parcelas subsubdivididas</td></tr>
+          </tbody>
+        </table></div>
+        <figcaption>Um fator na parcela e outro na subparcela <strong>não</strong> é esquema fatorial: os fatores
+        são sorteados em etapas e cada um tem o seu erro. Na dúvida, leia
+        <a href="guia-fatorial-parcela-subdividida.html">Fatorial ou parcela subdividida?</a> e
+        <a href="guia-dic-dbc.html">DIC ou DBC?</a> antes de analisar.</figcaption>
+      </figure>
+      <p class="guide-p">
+        Escolher o arranjo errado não dá erro na tela: dá uma ANOVA com o resíduo errado. Nas parcelas
+        subdivididas, por exemplo, o fator da parcela é testado contra o erro (a), e o da subparcela contra o erro
+        (b). O Ranova usa o erro correto em cada teste F e em cada comparação de médias, inclusive o erro combinado
+        (com graus de liberdade de Satterthwaite) quando se compara o fator da parcela dentro de cada nível da
+        subparcela.
+      </p>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="container guide-article">
+      <span class="guide-number">02</span>
+      <div class="section-head"><h2>Como os dados devem estar</h2></div>
+      <p class="guide-p">Uma linha por parcela e uma coluna para cada informação:</p>
+      <figure class="figure">
+        <div class="table-scroll"><table class="data-table">
+          <thead><tr><th class="col-a">Bloco</th><th class="col-a">Dose</th><th class="col-a">Cultivar</th><th class="col-c num">Produtividade</th><th class="col-c num">Brix</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>0</td><td>A</td><td class="num">28,4</td><td class="num">10,2</td></tr>
+            <tr><td>1</td><td>50</td><td>A</td><td class="num">31,9</td><td class="num">10,9</td></tr>
+            <tr class="row-ellipsis"><td colspan="5">…</td></tr>
+          </tbody>
+        </table></div>
+        <figcaption>No DIC, a coluna de bloco pode ser trocada por uma de repetição. Em parcelas subdivididas em
+        DIC, essa coluna é obrigatória: é ela que diz quais subparcelas pertencem à mesma parcela.</figcaption>
+      </figure>
+      <p class="guide-p">
+        Se a sua planilha está em "formato largo" (um bloco por coluna, uma aba por data), reorganize antes. O guia
+        <a href="guia-organizar-dados.html">Como organizar a planilha antes de analisar</a> mostra o passo a passo, e
+        <a href="guia-dados-faltantes.html">Parcelas perdidas e dados faltantes</a> explica o que fazer com parcelas perdidas.
+      </p>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="container guide-article">
+      <span class="guide-number">03</span>
+      <div class="section-head"><h2>Passo a passo no app</h2></div>
+      <ol class="guide-steps">
+        <li><strong>Dados.</strong> Escolha uma das quatro entradas:
+          <em>Montar</em> (informe de 1 a 3 fatores com seus níveis separados por <code>;</code>, as repetições ou
+          blocos e as variáveis; o app gera a planilha com todas as combinações para você digitar),
+          <em>Importar</em> (Excel <code>.xlsx</code>/<code>.xls</code> com escolha da aba, ou CSV; há uma planilha modelo para baixar),
+          <em>Colar</em> (células copiadas do Excel, com ou sem cabeçalho) ou
+          <em>Exemplo</em> (dados fictícios de melão: fatorial 4 × 2 de doses × cultivares em DBC, ou parcelas subdivididas com irrigação nas parcelas e cultivar nas subparcelas).</li>
+        <li><strong>Estrutura do experimento.</strong> Escolha o delineamento, a coluna de blocos (ou de repetição), os fatores e as variáveis resposta. O app já sugere tudo pelas colunas; confira.</li>
+        <li><strong>Opções da análise.</strong> Nível de significância, casas decimais, formato da tabela de ANOVA (QM com asteriscos, F e p em colunas, ou F (p) na mesma célula), teste de médias e erro-padrão das médias (do modelo ou descritivo).</li>
+        <li><strong>Analisar.</strong> Os resultados aparecem em abas, explicadas abaixo.</li>
+        <li><strong>Painel e relatório.</strong> Monte um painel com os gráficos que quiser (A, B, C…) e baixe o relatório em PDF (A4, para imprimir) ou HTML (com o visual do app, para abrir no navegador ou enviar).</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="container guide-article">
+      <span class="guide-number">04</span>
+      <div class="section-head"><h2>Como ler cada aba de resultado</h2></div>
+      <h3 class="guide-h3">ANOVA</h3>
+      <p class="guide-p">
+        O quadro traz fontes de variação, GL, quadrados médios, F, p e o CV (um por erro, nas subdivididas), com
+        uma leitura rápida em texto de quais efeitos e interações foram significativos. Se algum termo do quadro
+        não for claro, veja <a href="guia-tabela-anova.html">Como ler a tabela da ANOVA</a>,
+        <a href="guia-graus-de-liberdade.html">Graus de liberdade</a> e <a href="guia-cv.html">CV alto é problema?</a>
+      </p>
+      <h3 class="guide-h3">Pressupostos</h3>
+      <p class="guide-p">
+        Shapiro-Wilk (normalidade dos resíduos), Levene (homogeneidade de variâncias) e os quatro gráficos de
+        diagnóstico dos resíduos. Os gráficos costumam dizer mais que os p-valores; o guia
+        <a href="guia-pressupostos.html">Pressupostos da ANOVA sem mistério</a> mostra o que procurar.
+      </p>
+      <h3 class="guide-h3">Discrepantes</h3>
+      <p class="guide-p">
+        O app marca como <strong>possível outlier</strong> a parcela com resíduo studentizado |t| &gt; 3, e como
+        <strong>ponto influente</strong> a que tem distância de Cook acima de 4/(n − p) e |t| &gt; 2. Você pode
+        substituir o valor pela média das demais repetições do tratamento e reanalisar; a substituição fica
+        registrada no relatório e pode ser desfeita.
+      </p>
+      <div class="callout callout-bad">
+        <span class="callout-title">Antes de substituir</span>
+        Volte ao caderno de campo. Erro de digitação ou de unidade se corrige com o valor certo. Um valor real,
+        só "inconveniente", não sai da análise porque atrapalhou o resultado.
+      </div>
+      <h3 class="guide-h3">Médias e interação</h3>
+      <p class="guide-p">
+        Médias com letras pelo teste escolhido: Tukey, t (LSD), Bonferroni, Duncan, SNK, Scott-Knott ou Dunnett.
+        Quando a interação é significativa, a aba <em>Interação</em> faz o desdobramento: letras maiúsculas
+        comparam numa direção e minúsculas na outra. O guia <a href="guia-interacao.html">Interação significativa:
+        e agora?</a> explica como ler essa tabela, e <a href="guia-tukey-ou-regressao.html">Tukey ou regressão?</a>
+        explica por que doses pedem regressão, e não teste de médias.
+      </p>
+      <figure class="figure">
+        <img src="assets/img/examples/chart-barras-erro.svg" alt="Gráfico de barras com erro-padrão e letras de comparação de médias por dose" loading="lazy" />
+        <figcaption><strong>Médias com erro-padrão e letras.</strong> Exemplo do tipo de gráfico que sai da aba
+        <em>Gráficos</em> (dados fictícios).</figcaption>
+      </figure>
+      <h3 class="guide-h3">Gráficos</h3>
+      <p class="guide-p">
+        Médias (uma cor ou uma cor por nível) e interação (linhas ou barras com letras), com paletas prontas,
+        inclusive tons de cinza. Dá para renomear variáveis, fatores e até níveis (por exemplo, "0" vira
+        "Controle"), trocar fonte e tamanho, e exportar em PNG ou TIFF a 150, 300 ou 600 dpi, com tamanho em
+        centímetros. Para ajustes mais finos de aparência, leve as médias e as letras para o
+        <a href="plota.html">Plota</a>.
+      </p>
+      <p class="guide-p">
+        Toda tabela tem um botão <em>Copiar tabela</em>, que cola como tabela no Word e como células no Excel, sem
+        a formatação do app. Há ainda a opção de estilo "clássico (artigo)", com texto e filetes pretos.
+      </p>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="container guide-article">
+      <span class="guide-number">05</span>
+      <div class="section-head"><h2>Dúvidas comuns</h2></div>
+      <h3 class="guide-h3">Os resultados conferem com outros programas?</h3>
+      <p class="guide-p">
+        As análises vêm do pacote R <code>ranova</code>, que tem testes automatizados com valores de referência
+        dos pacotes <code>agricolae</code> (Tukey, t, Bonferroni, Duncan, SNK e parcelas subsubdivididas),
+        <code>ExpDes.pt</code> (Scott-Knott e parcelas subdivididas, inclusive o erro combinado) e do
+        <code>aov(... + Error())</code> do R base.
+      </p>
+      <h3 class="guide-h3">Prefiro rodar no R. Dá?</h3>
+      <p class="guide-p">Sim, o mesmo motor está no pacote, de código aberto:</p>
+      <pre class="code-block"><code>remotes::install_github("Marlenildo/ranova")
+library(ranova)
+
+ajuste &lt;- ranova_ajuste(dados, "prod", c("dose", "cultivar"), "DBC", bloco = "bloco")
+ranova_anova(ajuste)                                 # quadro da ANOVA com CV
+ranova_medias(ajuste, "cultivar", teste = "tukey")   # médias com letras
+ranova_medias(ajuste, "dose", dentro = "cultivar")   # desdobramento</code></pre>
+      <p class="guide-p">
+        A documentação está no repositório <a href="https://github.com/Marlenildo/ranova" target="_blank" rel="noopener">Marlenildo/ranova</a>.
+        Para dar os primeiros passos, veja <a href="r-para-pesquisa.html">R para pesquisa</a>.
+      </p>
+      <h3 class="guide-h3">Meus dados ficam guardados?</h3>
+      <p class="guide-p">
+        Não. A planilha fica só na sessão aberta do navegador e é descartada ao fechar a página. Antes de sair,
+        baixe o relatório e, se quiser, a planilha em <code>.xlsx</code>.
+      </p>
+      <h3 class="guide-h3">E se o meu delineamento não estiver na lista?</h3>
+      <p class="guide-p">
+        Quadrado latino, medidas repetidas no tempo, covariáveis, contagens e proporções que pedem modelos
+        generalizados ficam fora do app. Para esses casos, <a href="sobre.html#contato">entre em contato</a>.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div>
+      <p class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="38" height="38" /><span>Marlenildo<span class="brand-dot">.online</span></span></p>
+      <p class="footer-note">Apps em R &amp; Shiny para pesquisa e gestão de dados.</p>
+      <ul class="social-icons" aria-label="Perfis profissionais e acadêmicos">
+        <li>
+          <a href="https://github.com/Marlenildo" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://orcid.org/0000-0001-7449-6916" target="_blank" rel="noopener" aria-label="ORCID">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" font-size="10" font-weight="700" fill="currentColor" stroke="none" font-family="Arial, sans-serif">iD</text></svg>
+          </a>
+        </li>
+        <li>
+          <a href="http://lattes.cnpq.br/6931262930637371" target="_blank" rel="noopener" aria-label="Currículo Lattes">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="mailto:marlenildo@gmail.com" aria-label="E-mail">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2.5"/><path d="m3 6.5 9 6.5 9-6.5"/></svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <ul class="footer-links" aria-label="Páginas do site">
+      <li><a href="guia.html">Guia</a></li>
+      <li><a href="sobre.html">Sobre</a></li>
+      <li><a href="sobre.html#contato">Contato</a></li>
+      <li><a href="privacidade.html">Privacidade</a></li>
+    </ul>
+  </div>
+  <p class="footer-copy">&copy; <span id="year"></span> Marlenildo. Todos os direitos reservados.</p>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
