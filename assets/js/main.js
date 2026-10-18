@@ -1,5 +1,31 @@
 document.getElementById("year").textContent = new Date().getFullYear();
 
+// Tema claro/escuro: segue o sistema até a pessoa escolher no botão do topo (como nos apps)
+const themeToggle = document.getElementById("themeToggle");
+if (themeToggle) {
+  const CHAVE_TEMA = "marlenildo:tema";
+  const SOL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+  const LUA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>';
+  const sistemaClaro = matchMedia("(prefers-color-scheme: light)");
+  let tema = "auto";
+  try { tema = localStorage.getItem(CHAVE_TEMA) || "auto"; } catch (e) { /* sem armazenamento */ }
+  const escuro = () => tema === "dark" || (tema === "auto" && !sistemaClaro.matches);
+  const aplicarTema = () => {
+    if (tema === "auto") document.documentElement.removeAttribute("data-theme");
+    else document.documentElement.setAttribute("data-theme", tema);
+    themeToggle.innerHTML = escuro() ? SOL : LUA;
+    themeToggle.title = escuro() ? "Usar tema claro" : "Usar tema escuro";
+    themeToggle.setAttribute("aria-label", themeToggle.title);
+  };
+  themeToggle.addEventListener("click", () => {
+    tema = escuro() ? "light" : "dark";
+    try { localStorage.setItem(CHAVE_TEMA, tema); } catch (e) { /* sem armazenamento */ }
+    aplicarTema();
+  });
+  if (sistemaClaro.addEventListener) sistemaClaro.addEventListener("change", aplicarTema);
+  aplicarTema();
+}
+
 const navToggle = document.getElementById("navToggle");
 const navLinks = document.getElementById("navLinks");
 

@@ -22,6 +22,13 @@ html { scroll-behavior: smooth; }
   --shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.6);
   --font-display: "Sora", "Inter", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
+  --header-bg: rgba(10, 11, 16, 0.65);
+  --menu-bg: rgba(10, 11, 16, 0.97);
+  --border-strong: rgba(255, 255, 255, 0.22);
+  --glow: 1;
+  --warn: #fbbf24; --bad: #ff5fa2; --good: #34d399;
+  --col-a: #b8a6ff; --col-b: #7fe6f5; --col-c: #ffb0d2; --col-d: #fcd57a;
+  color-scheme: dark;
 }
 
 body {
@@ -75,7 +82,7 @@ img { max-width: 100%; display: block; }
   top: 0;
   z-index: 50;
   backdrop-filter: blur(14px);
-  background: rgba(10, 11, 16, 0.65);
+  background: var(--header-bg);
   border-bottom: 1px solid var(--border);
 }
 
@@ -495,7 +502,7 @@ section { padding: 120px 0; }
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
-    background: rgba(10, 11, 16, 0.97);
+    background: var(--menu-bg);
     border-bottom: 1px solid var(--border);
     padding: 12px 6vw 24px;
     transform: translateY(-8px);
@@ -757,12 +764,12 @@ a.topic-card:hover {
   color: var(--accent-b-ink);
   margin-bottom: 6px;
 }
-.callout-warn { border-left-color: #fbbf24; }
-.callout-warn .callout-title { color: #fbbf24; }
-.callout-bad { border-left-color: #ff5fa2; }
-.callout-bad .callout-title { color: #ff5fa2; }
-.callout-good { border-left-color: #34d399; }
-.callout-good .callout-title { color: #34d399; }
+.callout-warn { border-left-color: var(--warn); }
+.callout-warn .callout-title { color: var(--warn); }
+.callout-bad { border-left-color: var(--bad); }
+.callout-bad .callout-title { color: var(--bad); }
+.callout-good { border-left-color: var(--good); }
+.callout-good .callout-title { color: var(--good); }
 
 .figure {
   margin: 8px 0 28px;
@@ -800,8 +807,8 @@ a.topic-card:hover {
   border-radius: 999px;
   margin-bottom: 12px;
 }
-.tag-bad { color: #ff5fa2; background: rgba(255, 95, 162, 0.1); border: 1px solid rgba(255, 95, 162, 0.35); }
-.tag-good { color: #34d399; background: rgba(52, 211, 153, 0.1); border: 1px solid rgba(52, 211, 153, 0.35); }
+.tag-bad { color: var(--bad); background: rgba(255, 95, 162, 0.1); border: 1px solid rgba(255, 95, 162, 0.35); }
+.tag-good { color: var(--good); background: rgba(52, 211, 153, 0.1); border: 1px solid rgba(52, 211, 153, 0.35); }
 .figure h4 { font-family: var(--font-display); font-size: 1rem; margin: 0 0 12px; }
 
 /* Tabelas de dados */
@@ -830,13 +837,13 @@ a.topic-card:hover {
 .data-table.table-wrap td { white-space: normal; vertical-align: top; min-width: 150px; }
 .data-table td.num, .data-table th.num { text-align: right; }
 .data-table tr.row-ellipsis td { text-align: center; color: var(--text-muted); opacity: 0.6; letter-spacing: 0.3em; }
-.data-table tr.row-total td { color: var(--text); font-weight: 600; border-top: 1px solid rgba(255, 255, 255, 0.22); }
+.data-table tr.row-total td { color: var(--text); font-weight: 600; border-top: 1px solid var(--border-strong); }
 .data-table tr.row-hl td { color: var(--text); background: rgba(34, 211, 238, 0.07); }
-.data-table .col-a { color: #b8a6ff; }
-.data-table .col-b { color: #7fe6f5; }
-.data-table .col-c { color: #ffb0d2; }
-.data-table .col-d { color: #fcd57a; }
-.data-table .cell-bad { color: #ff5fa2; background: rgba(255, 95, 162, 0.08); }
+.data-table .col-a { color: var(--col-a); }
+.data-table .col-b { color: var(--col-b); }
+.data-table .col-c { color: var(--col-c); }
+.data-table .col-d { color: var(--col-d); }
+.data-table .cell-bad { color: var(--bad); background: rgba(255, 95, 162, 0.08); }
 .data-table .letter { color: var(--accent-b-ink); font-weight: 700; }
 .data-table caption {
   caption-side: bottom;
@@ -991,3 +998,64 @@ a.topic-card:hover {
 @media (max-width: 560px) {
   .app-hero-title { flex-direction: column; align-items: flex-start; gap: 12px; }
 }
+
+
+/* ---------- Tema claro e escuro (automático pelo sistema ou pelo botão do topo) ---------- */
+:root[data-theme="light"] {
+  --bg: #f5f6fa;
+  --bg-alt: #ffffff;
+  --surface: rgba(255, 255, 255, 0.72);
+  --surface-strong: #ffffff;
+  --border: rgba(18, 20, 28, 0.10);
+  --border-strong: rgba(18, 20, 28, 0.22);
+  --text: #14161f;
+  --text-muted: #5b6275;
+  --accent-a-ink: #5a3fd6;
+  --accent-b-ink: #0b7285;
+  --shadow: 0 1px 2px rgba(18, 20, 28, 0.04), 0 12px 32px -16px rgba(18, 20, 28, 0.18);
+  --header-bg: rgba(245, 246, 250, 0.82);
+  --menu-bg: rgba(245, 246, 250, 0.98);
+  --glow: 0.45;
+  --warn: #a76300; --bad: #c2185b; --good: #16884a;
+  --col-a: #5a3fd6; --col-b: #0b7285; --col-c: #b0306a; --col-d: #8a5d1c;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+  --bg: #f5f6fa;
+  --bg-alt: #ffffff;
+  --surface: rgba(255, 255, 255, 0.72);
+  --surface-strong: #ffffff;
+  --border: rgba(18, 20, 28, 0.10);
+  --border-strong: rgba(18, 20, 28, 0.22);
+  --text: #14161f;
+  --text-muted: #5b6275;
+  --accent-a-ink: #5a3fd6;
+  --accent-b-ink: #0b7285;
+  --shadow: 0 1px 2px rgba(18, 20, 28, 0.04), 0 12px 32px -16px rgba(18, 20, 28, 0.18);
+  --header-bg: rgba(245, 246, 250, 0.82);
+  --menu-bg: rgba(245, 246, 250, 0.98);
+  --glow: 0.45;
+  --warn: #a76300; --bad: #c2185b; --good: #16884a;
+  --col-a: #5a3fd6; --col-b: #0b7285; --col-c: #b0306a; --col-d: #8a5d1c;
+  color-scheme: light;
+  }
+}
+.bg-glow { opacity: var(--glow); }
+
+.nav { justify-content: flex-start; gap: 16px; }
+.nav > .brand { margin-right: auto; }
+.nav-links { order: 1; }
+.theme-toggle { order: 2; }
+.nav-toggle { order: 3; }
+.theme-toggle {
+  width: 38px; height: 38px; flex: none; display: inline-grid; place-items: center; padding: 0;
+  border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--text-muted);
+  cursor: pointer; transition: color 0.2s ease, border-color 0.2s ease;
+}
+.theme-toggle:hover { color: var(--text); border-color: var(--accent-b); }
+.theme-toggle svg { width: 18px; height: 18px; }
+
+/* Apps novos: o logo já tem o próprio fundo arredondado, então sem moldura branca */
+.app-logo-wrap.app-logo-wrap--icone { background: none; padding: 0; box-shadow: 0 16px 32px -14px rgba(0, 0, 0, 0.45); }
+.app-logo-wrap--icone .app-logo { border-radius: 20px; }
