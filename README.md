@@ -1,8 +1,8 @@
 # site-marlenildo
 
-Site pessoal de Marlenildo — galeria dos apps em R/Shiny publicados no
-[Posit Connect Cloud](https://connect.posit.cloud): Plota, Calibra, Ranova,
-Minhas Entregas e Croma.
+Site pessoal de Marlenildo — galeria dos apps: Plota, Calibra, Ranova e Croma
+(R/Shiny no [Posit Connect Cloud](https://connect.posit.cloud)), Minhas Entregas e
+Minhas Compras (web, no Cloudflare).
 
 Site estático (HTML + CSS + JS puro, sem build), publicado no domínio
 `marlenildo.online` via GitHub Pages.
