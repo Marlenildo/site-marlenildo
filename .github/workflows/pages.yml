@@ -52,6 +52,25 @@ jobs:
             done
           fi
 
+      - name: Validar HTML da prévia
+        run: |
+          set -euo pipefail
+          for file in artigos.html artigo-interpretar-anova.html artigo-organizar-planilha-r.html; do
+            path="_site/dev/$file"
+            test -s "$path"
+            grep -q '<!doctype html>' "$path"
+            grep -q 'rel="stylesheet"' "$path"
+            grep -q '<main' "$path"
+            grep -q '</main>' "$path"
+            grep -q 'name="robots" content="noindex, nofollow"' "$path"
+            if grep -q 'pagead2.googlesyndication.com' "$path"; then
+              echo "ERRO: script AdSense na prévia: $file"
+              exit 1
+            fi
+          done
+          test -s _site/dev/assets/css/style.css
+          echo "Prévia validada: HTML, CSS e noindex presentes."
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
