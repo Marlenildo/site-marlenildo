@@ -47,7 +47,7 @@ jobs:
             find _site/dev -name '*.html' | while read -r f; do
               # fora dos buscadores e sem anúncios na prévia
               sed -i 's#<head>#<head>\n<meta name="robots" content="noindex, nofollow" />#' "$f"
-              sed -i '/pagead2.googlesyndication.com/d' "$f"
+              sed -E -i 's#<script[^>]*pagead2\.googlesyndication\.com[^>]*></script>##g' "$f"
               sed -i "s|<body>|<body>\n${banner}|" "$f"
             done
           fi
