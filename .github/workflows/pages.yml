@@ -55,7 +55,7 @@ jobs:
       - name: Validar HTML da prévia
         run: |
           set -euo pipefail
-          for file in artigos.html artigo-interpretar-anova.html artigo-organizar-planilha-r.html; do
+          for file in index.html guia.html sobre.html guia-dic-dbc.html; do
             path="_site/dev/$file"
             test -s "$path"
             grep -q '<!doctype html>' "$path"
