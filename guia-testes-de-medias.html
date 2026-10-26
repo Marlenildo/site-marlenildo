@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tukey, Duncan, SNK, Scott-Knott ou Dunnett: qual teste de médias usar — Marlenildo</title>
+<link rel="canonical" href="https://marlenildo.online/guia-testes-de-medias.html">
+<meta name="description" content="Diferenças entre Tukey, SNK, Duncan, Scott-Knott e Dunnett, com o mesmo experimento analisado pelos cinco testes, critérios de escolha e código em R." />
+<meta property="og:title" content="Qual teste de médias usar?" />
+<meta property="og:description" content="Diferenças entre Tukey, SNK, Duncan, Scott-Knott e Dunnett, com o mesmo experimento analisado pelos cinco testes, critérios de escolha e código em R." />
+<meta property="og:type" content="article" />
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<script>try{var t=localStorage.getItem("marlenildo:tema");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="assets/css/style.css?v=20261026" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130340973057636" crossorigin="anonymous"></script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Qual teste de médias usar?", "description": "Diferenças entre Tukey, SNK, Duncan, Scott-Knott e Dunnett, com o mesmo experimento analisado pelos cinco testes, critérios de escolha e código em R.", "inLanguage": "pt-BR", "datePublished": "2026-10-26", "dateModified": "2026-10-26", "mainEntityOfPage": "https://marlenildo.online/guia-testes-de-medias.html", "author": {"@type": "Person", "name": "Marlenildo", "url": "https://marlenildo.online/sobre.html", "sameAs": ["https://orcid.org/0000-0001-7449-6916", "http://lattes.cnpq.br/6931262930637371", "https://github.com/Marlenildo"]}, "publisher": {"@type": "Person", "name": "Marlenildo", "url": "https://marlenildo.online/"}}</script>
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+<div class="bg-glow" aria-hidden="true"></div>
+
+<header class="site-header">
+  <nav class="nav container">
+    <a href="index.html#topo" class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="46" height="46" /><span>Marlenildo<span class="brand-dot">.online</span></span></a>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Mudar tema"></button>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="guia.html" aria-current="page">Guia</a></li>
+      <li><a href="index.html#apps">Ferramentas</a></li>
+      <li><a href="sobre.html">Sobre</a></li>
+      <li><a href="sobre.html#contato">Contato</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="conteudo">
+
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <nav class="breadcrumb" aria-label="Você está em"><a href="guia.html">Guia</a><span aria-hidden="true">/</span><span>Etapa 4 · Análise</span></nav>
+      <h1>Qual <span class="text-gradient">teste de médias</span> usar?</h1>
+      <p class="hero-lead">Tukey, SNK, Duncan, Scott-Knott e Dunnett respondem a perguntas diferentes. O mesmo experimento, analisado por todos eles, mostra onde cada um ajuda e onde confunde.</p>
+      <ul class="article-meta">
+        <li>Por <a href="sobre.html">Marlenildo</a></li>
+        <li>Publicado em <time datetime="2026-10-26">26 de outubro de 2026</time></li>
+        <li>Etapa 4 · Análise</li>
+        <li>9 min de leitura</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="guide" id="antes">
+    <div class="container guide-article">
+      <span class="guide-number">01</span>
+      <div class="section-head">
+        <h2>Antes do teste, o F</h2>
+        <p class="section-lead">Teste de médias é o segundo passo, não o primeiro.</p>
+      </div>
+      <p class="guide-p">
+        A comparação de médias só entra depois que a ANOVA indica efeito do fator (F significativo) e quando o fator é <strong>qualitativo</strong>, com três níveis ou mais: cultivares, produtos, manejos, substratos. Com dois níveis, o próprio F já responde se eles diferem. Se o fator é uma dose, uma lâmina ou uma época, a ferramenta certa é a <a href="guia-tukey-ou-regressao.html">regressão</a>.
+      </p>
+      <p class="guide-p">
+        Superada essa etapa, a pergunta passa a ser <em>quais</em> tratamentos diferem. É aí que os testes se distinguem: cada um equilibra de um jeito o risco de apontar uma diferença que não existe (erro tipo I) e o de deixar passar uma diferença real (erro tipo II).
+      </p>
+    </div>
+  </section>
+
+  <section class="guide" id="testes">
+    <div class="container guide-article">
+      <span class="guide-number">02</span>
+      <div class="section-head">
+        <h2>Os testes, em uma frase cada</h2>
+        <p class="section-lead">Todos usam o quadrado médio do resíduo como régua; muda o tamanho da régua.</p>
+      </div>
+      <div class="summary-grid">
+        <div class="summary-card"><h4>Tukey</h4><p>Protege o conjunto de todas as comparações ao mesmo tempo. É conservador: só aponta diferença quando ela é grande. Com muitos tratamentos, gera letras sobrepostas (ab, abc, bcd).</p></div>
+        <div class="summary-card"><h4>SNK (Student-Newman-Keuls)</h4><p>A diferença mínima depende de quantas médias ficam entre as duas comparadas. Fica entre Tukey e Duncan em rigor.</p></div>
+        <div class="summary-card"><h4>Duncan</h4><p>A diferença mínima cresce pouco com o número de médias. Encontra mais diferenças, mas também mais diferenças falsas. Muitas revistas hoje pedem para evitá-lo.</p></div>
+        <div class="summary-card"><h4>Scott-Knott</h4><p>Não compara pares: divide as médias em grupos que não se sobrepõem. Cada tratamento recebe uma única letra. Muito usado com muitos genótipos ou cultivares.</p></div>
+        <div class="summary-card"><h4>Dunnett</h4><p>Compara cada tratamento apenas com uma testemunha. Quando essa é a pergunta, tem mais poder que os demais, porque faz menos comparações.</p></div>
+        <div class="summary-card"><h4>t ou LSD</h4><p>Diferença mínima única, sem correção para comparações múltiplas. Só faz sentido para poucas comparações planejadas antes do experimento.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="guide" id="exemplo">
+    <div class="container guide-article">
+      <span class="guide-number">03</span>
+      <div class="section-head">
+        <h2>O mesmo experimento, cinco respostas</h2>
+        <p class="section-lead">Produtividade de grãos de seis cultivares de feijão-caupi (kg/ha), em blocos casualizados com quatro repetições. Dados ilustrativos.</p>
+      </div>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead><tr><th>Cultivar</th><th class="num">Bloco 1</th><th class="num">Bloco 2</th><th class="num">Bloco 3</th><th class="num">Bloco 4</th></tr></thead>
+          <tbody>
+            <tr><td>A</td><td class="num">1.315</td><td class="num">1.346</td><td class="num">1.150</td><td class="num">1.313</td></tr>
+            <tr><td>B</td><td class="num">1.217</td><td class="num">1.114</td><td class="num">1.149</td><td class="num">1.049</td></tr>
+            <tr><td>C</td><td class="num">1.354</td><td class="num">1.378</td><td class="num">1.396</td><td class="num">1.320</td></tr>
+            <tr><td>D</td><td class="num">1.011</td><td class="num">970</td><td class="num">1.224</td><td class="num">1.103</td></tr>
+            <tr><td>E</td><td class="num">1.343</td><td class="num">1.225</td><td class="num">1.103</td><td class="num">1.185</td></tr>
+            <tr><td>Local</td><td class="num">1.044</td><td class="num">965</td><td class="num">928</td><td class="num">905</td></tr>
+          </tbody>
+          <caption>Os dados para você reproduzir a análise. “Local” é a cultivar usada pelos produtores da região, a testemunha.</caption>
+        </table>
+      </div>
+      <h3 class="guide-h3">A ANOVA</h3>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead><tr><th>FV</th><th class="num">GL</th><th class="num">SQ</th><th class="num">QM</th><th class="num">F</th><th class="num">p</th></tr></thead>
+          <tbody>
+            <tr><td>Blocos</td><td class="num">3</td><td class="num">15.987</td><td class="num">5.329</td><td class="num">0,76</td><td class="num">0,532</td></tr>
+            <tr class="row-hl"><td>Cultivares</td><td class="num">5</td><td class="num">420.311</td><td class="num">84.062</td><td class="num">12,04</td><td class="num">&lt; 0,001</td></tr>
+            <tr><td>Resíduo</td><td class="num">15</td><td class="num">104.689</td><td class="num">6.979</td><td class="num"></td><td class="num"></td></tr>
+            <tr><td>Total</td><td class="num">23</td><td class="num">540.987</td><td class="num"></td><td class="num"></td><td class="num"></td></tr>
+          </tbody>
+          <caption>O F das cultivares é significativo; o CV é de 7,1%, com média geral de 1.171 kg/ha.</caption>
+        </table>
+      </div>
+      <h3 class="guide-h3">As letras de cada teste</h3>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead><tr><th>Cultivar</th><th class="num">Média</th><th class="num">Tukey</th><th class="num">SNK</th><th class="num">Duncan</th><th class="num">Scott-Knott</th></tr></thead>
+          <tbody>
+            <tr><td>C</td><td class="num">1.362,0</td><td class="num">a</td><td class="num">a</td><td class="num">a</td><td class="num">a</td></tr>
+            <tr><td>A</td><td class="num">1.281,0</td><td class="num">ab</td><td class="num">ab</td><td class="num">ab</td><td class="num">a</td></tr>
+            <tr><td>E</td><td class="num">1.214,0</td><td class="num">abc</td><td class="num">abc</td><td class="num">bc</td><td class="num">a</td></tr>
+            <tr><td>B</td><td class="num">1.132,2</td><td class="num">bcd</td><td class="num">bc</td><td class="num">cd</td><td class="num">b</td></tr>
+            <tr><td>D</td><td class="num">1.077,0</td><td class="num">cd</td><td class="num">cd</td><td class="num">de</td><td class="num">b</td></tr>
+            <tr><td>Local</td><td class="num">960,5</td><td class="num">d</td><td class="num">d</td><td class="num">e</td><td class="num">c</td></tr>
+          </tbody>
+          <caption>Médias seguidas da mesma letra, na coluna, não diferem pelo teste indicado (5%). Diferença mínima significativa: Tukey 191,9; SNK de 125,9 a 191,9; Duncan de 125,9 a 140,2 kg/ha, conforme o número de médias abrangidas.</caption>
+        </table>
+      </div>
+      <figure class="figure">
+        <h4>Onde os testes se encontram e onde divergem</h4>
+        <svg viewBox="0 0 340 300" role="img" aria-labelledby="t-dot"><title id="t-dot">Médias das seis cultivares com intervalos de meia DMS de Tukey; as cores indicam os três grupos do Scott-Knott.</title><line x1="90.2" y1="14" x2="90.2" y2="246" stroke="rgba(127.127.127.0.18)"/><text x="90.2" y="262" text-anchor="middle" font-size="11" fill="#9aa0b4" font-family="Inter. system-ui. sans-serif">900</text><line x1="170.8" y1="14" x2="170.8" y2="246" stroke="rgba(127.127.127.0.18)"/><text x="170.8" y="262" text-anchor="middle" font-size="11" fill="#9aa0b4" font-family="Inter. system-ui. sans-serif">1.100</text><line x1="251.5" y1="14" x2="251.5" y2="246" stroke="rgba(127.127.127.0.18)"/><text x="251.5" y="262" text-anchor="middle" font-size="11" fill="#9aa0b4" font-family="Inter. system-ui. sans-serif">1.300</text><text x="195.0" y="286" text-anchor="middle" font-size="11.5" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">Produtividade (kg/ha)</text><text x="60" y="38" text-anchor="end" font-size="12" font-weight="600" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">C</text><line x1="237.8" y1="34" x2="315.1" y2="34" stroke="#7c5cff" stroke-width="4" stroke-linecap="round" opacity="0.55"/><circle cx="276.5" cy="34" r="6" fill="#7c5cff" stroke="#eef0f6" stroke-width="1.5"/><text x="60" y="78" text-anchor="end" font-size="12" font-weight="600" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">A</text><line x1="205.1" y1="74" x2="282.5" y2="74" stroke="#7c5cff" stroke-width="4" stroke-linecap="round" opacity="0.55"/><circle cx="243.8" cy="74" r="6" fill="#7c5cff" stroke="#eef0f6" stroke-width="1.5"/><text x="60" y="118" text-anchor="end" font-size="12" font-weight="600" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">E</text><line x1="178.1" y1="114" x2="255.5" y2="114" stroke="#7c5cff" stroke-width="4" stroke-linecap="round" opacity="0.55"/><circle cx="216.8" cy="114" r="6" fill="#7c5cff" stroke="#eef0f6" stroke-width="1.5"/><text x="60" y="158" text-anchor="end" font-size="12" font-weight="600" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">B</text><line x1="145.1" y1="154" x2="222.5" y2="154" stroke="#22d3ee" stroke-width="4" stroke-linecap="round" opacity="0.55"/><circle cx="183.8" cy="154" r="6" fill="#22d3ee" stroke="#eef0f6" stroke-width="1.5"/><text x="60" y="198" text-anchor="end" font-size="12" font-weight="600" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">D</text><line x1="122.8" y1="194" x2="200.2" y2="194" stroke="#22d3ee" stroke-width="4" stroke-linecap="round" opacity="0.55"/><circle cx="161.5" cy="194" r="6" fill="#22d3ee" stroke="#eef0f6" stroke-width="1.5"/><text x="60" y="238" text-anchor="end" font-size="12" font-weight="600" fill="#9aa0b4" font-family="Inter, system-ui, sans-serif">Local</text><line x1="75.9" y1="234" x2="153.2" y2="234" stroke="#fbbf24" stroke-width="4" stroke-linecap="round" opacity="0.55"/><circle cx="114.6" cy="234" r="6" fill="#fbbf24" stroke="#eef0f6" stroke-width="1.5"/></svg>
+        <figcaption>Cada barra cobre a média ± metade da DMS de Tukey: duas cultivares só diferem por Tukey quando as barras não se tocam. As cores mostram os três grupos do Scott-Knott. E e B ficam em grupos diferentes no Scott-Knott, embora difiram só 82 kg/ha, menos do que a DMS de qualquer um dos outros testes.</figcaption>
+      </figure>
+      <h3 class="guide-h3">Como ler o resultado</h3>
+      <ul class="check-list">
+        <li><strong>Tukey</strong> separa com segurança só os extremos. A cultivar E (abc) é igual a C e também a B, que diferem entre si. Matematicamente correto, mas difícil de transformar em recomendação.</li>
+        <li><strong>Duncan</strong>, com diferenças mínimas menores, enxerga cinco níveis. Parte dessas separações pode ser falsa: o teste aceita mais risco de erro tipo I.</li>
+        <li><strong>Scott-Knott</strong> entrega três grupos limpos: C, A e E no topo; B e D intermediárias; a Local abaixo. É fácil de comunicar, mas a fronteira entre grupos pode separar médias muito próximas, como E e B.</li>
+        <li><strong>Dunnett</strong> responde a outra pergunta: quais cultivares superam a Local? Com DMS de 166,1 kg/ha, A, B, C e E superam; D (+116,5 kg/ha) não difere da testemunha.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="guide" id="escolha">
+    <div class="container guide-article">
+      <span class="guide-number">04</span>
+      <div class="section-head">
+        <h2>Como escolher</h2>
+        <p class="section-lead">Pela pergunta do experimento e pelo número de tratamentos, nunca pelo resultado.</p>
+      </div>
+      <ul class="check-list">
+        <li><strong>Poucos tratamentos (até 5 ou 6) e interesse em todos os pares:</strong> Tukey.</li>
+        <li><strong>Muitos tratamentos, como ensaios de cultivares, linhagens ou acessos:</strong> Scott-Knott, que evita a sopa de letras.</li>
+        <li><strong>A pergunta é “supera a testemunha?”:</strong> Dunnett, contra o controle.</li>
+        <li><strong>Duncan e LSD como padrão:</strong> evite. Ainda aparecem em trabalhos antigos, mas aumentam o risco de diferenças falsas.</li>
+        <li><strong>Decida o teste no planejamento</strong> e registre no projeto. Trocar de teste até “aparecer diferença” é escolher a conclusão antes da análise.</li>
+      </ul>
+      <div class="callout callout-warn">
+        <span class="callout-title">Letras não são o fim da análise</span>
+        Duas médias com a mesma letra não são iguais: o experimento apenas não teve sensibilidade para separá-las. Escreva “não diferiram”, nunca “foram iguais”, e olhe também o tamanho da diferença, que é o que interessa ao produtor.
+      </div>
+    </div>
+  </section>
+
+  <section class="guide" id="no-r">
+    <div class="container guide-article">
+      <span class="guide-number">05</span>
+      <div class="section-head">
+        <h2>No R</h2>
+      </div>
+      <pre class="code-block"><code>dados$cultivar &lt;- factor(dados$cultivar)
+dados$bloco    &lt;- factor(dados$bloco)
+
+# ExpDes.pt: troque mcomp por "tukey", "snk", "duncan" ou "sk" (Scott-Knott)
+library(ExpDes.pt)
+dbc(dados$cultivar, dados$bloco, dados$produtividade,
+    quali = TRUE, mcomp = "sk", sigT = 0.05)
+
+# Dunnett: cada cultivar contra a testemunha "Local"
+library(multcomp)
+dados$cultivar &lt;- relevel(dados$cultivar, ref = "Local")
+modelo &lt;- aov(produtividade ~ bloco + cultivar, data = dados)
+summary(glht(modelo, linfct = mcp(cultivar = "Dunnett")))</code></pre>
+      <p class="guide-p">
+        No pacote <code>agricolae</code>, as funções <code>HSD.test()</code>, <code>SNK.test()</code> e <code>duncan.test()</code> recebem o modelo e o nome do fator. Se preferir não programar, o <a href="ranova.html">Ranova</a> roda Tukey, Duncan, SNK e Scott-Knott a partir da planilha e monta a tabela de médias com as letras.
+      </p>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="container guide-article">
+      <nav class="article-nav" aria-label="Navegação entre artigos">
+        <a href="guia-tukey-ou-regressao.html"><small>← Anterior</small><strong>Tukey ou regressão?</strong></a><a href="guia-pressupostos.html" class="is-next"><small>Próximo →</small><strong>Pressupostos da ANOVA</strong></a>
+      </nav>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div>
+      <p class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="38" height="38" /><span>Marlenildo<span class="brand-dot">.online</span></span></p>
+      <p class="footer-note">Guia prático de estatística experimental e ferramentas em R para a pesquisa.</p>
+      <ul class="social-icons" aria-label="Perfis profissionais e acadêmicos">
+        <li>
+          <a href="https://github.com/Marlenildo" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://orcid.org/0000-0001-7449-6916" target="_blank" rel="noopener" aria-label="ORCID">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" font-size="10" font-weight="700" fill="currentColor" stroke="none" font-family="Arial, sans-serif">iD</text></svg>
+          </a>
+        </li>
+        <li>
+          <a href="http://lattes.cnpq.br/6931262930637371" target="_blank" rel="noopener" aria-label="Currículo Lattes">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="mailto:marlenildo@gmail.com" aria-label="E-mail">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2.5"/><path d="m3 6.5 9 6.5 9-6.5"/></svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <ul class="footer-links" aria-label="Páginas do site">
+      <li><a href="guia.html">Guia</a></li>
+      <li><a href="sobre.html">Sobre</a></li>
+      <li><a href="sobre.html#contato">Contato</a></li>
+      <li><a href="outros-apps.html">Outros apps</a></li>
+      <li><a href="privacidade.html">Privacidade</a></li>
+    </ul>
+  </div>
+  <p class="footer-copy">&copy; <span id="year"></span> Marlenildo. Todos os direitos reservados.</p>
+</footer>
+
+<script src="assets/js/main.js?v=20261018b"></script>
+</body>
+</html>

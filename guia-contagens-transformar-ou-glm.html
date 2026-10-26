@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Contagens na ANOVA: transformar, usar GLM ou teste não paramétrico — Marlenildo</title>
+<link rel="canonical" href="https://marlenildo.online/guia-contagens-transformar-ou-glm.html">
+<meta name="description" content="O que fazer quando dados de contagem violam os pressupostos da ANOVA: transformação raiz e log, Box-Cox, GLM Poisson e binomial negativa e Kruskal-Wallis, com exemplo completo e código em R." />
+<meta property="og:title" content="Contagens na ANOVA: transformar ou usar GLM?" />
+<meta property="og:description" content="O que fazer quando dados de contagem violam os pressupostos da ANOVA: transformação raiz e log, Box-Cox, GLM Poisson e binomial negativa e Kruskal-Wallis, com exemplo completo e código em R." />
+<meta property="og:type" content="article" />
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<script>try{var t=localStorage.getItem("marlenildo:tema");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="assets/css/style.css?v=20261026" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130340973057636" crossorigin="anonymous"></script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Contagens na ANOVA: transformar ou usar GLM?", "description": "O que fazer quando dados de contagem violam os pressupostos da ANOVA: transformação raiz e log, Box-Cox, GLM Poisson e binomial negativa e Kruskal-Wallis, com exemplo completo e código em R.", "inLanguage": "pt-BR", "datePublished": "2026-10-26", "dateModified": "2026-10-26", "mainEntityOfPage": "https://marlenildo.online/guia-contagens-transformar-ou-glm.html", "author": {"@type": "Person", "name": "Marlenildo", "url": "https://marlenildo.online/sobre.html", "sameAs": ["https://orcid.org/0000-0001-7449-6916", "http://lattes.cnpq.br/6931262930637371", "https://github.com/Marlenildo"]}, "publisher": {"@type": "Person", "name": "Marlenildo", "url": "https://marlenildo.online/"}}</script>
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+<div class="bg-glow" aria-hidden="true"></div>
+
+<header class="site-header">
+  <nav class="nav container">
+    <a href="index.html#topo" class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="46" height="46" /><span>Marlenildo<span class="brand-dot">.online</span></span></a>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Mudar tema"></button>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="guia.html" aria-current="page">Guia</a></li>
+      <li><a href="index.html#apps">Ferramentas</a></li>
+      <li><a href="sobre.html">Sobre</a></li>
+      <li><a href="sobre.html#contato">Contato</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="conteudo">
+
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <nav class="breadcrumb" aria-label="Você está em"><a href="guia.html">Guia</a><span aria-hidden="true">/</span><span>Etapa 4 · Análise</span></nav>
+      <h1>Contagens na ANOVA: <span class="text-gradient">transformar</span> ou usar GLM?</h1>
+      <p class="hero-lead">Insetos, lesões e frutos contados raramente cumprem os pressupostos da ANOVA. Um exemplo com mosca-branca, analisado pelos três caminhos possíveis, mostra o que muda nas conclusões.</p>
+      <ul class="article-meta">
+        <li>Por <a href="sobre.html">Marlenildo</a></li>
+        <li>Publicado em <time datetime="2026-10-26">26 de outubro de 2026</time></li>
+        <li>Etapa 4 · Análise</li>
+        <li>8 min de leitura</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="guide" id="problema">
+    <div class="container guide-article">
+      <span class="guide-number">01</span>
+      <div class="section-head">
+        <h2>Por que contagens desafiam a ANOVA</h2>
+        <p class="section-lead">Quanto maior a média, maior a variação.</p>
+      </div>
+      <p class="guide-p">
+        Número de insetos, lesões, frutos ou plantas daninhas são contagens: valores inteiros, nunca negativos e, em geral, com variância que cresce junto com a média. Uma testemunha com 60 ninfas por folha varia muito mais, em números absolutos, do que um tratamento eficiente com 3. A ANOVA, porém, usa um único quadrado médio do resíduo para julgar todas as comparações, como se todos os tratamentos variassem igualmente.
+      </p>
+      <p class="guide-p">
+        O resultado é previsível: a variação grande da testemunha infla o resíduo, e as diferenças entre os tratamentos mais eficientes, justamente os que interessam, ficam escondidas. O <a href="guia-pressupostos.html">guia de pressupostos</a> mostra como diagnosticar; aqui seguimos um exemplo completo pelas três saídas possíveis.
+      </p>
+    </div>
+  </section>
+
+  <section class="guide" id="exemplo">
+    <div class="container guide-article">
+      <span class="guide-number">02</span>
+      <div class="section-head">
+        <h2>O exemplo</h2>
+        <p class="section-lead">Ninfas de mosca-branca por folha, testemunha e quatro inseticidas, delineamento inteiramente casualizado com seis repetições. Dados ilustrativos.</p>
+      </div>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead><tr><th>Tratamento</th><th class="num">Contagens por parcela</th><th class="num">Média</th><th class="num">Variância</th></tr></thead>
+          <tbody>
+            <tr><td>Testemunha</td><td class="num">56, 74, 52, 39, 53, 73</td><td class="num">57,8</td><td class="num">181,4</td></tr>
+            <tr><td>Produto A</td><td class="num">14, 12, 25, 28, 17, 13</td><td class="num">18,2</td><td class="num">45,4</td></tr>
+            <tr><td>Produto B</td><td class="num">6, 7, 14, 14, 12, 10</td><td class="num">10,5</td><td class="num">11,9</td></tr>
+            <tr><td>Produto C</td><td class="num">5, 14, 3, 7, 7, 11</td><td class="num">7,8</td><td class="num">16,2</td></tr>
+            <tr><td>Produto D</td><td class="num">4, 2, 3, 1, 4, 4</td><td class="num">3,0</td><td class="num">1,6</td></tr>
+          </tbody>
+          <caption>A variância da testemunha é mais de cem vezes a do Produto D: o padrão típico de contagens.</caption>
+        </table>
+      </div>
+      <h3 class="guide-h3">Diagnóstico nas três escalas</h3>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead><tr><th>Escala</th><th class="num">Shapiro-Wilk (p)</th><th class="num">Levene (p)</th><th class="num">CV (%)</th></tr></thead>
+          <tbody>
+            <tr><td>Original</td><td class="num">0,022</td><td class="num">0,032</td><td class="num">36,8</td></tr>
+            <tr class="row-hl"><td>Raiz quadrada (x + 0,5)</td><td class="num">0,549</td><td class="num">0,620</td><td class="num">17,1</td></tr>
+            <tr><td>Logaritmo (x + 1)</td><td class="num">0,498</td><td class="num">0,805</td><td class="num">14,0</td></tr>
+          </tbody>
+          <caption>Shapiro-Wilk nos resíduos da ANOVA; Levene centrado na mediana. Na escala original, os dois pressupostos falham; nas transformadas, ambos se sustentam.</caption>
+        </table>
+      </div>
+      <p class="guide-p">
+        O procedimento de Box-Cox, aplicado a esses dados, estimou λ ≈ 0,25, com intervalo de confiança de 0 a 0,5. Tanto o logaritmo (λ = 0) quanto a raiz quadrada (λ = 0,5) são aceitáveis; seguimos com a raiz, a transformação clássica para contagens.
+      </p>
+    </div>
+  </section>
+
+  <section class="guide" id="transformar">
+    <div class="container guide-article">
+      <span class="guide-number">03</span>
+      <div class="section-head">
+        <h2>Caminho 1: transformar</h2>
+        <p class="section-lead">A transformação estabiliza a variância e devolve a cada comparação a régua certa.</p>
+      </div>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead><tr><th>Tratamento</th><th class="num">Média</th><th class="num">Tukey (original)</th><th class="num">Tukey (raiz)</th></tr></thead>
+          <tbody>
+            <tr><td>Testemunha</td><td class="num">57,8</td><td class="num">a</td><td class="num">a</td></tr>
+            <tr><td>Produto A</td><td class="num">18,2</td><td class="num">b</td><td class="num">b</td></tr>
+            <tr><td>Produto B</td><td class="num">10,5</td><td class="num">bc</td><td class="num">bc</td></tr>
+            <tr><td>Produto C</td><td class="num">7,8</td><td class="num">bc</td><td class="num">cd</td></tr>
+            <tr class="row-hl"><td>Produto D</td><td class="num">3,0</td><td class="num">c</td><td class="num">d</td></tr>
+          </tbody>
+          <caption>Na escala original, o Produto D não se distingue de B nem de C. Após a transformação, D difere de B, e C difere de A.</caption>
+        </table>
+      </div>
+      <p class="guide-p">
+        Nada mudou nos dados: mudou a régua. Na escala original, a diferença mínima significativa de Tukey é de 12,1 ninfas, um valor ditado pela variação da testemunha. Para quem compara produtos com 3 a 10 ninfas, essa régua é grossa demais.
+      </p>
+      <div class="callout callout-warn">
+        <span class="callout-title">Ao apresentar</span>
+        Faça a análise na escala transformada, mas mostre na tabela as médias originais (ou as médias retransformadas, aqui 57,2; 17,7; 10,3; 7,4 e 2,9 ninfas) com as letras obtidas na análise transformada, e informe no rodapé qual transformação foi usada.
+      </div>
+    </div>
+  </section>
+
+  <section class="guide" id="glm">
+    <div class="container guide-article">
+      <span class="guide-number">04</span>
+      <div class="section-head">
+        <h2>Caminho 2: modelo para contagens</h2>
+        <p class="section-lead">Em vez de forçar o dado na normal, escolha a distribuição que combina com ele.</p>
+      </div>
+      <p class="guide-p">
+        Os modelos lineares generalizados (GLM) modelam a contagem diretamente. O ponto de partida é a distribuição de Poisson, que supõe variância igual à média. Aqui, a razão entre o qui-quadrado de Pearson e os graus de liberdade do resíduo foi 1,87: há <strong>superdispersão</strong>, ou seja, mais variação do que a Poisson admite. A saída é a binomial negativa, que tem um parâmetro a mais para absorver esse excesso.
+      </p>
+      <p class="guide-p">
+        Com a binomial negativa, o teste de razão de verossimilhança para tratamentos deu χ² = 69,6 com 4 graus de liberdade (p &lt; 0,001). As comparações são feitas sobre as médias estimadas pelo modelo, já na escala de ninfas por folha, sem precisar retransformar nada.
+      </p>
+      <div class="summary-grid">
+        <div class="summary-card"><h4>Vantagem</h4><p>Respeita a natureza do dado, lida bem com muitos zeros e permite fatoriais, blocos e covariáveis.</p></div>
+        <div class="summary-card"><h4>Custo</h4><p>Exige mais familiaridade com o R e com a leitura dos resultados, que vêm em escala logarítmica dentro do modelo.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="guide" id="np">
+    <div class="container guide-article">
+      <span class="guide-number">05</span>
+      <div class="section-head">
+        <h2>Caminho 3: teste não paramétrico</h2>
+        <p class="section-lead">Útil como conferência, limitado como análise principal.</p>
+      </div>
+      <p class="guide-p">
+        O teste de Kruskal-Wallis, que compara postos em vez de valores, também detecta efeito dos tratamentos (H = 24,6; p &lt; 0,001). Ele dispensa normalidade, mas tem limites: não lida com fatorial, parcela subdividida ou regressão, e responde sobre a distribuição dos postos, não sobre médias. Para DBC, o equivalente é o teste de Friedman.
+      </p>
+    </div>
+  </section>
+
+  <section class="guide" id="escolha">
+    <div class="container guide-article">
+      <span class="guide-number">06</span>
+      <div class="section-head">
+        <h2>Qual caminho seguir</h2>
+      </div>
+      <ul class="check-list">
+        <li><strong>Contagens sem muitos zeros e delineamento simples:</strong> a transformação por raiz quadrada resolve na maioria dos casos e é aceita por revistas e bancas.</li>
+        <li><strong>Muitos zeros, contagens muito baixas ou fatoriais:</strong> prefira o GLM (Poisson, se não houver superdispersão; binomial negativa, se houver).</li>
+        <li><strong>Proporções de contagens</strong> (germinadas de 50 sementes, plantas doentes de 20): GLM binomial, não a transformação arco-seno.</li>
+        <li><strong>Não paramétrico:</strong> para delineamentos simples, ou como conferência de que a conclusão não depende do modelo.</li>
+        <li><strong>Em qualquer caminho,</strong> verifique os resíduos do modelo final e deixe registrado no texto o que foi feito.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="guide" id="no-r">
+    <div class="container guide-article">
+      <span class="guide-number">07</span>
+      <div class="section-head">
+        <h2>No R</h2>
+      </div>
+      <pre class="code-block"><code>dados$trat &lt;- factor(dados$trat)
+
+# 1. Diagnóstico na escala original
+m0 &lt;- aov(ninfas ~ trat, data = dados)
+shapiro.test(residuals(m0))
+car::leveneTest(ninfas ~ trat, data = dados)
+MASS::boxcox(lm(ninfas + 0.5 ~ trat, data = dados))   # sugere o lambda
+
+# 2. Transformação
+dados$raiz &lt;- sqrt(dados$ninfas + 0.5)
+m1 &lt;- aov(raiz ~ trat, data = dados)
+shapiro.test(residuals(m1))
+agricolae::HSD.test(m1, "trat", console = TRUE)
+
+# 3. GLM
+mp &lt;- glm(ninfas ~ trat, family = poisson, data = dados)
+sum(residuals(mp, type = "pearson")^2) / df.residual(mp)  # &gt; 1: superdispersão
+mnb &lt;- MASS::glm.nb(ninfas ~ trat, data = dados)
+anova(mnb, test = "Chisq")
+library(emmeans)
+multcomp::cld(emmeans(mnb, ~ trat, type = "response"), Letters = letters)
+
+# 4. Não paramétrico
+kruskal.test(ninfas ~ trat, data = dados)</code></pre>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="container guide-article">
+      <nav class="article-nav" aria-label="Navegação entre artigos">
+        <a href="guia-pressupostos.html"><small>← Anterior</small><strong>Pressupostos da ANOVA</strong></a><a href="r-para-pesquisa.html" class="is-next"><small>Próximo →</small><strong>Primeiros passos no R</strong></a>
+      </nav>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div>
+      <p class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="38" height="38" /><span>Marlenildo<span class="brand-dot">.online</span></span></p>
+      <p class="footer-note">Guia prático de estatística experimental e ferramentas em R para a pesquisa.</p>
+      <ul class="social-icons" aria-label="Perfis profissionais e acadêmicos">
+        <li>
+          <a href="https://github.com/Marlenildo" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://orcid.org/0000-0001-7449-6916" target="_blank" rel="noopener" aria-label="ORCID">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" font-size="10" font-weight="700" fill="currentColor" stroke="none" font-family="Arial, sans-serif">iD</text></svg>
+          </a>
+        </li>
+        <li>
+          <a href="http://lattes.cnpq.br/6931262930637371" target="_blank" rel="noopener" aria-label="Currículo Lattes">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="mailto:marlenildo@gmail.com" aria-label="E-mail">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2.5"/><path d="m3 6.5 9 6.5 9-6.5"/></svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <ul class="footer-links" aria-label="Páginas do site">
+      <li><a href="guia.html">Guia</a></li>
+      <li><a href="sobre.html">Sobre</a></li>
+      <li><a href="sobre.html#contato">Contato</a></li>
+      <li><a href="outros-apps.html">Outros apps</a></li>
+      <li><a href="privacidade.html">Privacidade</a></li>
+    </ul>
+  </div>
+  <p class="footer-copy">&copy; <span id="year"></span> Marlenildo. Todos os direitos reservados.</p>
+</footer>
+
+<script src="assets/js/main.js?v=20261018b"></script>
+</body>
+</html>

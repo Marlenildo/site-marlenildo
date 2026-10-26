@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Como escrever os resultados: tabela de médias, letras, regressão e texto — Marlenildo</title>
+<link rel="canonical" href="https://marlenildo.online/guia-escrever-resultados.html">
+<meta name="description" content="Como apresentar resultados de experimentos em artigos, dissertações e TCC: tabela de médias com letras, texto de resultados, equações de regressão, interação e figuras, com exemplos antes e depois." />
+<meta property="og:title" content="Como escrever os resultados" />
+<meta property="og:description" content="Como apresentar resultados de experimentos em artigos, dissertações e TCC: tabela de médias com letras, texto de resultados, equações de regressão, interação e figuras, com exemplos antes e depois." />
+<meta property="og:type" content="article" />
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<script>try{var t=localStorage.getItem("marlenildo:tema");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="assets/css/style.css?v=20261026" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130340973057636" crossorigin="anonymous"></script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Como escrever os resultados", "description": "Como apresentar resultados de experimentos em artigos, dissertações e TCC: tabela de médias com letras, texto de resultados, equações de regressão, interação e figuras, com exemplos antes e depois.", "inLanguage": "pt-BR", "datePublished": "2026-10-26", "dateModified": "2026-10-26", "mainEntityOfPage": "https://marlenildo.online/guia-escrever-resultados.html", "author": {"@type": "Person", "name": "Marlenildo", "url": "https://marlenildo.online/sobre.html", "sameAs": ["https://orcid.org/0000-0001-7449-6916", "http://lattes.cnpq.br/6931262930637371", "https://github.com/Marlenildo"]}, "publisher": {"@type": "Person", "name": "Marlenildo", "url": "https://marlenildo.online/"}}</script>
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+<div class="bg-glow" aria-hidden="true"></div>
+
+<header class="site-header">
+  <nav class="nav container">
+    <a href="index.html#topo" class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="46" height="46" /><span>Marlenildo<span class="brand-dot">.online</span></span></a>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Mudar tema"></button>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="guia.html" aria-current="page">Guia</a></li>
+      <li><a href="index.html#apps">Ferramentas</a></li>
+      <li><a href="sobre.html">Sobre</a></li>
+      <li><a href="sobre.html#contato">Contato</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="conteudo">
+
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <nav class="breadcrumb" aria-label="Você está em"><a href="guia.html">Guia</a><span aria-hidden="true">/</span><span>Etapa 5 · Interpretação</span></nav>
+      <h1>Como escrever os <span class="text-gradient">resultados</span></h1>
+      <p class="hero-lead">A análise está pronta; falta contar o que ela mostra. Tabela, texto e figura, com exemplos de antes e depois a partir dos exemplos do guia.</p>
+      <ul class="article-meta">
+        <li>Por <a href="sobre.html">Marlenildo</a></li>
+        <li>Publicado em <time datetime="2026-10-26">26 de outubro de 2026</time></li>
+        <li>Etapa 5 · Interpretação</li>
+        <li>7 min de leitura</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="guide" id="ordem">
+    <div class="container guide-article">
+      <span class="guide-number">01</span>
+      <div class="section-head">
+        <h2>Cada coisa no seu lugar</h2>
+        <p class="section-lead">Texto, tabela e figura não devem repetir a mesma informação.</p>
+      </div>
+      <div class="summary-grid">
+        <div class="summary-card"><h4>A ANOVA</h4><p>Resumida no texto (F, graus de liberdade e p) ou em tabela suplementar. Raramente precisa ocupar o corpo do artigo.</p></div>
+        <div class="summary-card"><h4>A tabela ou a figura</h4><p>Guarda os números: médias, letras, CV, equações. É onde o leitor vai consultar os valores.</p></div>
+        <div class="summary-card"><h4>O texto</h4><p>Interpreta: o que mudou, quanto mudou e o que isso significa. Não lista de novo os números da tabela.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="guide" id="tabela">
+    <div class="container guide-article">
+      <span class="guide-number">02</span>
+      <div class="section-head">
+        <h2>A tabela de médias</h2>
+        <p class="section-lead">Usando o ensaio de cultivares de feijão-caupi do guia de testes de médias.</p>
+      </div>
+      <div class="compare-grid">
+        <figure class="figure">
+          <span class="tag-bad">Confusa</span>
+          <h4>Tabela 1</h4>
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead><tr><th>Trat.</th><th class="num">Média</th><th class="num">Teste</th></tr></thead>
+              <tbody>
+                    <tr><td>1</td><td class="num">1281,0000</td><td class="num">ab</td></tr>
+                    <tr><td>2</td><td class="num">1132,2500</td><td class="num">bcd</td></tr>
+                    <tr><td>3</td><td class="num">1362,0000</td><td class="num">a</td></tr>
+                    <tr><td>4</td><td class="num">1077,0000</td><td class="num">cd</td></tr>
+                    <tr><td>5</td><td class="num">1214,0000</td><td class="num">abc</td></tr>
+                    <tr><td>6</td><td class="num">960,5000</td><td class="num">d</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <figcaption>Tratamentos sem nome, fora de ordem, quatro casas decimais sem significado, sem unidade, sem indicar o teste nem o CV.</figcaption>
+        </figure>
+        <figure class="figure">
+          <span class="tag-good">Pronta para publicar</span>
+          <h4>Tabela 1. Produtividade de grãos de cultivares de feijão-caupi</h4>
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead><tr><th>Cultivar</th><th class="num">Produtividade (kg ha⁻¹)</th></tr></thead>
+              <tbody>
+                    <tr><td>C</td><td class="num">1.362 a</td></tr>
+                    <tr><td>A</td><td class="num">1.281 a</td></tr>
+                    <tr><td>E</td><td class="num">1.214 a</td></tr>
+                    <tr><td>B</td><td class="num">1.132 b</td></tr>
+                    <tr><td>D</td><td class="num">1.077 b</td></tr>
+                    <tr><td>Local</td><td class="num">961 c</td></tr>
+                    <tr><td>CV (%)</td><td class="num">7,1</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <figcaption>Médias seguidas da mesma letra não diferem pelo teste de Scott-Knott (p ≤ 0,05). Nomes, ordem decrescente, unidade, casas decimais compatíveis com a medição e rodapé completo.</figcaption>
+        </figure>
+      </div>
+      <ul class="check-list">
+        <li><strong>Casas decimais</strong> seguem a precisão da medida, não o que o programa imprime. Produtividade em kg ha⁻¹ não precisa de decimais.</li>
+        <li><strong>Ordene</strong> as médias de forma útil: decrescente para cultivares, na sequência natural para manejos ou épocas.</li>
+        <li><strong>O rodapé</strong> diz qual teste, o nível de significância e, se houver, a transformação usada na análise.</li>
+        <li><strong>Várias variáveis</strong> do mesmo experimento podem dividir a tabela, uma por coluna, cada uma com suas letras e seu CV.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="guide" id="texto">
+    <div class="container guide-article">
+      <span class="guide-number">03</span>
+      <div class="section-head">
+        <h2>O parágrafo de resultados</h2>
+        <p class="section-lead">Comece pelo efeito, depois a magnitude, depois o detalhe.</p>
+      </div>
+      <div class="callout callout-bad">
+        <span class="callout-title">Antes</span>
+        Houve diferença estatística significativa entre os tratamentos ao nível de 5% de probabilidade pelo teste F (Tabela 1). A cultivar C apresentou 1362 kg/ha, a A 1281 kg/ha, a E 1214 kg/ha, a B 1132,25 kg/ha, a D 1077 kg/ha e a Local 960,5 kg/ha, sendo que a C foi estatisticamente superior.
+      </div>
+      <div class="callout callout-good">
+        <span class="callout-title">Depois</span>
+        A produtividade variou entre as cultivares (F = 12,04; p &lt; 0,001). C, A e E formaram o grupo mais produtivo, com média de 1.286 kg ha⁻¹, cerca de 34% acima da cultivar local (961 kg ha⁻¹), que ficou isolada no grupo de menor desempenho (Tabela 1).
+      </div>
+      <p class="guide-p">
+        A segunda versão é mais curta e diz mais: nomeia o grupo que importa, traduz a diferença em porcentagem e deixa os números individuais para a tabela. A discussão, depois, explica <em>por que</em> essas cultivares se destacaram.
+      </p>
+      <ul class="check-list">
+        <li>Prefira “não diferiram” a “foram iguais”: a ausência de significância não prova igualdade.</li>
+        <li>Evite “altamente significativo”: informe o valor de p, ou p &lt; 0,001 quando ele for muito pequeno.</li>
+        <li>Não escreva “estatisticamente superior” em toda frase. Se a tabela traz as letras, “superior” já basta.</li>
+        <li>Use vírgula decimal e as unidades no Sistema Internacional (kg ha⁻¹, e não kg/ha), conforme as normas da revista.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="guide" id="regressao">
+    <div class="container guide-article">
+      <span class="guide-number">04</span>
+      <div class="section-head">
+        <h2>Quando o resultado é uma curva</h2>
+        <p class="section-lead">Tratamentos quantitativos são relatados pela equação, não por letras.</p>
+      </div>
+      <p class="guide-p">
+        Com o exemplo das doses de nitrogênio do guia <a href="guia-tukey-ou-regressao.html">Tukey ou regressão?</a>:
+      </p>
+      <div class="callout callout-good">
+        <span class="callout-title">Exemplo</span>
+        A produtividade de grãos respondeu de forma quadrática às doses de nitrogênio (ŷ = 3,222 + 0,03514x − 0,0001384x²; R² = 0,99), com máximo estimado de 5,45 t ha⁻¹ na dose de 127 kg ha⁻¹ de N (Figura 1).
+      </div>
+      <ul class="check-list">
+        <li>Informe a equação, o R² e o ponto de interesse (máximo, mínimo, dose de máxima eficiência).</li>
+        <li>Deixe claro que o R² foi calculado sobre as médias, quando for o caso: ele costuma ser bem maior do que o R² das parcelas.</li>
+        <li>Não extrapole a recomendação para além das doses testadas.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="guide" id="interacao">
+    <div class="container guide-article">
+      <span class="guide-number">05</span>
+      <div class="section-head">
+        <h2>Quando há interação</h2>
+        <p class="section-lead">O desdobramento vai numa tabela de dupla entrada.</p>
+      </div>
+      <p class="guide-p">
+        Com dois fatores e interação significativa, monte a tabela com os níveis de um fator nas linhas e os do outro nas colunas. Use letras maiúsculas para comparar na linha e minúsculas para comparar na coluna, e diga isso no rodapé. O passo a passo do desdobramento está no guia <a href="guia-interacao.html">Interação significativa: e agora?</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="guide" id="figuras">
+    <div class="container guide-article">
+      <span class="guide-number">06</span>
+      <div class="section-head">
+        <h2>Figuras que se explicam sozinhas</h2>
+      </div>
+      <ul class="check-list">
+        <li><strong>Barras</strong> para tratamentos qualitativos, sempre com o eixo começando em zero; <strong>pontos e linhas</strong> para doses e épocas.</li>
+        <li><strong>Barras de erro:</strong> informe na legenda se são erro-padrão, desvio-padrão ou intervalo de confiança. Sem isso, elas não dizem nada.</li>
+        <li><strong>Sem 3D, sombras ou cores sem função.</strong> Se a revista imprime em preto e branco, diferencie por forma e preenchimento.</li>
+        <li><strong>Resolução</strong> de pelo menos 300 dpi, em TIFF ou PDF, no tamanho final de publicação. O <a href="plota.html">Plota</a> exporta nesses formatos.</li>
+        <li><strong>Legenda completa:</strong> quem lê só a figura deve entender a variável, a unidade, o teste e o significado das letras.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="container guide-article">
+      <nav class="article-nav" aria-label="Navegação entre artigos">
+        <a href="guia-cv.html"><small>← Anterior</small><strong>CV alto é problema?</strong></a>
+      </nav>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div>
+      <p class="brand"><img src="assets/img/logo-mark.svg" alt="" class="brand-mark" width="38" height="38" /><span>Marlenildo<span class="brand-dot">.online</span></span></p>
+      <p class="footer-note">Guia prático de estatística experimental e ferramentas em R para a pesquisa.</p>
+      <ul class="social-icons" aria-label="Perfis profissionais e acadêmicos">
+        <li>
+          <a href="https://github.com/Marlenildo" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://orcid.org/0000-0001-7449-6916" target="_blank" rel="noopener" aria-label="ORCID">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" font-size="10" font-weight="700" fill="currentColor" stroke="none" font-family="Arial, sans-serif">iD</text></svg>
+          </a>
+        </li>
+        <li>
+          <a href="http://lattes.cnpq.br/6931262930637371" target="_blank" rel="noopener" aria-label="Currículo Lattes">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="mailto:marlenildo@gmail.com" aria-label="E-mail">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2.5"/><path d="m3 6.5 9 6.5 9-6.5"/></svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <ul class="footer-links" aria-label="Páginas do site">
+      <li><a href="guia.html">Guia</a></li>
+      <li><a href="sobre.html">Sobre</a></li>
+      <li><a href="sobre.html#contato">Contato</a></li>
+      <li><a href="outros-apps.html">Outros apps</a></li>
+      <li><a href="privacidade.html">Privacidade</a></li>
+    </ul>
+  </div>
+  <p class="footer-copy">&copy; <span id="year"></span> Marlenildo. Todos os direitos reservados.</p>
+</footer>
+
+<script src="assets/js/main.js?v=20261018b"></script>
+</body>
+</html>

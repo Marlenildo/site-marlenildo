@@ -851,6 +851,10 @@ a.topic-card:hover {
   padding-top: 10px;
   font-size: 0.8rem;
   color: var(--text-muted);
+  /* legenda visível e quebrando linha mesmo quando a tabela rola na horizontal */
+  position: sticky;
+  left: 0;
+  max-width: calc(100vw - 40px);
 }
 
 /* Abas do Excel (ilustração) */
